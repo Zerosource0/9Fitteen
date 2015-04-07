@@ -37,6 +37,16 @@ public class CreateProject extends HttpServlet {
 
         HttpSession sessionObj = request.getSession();
         Controller con = (Controller) sessionObj.getAttribute("Controller");
+        if(con == null)
+        {
+            //session start
+            con = Controller.getInstance();
+            sessionObj.setAttribute("Controller", con);
+        }
+        else
+        {
+            con = (Controller) sessionObj.getAttribute("Controller");
+        }
         
         createProject(request, response, con);
     }
