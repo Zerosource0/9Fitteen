@@ -7,6 +7,7 @@ package dataSource;
 
 import Data.Project;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 /**
  *
@@ -34,5 +35,9 @@ public class DBFacade {
     
     public boolean createProject(Project p){
         return pm.createProject(p, con);
+    }
+    
+    public ArrayList<Project> getProjects(){
+        return pm.getProjects(con);
     }
 }

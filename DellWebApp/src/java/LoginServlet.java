@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        RequestDispatcher rq = request.getRequestDispatcher("main.html");
+        RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
         
     }

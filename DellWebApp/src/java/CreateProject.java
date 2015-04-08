@@ -8,6 +8,7 @@ import Data.Controller;
 import Data.Project;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -109,6 +110,19 @@ public class CreateProject extends HttpServlet {
         request.setAttribute("project", p);
         
         RequestDispatcher rq = request.getRequestDispatcher("Main.jsp");
+        rq.forward(request, response);
+    }
+    
+    private void getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException
+    {
+        ArrayList<Project> projects = con.getProjects();
+        if(projects.size() >0)
+        {
+            System.out.println("Empty List");
+        }
+        
+        request.setAttribute("projects", projects);
+        RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
     

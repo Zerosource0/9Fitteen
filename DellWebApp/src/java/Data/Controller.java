@@ -6,6 +6,7 @@
 package Data;
 
 import dataSource.DBFacade;
+import java.util.ArrayList;
 
 
 /**
@@ -39,5 +40,9 @@ public class Controller {
             p = null;
         }
         return p;
+    }
+    
+    public ArrayList<Project> getProjects(){
+        return dbf.getProjects();
     }
 }
