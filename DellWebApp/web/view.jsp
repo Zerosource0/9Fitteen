@@ -22,8 +22,7 @@
         <title>Dell Project Dashboard</title>
 
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Custom styles for this template -->
+        
         <link href="res/css/dashboard.css" rel="stylesheet">
 
     </head>
@@ -43,7 +42,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="CreateProject">Dashboard</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="index.html">Log Out</a></li>

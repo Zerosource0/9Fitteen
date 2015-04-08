@@ -1,3 +1,5 @@
+package servlet;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,6 +35,9 @@ public class CreateProject extends HttpServlet {
         }
 
         String command = request.getParameter("command");
+        if (command == null) {
+            getProjects(request, response, con);
+        }
         if (command.equals("view")) {
             getProjects(request, response, con);
         } else if (command.equals("create")) {
