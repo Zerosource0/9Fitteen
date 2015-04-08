@@ -116,17 +116,19 @@
                 </tr>
               </thead>
               <tbody>
-                  <%= ArrayList<Project> projects = request.getAttribute("projects") %>
-                  <% 
+                  <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
+                  %> <%= projects.size() %> <%
                   
+                  
+                  for (Project p : projects) {
+                      
+                  %> <tr><td> <%= p.getId() %> </td> <%
+                  %> <td> <%= p.getProjectName() %> </td> <%
+                  %> <td> <%= p.getFkProjetStateID() %> </td> <%
+                  %> <td> <%= p.getDateCreated() %> </td> <%
+                  %> <td> <%= p.getDateDone() %> </td> </tr> <%
+                  }
                   %>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
               </tbody>
             </table>
           </div>

@@ -49,7 +49,13 @@ public class CreateProject extends HttpServlet {
             con = (Controller) sessionObj.getAttribute("Controller");
         }
         
+        String command = request.getParameter("command");
+        if (command.equals("create")){
         createProject(request, response, con);
+        }
+        else if(command.equals("view")){
+        getProjects(request, response, con);
+        }
     }
     
 
@@ -119,6 +125,10 @@ public class CreateProject extends HttpServlet {
         if(projects.size() >0)
         {
             System.out.println("Empty List");
+        }
+        if (projects == null) {
+//            projects = new ArrayList<>();
+//            projects.add(new Project("name"));
         }
         
         request.setAttribute("projects", projects);

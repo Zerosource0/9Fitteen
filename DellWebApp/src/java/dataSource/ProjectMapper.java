@@ -35,7 +35,7 @@ public class ProjectMapper {
 
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-
+               try{ 
                 projects.add(new Project(
                         rs.getInt(1),
                         rs.getInt(2),
@@ -51,7 +51,11 @@ public class ProjectMapper {
                         rs.getString(12),
                         rs.getString(13)
                 ));
-
+               }
+               catch(Exception e)
+               {
+                   e.printStackTrace();
+               }
             }
 
         } catch (Exception e) {
