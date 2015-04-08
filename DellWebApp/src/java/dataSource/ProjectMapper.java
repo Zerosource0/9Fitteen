@@ -34,7 +34,7 @@ public class ProjectMapper {
             statement = con.prepareStatement(sqlString1);
 
             ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                try{ 
                 projects.add(new Project(
                         rs.getInt(1),

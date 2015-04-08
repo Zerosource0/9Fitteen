@@ -50,12 +50,13 @@ public class CreateProject extends HttpServlet {
         }
         
         String command = request.getParameter("command");
-        if (command.equals("create")){
-        createProject(request, response, con);
-        }
-        else if(command.equals("view")){
+        if(command.equals("view")){
         getProjects(request, response, con);
         }
+        else if(command.equals("create")){
+        createProject(request, response, con);
+        }
+
     }
     
 
@@ -100,7 +101,6 @@ public class CreateProject extends HttpServlet {
 
     private void createProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException
     {
-        
         
         Boolean success = true;
         
