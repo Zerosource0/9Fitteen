@@ -95,13 +95,13 @@ public class CreateProject extends HttpServlet {
     {
         
         
-        Boolean success = false;
+        Boolean success = true;
         
         String name = request.getParameter("name");
         
         Project p = con.createProject(name);
-        if(p != null){
-            success = true;
+        if(p == null){
+            success = false;
         }
         
         request.setAttribute("pro", success);

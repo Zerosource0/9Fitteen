@@ -25,41 +25,29 @@ public class ProjectMapper {
     public boolean createProject(Project p, Connection con){
         int rowsInserted = 0;
         
-        String sqlString1 = "select seq_projectid.nextval"
-                + "from dual";
+       /* String sqlString1 = "select seq_projectid.nextval"
+                + "from dual";*/
         
-        String sqlString2 = "insert into project "
-                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        String sqlString1 = "insert into project (FKPROJECTSTATEID,PROJECTNAME,FKPARTNERID)"
+                + " values (?,?,?)";
+        
+        //the future one
+        String sqlString2 = "insert into project (PROEJCTNAME,FKPARTNERID)"
+                + " values (?,?)";
+        
         PreparedStatement statement = null;
         try{
             
         statement = con.prepareStatement(sqlString1);
-        ResultSet rs = statement.executeQuery();
-        if(rs.next()){
-            p.setId(rs.getInt(1));
-        }
+        statement.setInt(1, p.getFkProjetStateID());
+        statement.setString(2, p.getProjectName());
+        statement.setInt(3, p.getFkProjetStateID());
+        rowsInserted = statement.executeUpdate();
         
-        statement = con.prepareStatement(sqlString2);
-        statement.setInt(1, p.getId());
-        statement.setInt(2, p.getFkProjetStateID());
-        statement.setString(3, p.getProjectName());
-        statement.setString(4, p.getDescription());
-        statement.setInt(5, p.getFkpartnerId());
-        
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = new Date();
-        statement.setString(6, dateFormat.format(date));
-        
-        statement.setString(7, null);
-        statement.setString(8, dateFormat.format(date));
-        statement.setInt(9, 0);
-        statement.setString(10, null);
-        statement.setString(11, null);
-        statement.setString(12, null);
-        statement.setString(13, null);
         }
         catch(Exception e){
-        
+            e.printStackTrace();
         }
             finally
             {
