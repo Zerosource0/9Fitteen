@@ -7,7 +7,6 @@
 import Data.Controller;
 import Data.Project;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,48 +16,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author marcj_000
- */
 @WebServlet(urlPatterns = {"/CreateProject"})
 public class CreateProject extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession sessionObj = request.getSession();
         Controller con = (Controller) sessionObj.getAttribute("Controller");
-        if(con == null)
-        {
+        if (con == null) {
             //session start
             con = Controller.getInstance();
             sessionObj.setAttribute("Controller", con);
-        }
-        else
-        {
+        } else {
             con = (Controller) sessionObj.getAttribute("Controller");
         }
-        
+
         String command = request.getParameter("command");
-        if(command.equals("view")){
-        getProjects(request, response, con);
-        }
-        else if(command.equals("create")){
-        createProject(request, response, con);
+        if (command.equals("view")) {
+            getProjects(request, response, con);
+        } else if (command.equals("create")) {
+            createProject(request, response, con);
+            getProjects(request, response, con);
         }
 
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -99,41 +81,38 @@ public class CreateProject extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void createProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException
-    {
-        
+    private void createProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+
         Boolean success = true;
-        
+
         String name = request.getParameter("name");
-        
+
         Project p = con.createProject(name);
-        if(p == null){
+        if (p == null) {
             success = false;
         }
-        
+
         request.setAttribute("pro", success);
-        
+
         request.setAttribute("project", p);
-        
-        RequestDispatcher rq = request.getRequestDispatcher("Main.jsp");
-        rq.forward(request, response);
+
+        //RequestDispatcher rq = request.getRequestDispatcher("Main.jsp");
+        //rq.forward(request, response);
     }
-    
-    private void getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException
-    {
+
+    private void getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects = con.getProjects();
-        if(projects.size() >0)
-        {
+        if (projects.size() > 0) {
             System.out.println("Empty List");
         }
         if (projects == null) {
 //            projects = new ArrayList<>();
 //            projects.add(new Project("name"));
         }
-        
+
         request.setAttribute("projects", projects);
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
-    
+
 }
