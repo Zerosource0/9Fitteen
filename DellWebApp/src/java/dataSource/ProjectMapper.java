@@ -8,14 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author marcj_000
- */
 public class ProjectMapper {
 
   //public ArrayList<String> getPartnerNames(Connection con){}
-    
     public ArrayList<String> getStateNames(Connection con) {
         ArrayList<String> stateNames = new ArrayList<>();
 
@@ -31,9 +26,9 @@ public class ProjectMapper {
             e.printStackTrace();
         } finally {
             try {
-                
+
                 statement.close();
-                
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -47,44 +42,31 @@ public class ProjectMapper {
 
         String sqlString1 = "select * from project order by projectid";
 
-        PreparedStatement statement = null;
-        try {
-            statement = con.prepareStatement(sqlString1);
-
-            ResultSet rs = statement.executeQuery();
+        //PreparedStatement statement = null;
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                try {
-                    projects.add(new Project(
-                            rs.getInt(1),
-                            rs.getInt(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getInt(5),
-                            rs.getString(6),
-                            rs.getString(7),
-                            rs.getString(8),
-                            rs.getInt(9),
-                            rs.getString(10),
-                            rs.getString(11),
-                            rs.getString(12),
-                            rs.getString(13)
-                    ));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                projects.add(new Project(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13)
+                ));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                
-                statement.close();
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+
         return projects;
     }
 
@@ -104,18 +86,18 @@ public class ProjectMapper {
         try {
             statement = con.prepareStatement(sqlString2);
             statement.setString(1, p.getProjectName());
-            statement.setInt(2, p.getFkpartnerId());
+            statement.setInt(2, p.getFkPartnerId());
             statement.setString(3, p.getDescription());
-            statement.setInt(4, p.getFundAllocated());
+            statement.setInt(4, p.getFundsAllocated());
             rowsInserted = statement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                
+
                 statement.close();
-                
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Data;
 
 /**
@@ -15,11 +10,11 @@ public class Project {
     private int fkProjetStateID;
     private String projectName;
     private String description;
-    private int fkpartnerId;
+    private int fkPartnerId;
     private String dateCreated;
     private String dateDone;
     private String dateLastEdit;
-    private int fundAllocated;
+    private int fundsAllocated;
     private String poeText;
     private String poePicture1;
     private String poePicture2;
@@ -57,12 +52,12 @@ public class Project {
         this.description = description;
     }
 
-    public int getFkpartnerId() {
-        return fkpartnerId;
+    public int getFkPartnerId() {
+        return fkPartnerId;
     }
 
-    public void setFkpartnerId(int fkpartnerId) {
-        this.fkpartnerId = fkpartnerId;
+    public void setFkPartnerId(int fkPartnerId) {
+        this.fkPartnerId = fkPartnerId;
     }
 
     public String getDateCreated() {
@@ -89,12 +84,12 @@ public class Project {
         this.dateLastEdit = dateLastEdit;
     }
 
-    public int getFundAllocated() {
-        return fundAllocated;
+    public int getFundsAllocated() {
+        return fundsAllocated;
     }
 
-    public void setFundAllocated(int fundAllocated) {
-        this.fundAllocated = fundAllocated;
+    public void setFundsAllocated(int fundsAllocated) {
+        this.fundsAllocated = fundsAllocated;
     }
 
     public String getPoeText() {
@@ -129,11 +124,19 @@ public class Project {
         this.poePicture3 = poePicture3;
     }
 
+    // with funds
     public Project(String projectName, String description, int fkpartnerId, int fundAllocated) {
         this.projectName = projectName;
         this.description = description;
-        this.fkpartnerId = fkpartnerId;
-        this.fundAllocated = fundAllocated;
+        this.fkPartnerId = fkpartnerId;
+        this.fundsAllocated = fundAllocated;
+    }
+
+    // without funds
+    public Project(String projectName, String description, int fkPartnerId) {
+        this.projectName = projectName;
+        this.description = description;
+        this.fkPartnerId = fkPartnerId;
     }
     
 
@@ -143,11 +146,11 @@ public class Project {
         this.fkProjetStateID = fkProjetStateID;
         this.projectName = projectName;
         this.description = description;
-        this.fkpartnerId = fkpartnerId;
+        this.fkPartnerId = fkpartnerId;
         this.dateCreated = dateCreated;
         this.dateDone = dateDone;
         this.dateLastEdit = dateLastEdit;
-        this.fundAllocated = fundAllocated;
+        this.fundsAllocated = fundAllocated;
         this.poeText = poeText;
         this.poePicture1 = poePicture1;
         this.poePicture2 = poePicture2;
@@ -156,7 +159,7 @@ public class Project {
 
     public Project(String projectName) {
         this.projectName = projectName;
-        this.fkpartnerId = 1;
+        this.fkPartnerId = 1;
         
     }
     

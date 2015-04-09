@@ -31,8 +31,7 @@ public class SqlServlet extends HttpServlet {
         String command = request.getParameter("command");
         if (command == null) {
             getProjects(request, response, con);
-        }
-        if (command.equals("view")) {
+        } else if (command.equals("view")) {
             getProjects(request, response, con);
         } else if (command.equals("create")) {
             createProject(request, response, con);
@@ -87,43 +86,50 @@ public class SqlServlet extends HttpServlet {
         String name = request.getParameter("name");
         String desc = request.getParameter("description");
         String partner = request.getParameter("partnerName"); //should be partnerID
-        int funds = Integer.parseInt(request.getParameter("funds"));
+
+        Integer funds = null;
+
+        Project p = null;
+        if (request.getParameter("funds").length() > 0) {
+            funds = Integer.parseInt(request.getParameter("funds"));
+            p = con.createProject(name, desc, 1, funds);
+        }
+        else {
+            p = con.createProject(name, desc, 1);
+        }
         
-        Project p = con.createProject(name, desc, 1, funds);
         if (p == null) {
             success = false;
         }
 
         request.setAttribute("pro", success);
-        
+
         request.setAttribute("project", p);
-        
-        //RequestDispatcher rq = request.getRequestDispatcher("Main.jsp");
-        //rq.forward(request, response);
+
     }
 
     private void getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects = con.getProjects();
-        if (projects.size() > 0) {
+        if (projects.size() <= 0) {
             System.out.println("Empty List");
         }
         if (projects == null) {
 //            projects = new ArrayList<>();
 //            projects.add(new Project("name"));
         }
-        
+
         request.setAttribute("projects", projects);
-        
+
         getStateNames(request, response, con);
-        
+
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
-    
+
     private void getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> stateNames = con.getStateNames();
-        
-        request.setAttribute("stateNames",stateNames);
+
+        request.setAttribute("stateNames", stateNames);
     }
 
 }
