@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dataSource;
 
 import Data.Project;
@@ -18,7 +13,6 @@ public class DBFacade {
     private ProjectMapper pm;
     private Connection con;
 
-    //== Singleton start
     private static DBFacade instance;
 
     private DBFacade() {
