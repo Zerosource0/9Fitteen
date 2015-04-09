@@ -10,29 +10,21 @@ import java.util.ArrayList;
 
 public class ProjectMapper {
 
-  //public ArrayList<String> getPartnerNames(Connection con){}
+    //public ArrayList<String> getPartnerNames(Connection con){}
     public ArrayList<String> getStateNames(Connection con) {
         ArrayList<String> stateNames = new ArrayList<>();
 
         String sqlString1 = "select projectstatename from projectstate";
-        PreparedStatement statement = null;
-        try {
-            statement = con.prepareStatement(sqlString1);
-            ResultSet rs = statement.executeQuery();
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
                 stateNames.add(rs.getString(1));
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-
-                statement.close();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+
         return stateNames;
     }
 
@@ -42,7 +34,6 @@ public class ProjectMapper {
 
         String sqlString1 = "select * from project order by projectid";
 
-        //PreparedStatement statement = null;
         try (PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -82,9 +73,8 @@ public class ProjectMapper {
         String sqlString2 = "insert into project (PROJECTNAME,FKPARTNERID,PROJECTDESCRIPTION,FUNDSALLOCATED)"
                 + " values (?,?,?,?)";
 
-        PreparedStatement statement = null;
-        try {
-            statement = con.prepareStatement(sqlString2);
+        try (PreparedStatement statement = con.prepareStatement(sqlString2)) {
+
             statement.setString(1, p.getProjectName());
             statement.setInt(2, p.getFkPartnerId());
             statement.setString(3, p.getDescription());
@@ -93,14 +83,6 @@ public class ProjectMapper {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-
-                statement.close();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return rowsInserted == 1;
     }
