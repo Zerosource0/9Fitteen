@@ -26,6 +26,7 @@ and open the template in the editor.
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
 
         <link href="res/css/dashboard.css" rel="stylesheet">
+        <link href="res/css/signin.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -63,7 +64,7 @@ and open the template in the editor.
                         <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="main.jsp">Create New Project</a></li>
+                        <li><a href="create.jsp">Create New Project</a></li>
                         <li><a href="">Nav item again</a></li>
                         <li><a href="">One more nav</a></li>
                         <li><a href="">Another nav item</a></li>
@@ -76,14 +77,14 @@ and open the template in the editor.
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header">Create New Project</h1>
-                    <form action="CreateProject" method="POST">
-                        <div><h3>Project Name</h3></div>
-                        <input type="text" name="name" required>
+                    <form class="form-signin" action="CreateProject" method="POST">
+                        <h1 class="form-signin-heading">Create New Project</h1>
+                        <div><h3>Project Name *</h3></div>
+                        <input class="form-control" type="text" name="name" required>
                         <div></div>
                         <div><h3>Partner</h3></div>
                         <div></div>
-                        <select>
+                        <select class="form-control">
                             <option value="" name="partnerName" disabled selected>Please Select Partner..</option>
                             <option>partner1</option>
                             <option>partner2</option>
@@ -91,14 +92,14 @@ and open the template in the editor.
                         <div></div>
                         <div><h3>Project Description</h3></div>
                         <div></div>
-                        <textarea name="description" rows="5" cols="30"></textarea>
+                        <textarea class="form-control" name="description" rows="5" cols="30"></textarea>
                         <div></div>
                         <div><h3>Funds Allocated</h3></div>
-                        <input type="number" name="funds">
+                        <input class="form-control" type="number" name="funds">
                         <div></div>
                         <div><h3></h3></div>
                         <input type="hidden" name="command" value="create" required/>
-                        <button>Create</button>
+                        <button class="btn btn-block btn-primary btn-lg" >Create</button>
                     </form>
                 </div>
             </div>
