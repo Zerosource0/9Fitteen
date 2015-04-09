@@ -149,7 +149,7 @@ public class Project {
 
     public Project(String projectName) {
         this.projectName = projectName;
-        
+        this.fkpartnerId = 1;
         
     }
     

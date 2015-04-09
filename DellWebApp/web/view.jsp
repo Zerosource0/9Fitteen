@@ -109,13 +109,14 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Project State Id</th>
+                                    <th>Project State</th>
                                     <th>Date Created</th>
                                     <th>Date Done</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
+                                   ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                                 %> <%= projects.size()%> 
                                 <%
                                     Enumeration<String> atr = request.getAttributeNames();
@@ -132,7 +133,7 @@
 
                                 %> <tr><td> <%= p.getId()%> </td> <%
                                     %> <td> <%= p.getProjectName()%> </td> <%
-                                    %> <td> <%= p.getFkProjetStateID()%> </td> <%
+                                    %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
                                     %> <td> <%= p.getDateCreated()%> </td> <%
                                     %> <td> <%= p.getDateDone()%> </td> </tr> <%
                                         }

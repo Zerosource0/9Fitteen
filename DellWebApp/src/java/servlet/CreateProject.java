@@ -98,9 +98,9 @@ public class CreateProject extends HttpServlet {
         }
 
         request.setAttribute("pro", success);
-
+        
         request.setAttribute("project", p);
-
+        
         //RequestDispatcher rq = request.getRequestDispatcher("Main.jsp");
         //rq.forward(request, response);
     }
@@ -114,10 +114,19 @@ public class CreateProject extends HttpServlet {
 //            projects = new ArrayList<>();
 //            projects.add(new Project("name"));
         }
-
+        
         request.setAttribute("projects", projects);
+        
+        getStateNames(request, response, con);
+        
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
+    }
+    
+    private void getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        ArrayList<String> stateNames = con.getStateNames();
+        
+        request.setAttribute("stateNames",stateNames);
     }
 
 }

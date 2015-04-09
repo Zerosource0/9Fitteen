@@ -45,4 +45,8 @@ public class Controller {
     public ArrayList<Project> getProjects(){
         return dbf.getProjects();
     }
+    
+    public ArrayList<String> getStateNames(){
+        return dbf.getStateNames();
+    }
 }

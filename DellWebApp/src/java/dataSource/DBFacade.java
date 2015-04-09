@@ -40,4 +40,8 @@ public class DBFacade {
     public ArrayList<Project> getProjects(){
         return pm.getProjects(con);
     }
+    
+    public ArrayList<String> getStateNames(){
+        return pm.getStateNames(con);
+    }
 }
