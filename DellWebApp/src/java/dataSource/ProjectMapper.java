@@ -22,6 +22,8 @@ import java.util.Date;
  */
 public class ProjectMapper {
 
+   // public ArrayList<String> getPartnerNames(Connection con){}
+    
     public ArrayList<String> getStateNames(Connection con) {
         ArrayList<String> stateNames = new ArrayList<>();
 
