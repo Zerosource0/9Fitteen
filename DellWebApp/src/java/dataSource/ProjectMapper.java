@@ -22,7 +22,7 @@ import java.util.Date;
  */
 public class ProjectMapper {
 
-   // public ArrayList<String> getPartnerNames(Connection con){}
+  //public ArrayList<String> getPartnerNames(Connection con){}
     
     public ArrayList<String> getStateNames(Connection con) {
         ArrayList<String> stateNames = new ArrayList<>();
@@ -39,7 +39,9 @@ public class ProjectMapper {
             e.printStackTrace();
         } finally {
             try {
+                if(statement != null){
                 statement.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -84,7 +86,9 @@ public class ProjectMapper {
             e.printStackTrace();
         } finally {
             try {
+                if(statement != null){
                 statement.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -101,21 +105,25 @@ public class ProjectMapper {
                 + " values (?,?)";
 
         //the future one
-        String sqlString2 = "insert into project (PROEJCTNAME,FKPARTNERID)"
-                + " values (?,?)";
+        String sqlString2 = "insert into project (PROEJCTNAME,FKPARTNERID,PROJECTDESCRIPTION,FUNDALLOCATED)"
+                + " values (?,?,?,?)";
 
         PreparedStatement statement = null;
         try {
-            statement = con.prepareStatement(sqlString1);
+            statement = con.prepareStatement(sqlString2);
             statement.setString(1, p.getProjectName());
             statement.setInt(2, p.getFkpartnerId());
+            statement.setString(3, p.getDescription());
+            statement.setInt(4, p.getFundAllocated());
             rowsInserted = statement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
+                if(statement != null){
                 statement.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }

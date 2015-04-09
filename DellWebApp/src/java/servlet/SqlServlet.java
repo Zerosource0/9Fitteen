@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = {"/CreateProject"})
-public class CreateProject extends HttpServlet {
+public class SqlServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -91,8 +91,11 @@ public class CreateProject extends HttpServlet {
         Boolean success = true;
 
         String name = request.getParameter("name");
-
-        Project p = con.createProject(name);
+        String desc = request.getParameter("description");
+        String partner = request.getParameter("partnerName");
+        int funds = Integer.parseInt(request.getParameter("funds"));
+        
+        Project p = con.createProject(name, desc, 1, funds);
         if (p == null) {
             success = false;
         }

@@ -110,6 +110,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Project State</th>
+                                    <th>Partner</th>
                                     <th>Date Created</th>
                                     <th>Date Done</th>
                                 </tr>
@@ -134,6 +135,7 @@
                                 %> <tr><td> <%= p.getId()%> </td> <%
                                     %> <td> <%= p.getProjectName()%> </td> <%
                                     %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
+                                    %> <td> <%= p.getFkpartnerId()%> </td> <%
                                     %> <td> <%= p.getDateCreated()%> </td> <%
                                     %> <td> <%= p.getDateDone()%> </td> </tr> <%
                                         }

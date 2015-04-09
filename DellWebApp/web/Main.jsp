@@ -84,7 +84,7 @@ and open the template in the editor.
                         <div><h3>Partner</h3></div>
                         <div></div>
                         <select>
-                            <option value="" disabled selected>Please Select Partner..</option>
+                            <option value="" name="partnerName" disabled selected>Please Select Partner..</option>
                             <option>partner1</option>
                             <option>partner2</option>
                         </select>
@@ -94,7 +94,7 @@ and open the template in the editor.
                         <textarea name="description" rows="5" cols="30"></textarea>
                         <div></div>
                         <div><h3>Funds Allocated</h3></div>
-                        <input type="number" name="fundsAllocated">
+                        <input type="number" name="funds">
                         <div></div>
                         <div><h3></h3></div>
                         <input type="hidden" name="command" value="create" required/>

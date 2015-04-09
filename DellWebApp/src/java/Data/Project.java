@@ -128,8 +128,15 @@ public class Project {
     public void setPoePicture3(String poePicture3) {
         this.poePicture3 = poePicture3;
     }
+
+    public Project(String projectName, String description, int fkpartnerId, int fundAllocated) {
+        this.projectName = projectName;
+        this.description = description;
+        this.fkpartnerId = fkpartnerId;
+        this.fundAllocated = fundAllocated;
+    }
     
-    
+
     
     public Project(int id, int fkProjetStateID, String projectName, String description, int fkpartnerId, String dateCreated, String dateDone, String dateLastEdit, int fundAllocated, String poeText, String poePicture1, String poePicture2, String poePicture3) {
         this.id = id;
