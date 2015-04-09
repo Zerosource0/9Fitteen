@@ -39,9 +39,9 @@ public class ProjectMapper {
             e.printStackTrace();
         } finally {
             try {
-                if(statement != null){
+                
                 statement.close();
-                }
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -53,7 +53,7 @@ public class ProjectMapper {
 
         ArrayList<Project> projects = new ArrayList<>();
 
-        String sqlString1 = "select * from project";
+        String sqlString1 = "select * from project order by projectid";
 
         PreparedStatement statement = null;
         try {
@@ -86,9 +86,9 @@ public class ProjectMapper {
             e.printStackTrace();
         } finally {
             try {
-                if(statement != null){
+                
                 statement.close();
-                }
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -105,7 +105,7 @@ public class ProjectMapper {
                 + " values (?,?)";
 
         //the future one
-        String sqlString2 = "insert into project (PROEJCTNAME,FKPARTNERID,PROJECTDESCRIPTION,FUNDALLOCATED)"
+        String sqlString2 = "insert into project (PROJECTNAME,FKPARTNERID,PROJECTDESCRIPTION,FUNDSALLOCATED)"
                 + " values (?,?,?,?)";
 
         PreparedStatement statement = null;
@@ -121,9 +121,9 @@ public class ProjectMapper {
             e.printStackTrace();
         } finally {
             try {
-                if(statement != null){
+                
                 statement.close();
-                }
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }

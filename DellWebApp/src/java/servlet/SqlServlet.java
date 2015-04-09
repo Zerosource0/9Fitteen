@@ -92,7 +92,7 @@ public class SqlServlet extends HttpServlet {
 
         String name = request.getParameter("name");
         String desc = request.getParameter("description");
-        String partner = request.getParameter("partnerName");
+        String partner = request.getParameter("partnerName"); //should be partnerID
         int funds = Integer.parseInt(request.getParameter("funds"));
         
         Project p = con.createProject(name, desc, 1, funds);
