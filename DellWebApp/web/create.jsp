@@ -4,6 +4,8 @@
     Author     : marcj_000
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Data.Partner"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--
@@ -86,8 +88,14 @@ and open the template in the editor.
                         <div></div>
                         <select class="form-control">
                             <option value="" name="partnerName" disabled selected>Please Select Partner..</option>
-                            <option>partner1</option>
-                            <option>partner2</option>
+                            <% ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
+                            
+                            for (Partner p : partnerInfo){
+                            %>
+                            
+                            <option><%=p.getPartnerName()%></option>
+                            
+                            <% } %> 
                         </select>
                         <div></div>
                         <div><h3>Project Description</h3></div>

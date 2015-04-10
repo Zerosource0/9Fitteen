@@ -104,7 +104,7 @@ public class SqlServlet extends HttpServlet {
         }
 
         request.setAttribute("pro", success);
-
+        
         request.setAttribute("project", p);
 
     }
@@ -134,10 +134,10 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("stateNames", stateNames);
     }
     
-    private void getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    public void getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partnerInfo = con.getParnerInfo();
         
         request.setAttribute("partnerInfo", partnerInfo);
     }
-
+    
 }
