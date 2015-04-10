@@ -66,7 +66,7 @@ and open the template in the editor.
                         <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="create.jsp">Create New Project</a></li>
+                        <li><a href="CreateServlet">Create New Project</a></li>
                         <li><a href="">Nav item again</a></li>
                         <li><a href="">One more nav</a></li>
                         <li><a href="">Another nav item</a></li>
