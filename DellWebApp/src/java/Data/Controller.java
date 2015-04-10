@@ -58,4 +58,8 @@ public class Controller {
     public ArrayList<String> getStateNames(){
         return dbf.getStateNames();
     }
+    
+    public ArrayList<Partner> getParnerInfo(){
+        return dbf.getPartnerInfo();
+    }
 }

@@ -1,5 +1,6 @@
 package dataSource;
 
+import Data.Partner;
 import Data.Project;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -37,5 +38,9 @@ public class DBFacade {
     
     public ArrayList<String> getStateNames(){
         return pm.getStateNames(con);
+    }
+    
+    public ArrayList<Partner> getPartnerInfo(){
+        return pm.getPartnerInfo(con);
     }
 }

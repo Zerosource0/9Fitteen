@@ -4,6 +4,7 @@
     Author     : marcj_000
 --%>
 
+<%@page import="Data.Partner"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Data.Project"%>
@@ -118,6 +119,7 @@
                             <tbody>
                                 <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
                                    ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
+                                   ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                                 %> <%= projects.size()%> 
                                 <%
                                     Enumeration<String> atr = request.getAttributeNames();
@@ -135,7 +137,7 @@
                                 %> <tr><td> <%= p.getId()%> </td> <%
                                     %> <td> <%= p.getProjectName()%> </td> <%
                                     %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
-                                    %> <td> <%= p.getFkPartnerId()%> </td> <%
+                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId()-1).getPartnerName()%> </td> <%
                                     %> <td> <%= p.getDateCreated()%> </td> <%
                                     %> <td> <%= p.getDateDone()%> </td> </tr> <%
                                         }

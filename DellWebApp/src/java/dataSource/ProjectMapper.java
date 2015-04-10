@@ -1,5 +1,6 @@
 package dataSource;
 
+import Data.Partner;
 import Data.Project;
 import java.sql.Connection;
 
@@ -10,7 +11,29 @@ import java.util.ArrayList;
 
 public class ProjectMapper {
 
-    //public ArrayList<String> getPartnerNames(Connection con){}
+    public ArrayList<Partner> getPartnerInfo(Connection con) {
+        ArrayList<Partner> partnerInfo = new ArrayList<>();
+
+        String sqlString1 = "select * from partner";
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                partnerInfo.add(new Partner(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5)
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return partnerInfo;
+    }
+
     public ArrayList<String> getStateNames(Connection con) {
         ArrayList<String> stateNames = new ArrayList<>();
 

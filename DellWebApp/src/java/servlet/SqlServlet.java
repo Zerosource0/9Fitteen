@@ -1,6 +1,7 @@
 package servlet;
 
 import Data.Controller;
+import Data.Partner;
 import Data.Project;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,6 +122,7 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("projects", projects);
 
         getStateNames(request, response, con);
+        getPartnerInfo(request, response, con);
 
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
@@ -130,6 +132,12 @@ public class SqlServlet extends HttpServlet {
         ArrayList<String> stateNames = con.getStateNames();
 
         request.setAttribute("stateNames", stateNames);
+    }
+    
+    private void getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        ArrayList<Partner> partnerInfo = con.getParnerInfo();
+        
+        request.setAttribute("partnerInfo", partnerInfo);
     }
 
 }
