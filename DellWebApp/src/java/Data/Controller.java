@@ -62,4 +62,11 @@ public class Controller {
     public ArrayList<Partner> getParnerInfo(){
         return dbf.getPartnerInfo();
     }
+    
+    public Person logIn(String userName, String password) {
+        Person person = dbf.logIn(userName, password);
+        
+        return person;
+        
+    }
 }

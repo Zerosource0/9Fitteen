@@ -15,6 +15,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         
         
+        
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
         

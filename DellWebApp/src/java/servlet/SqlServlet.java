@@ -2,6 +2,7 @@ package servlet;
 
 import Data.Controller;
 import Data.Partner;
+import Data.Person;
 import Data.Project;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class SqlServlet extends HttpServlet {
         } else if (command.equals("create")) {
             createProject(request, response, con);
             getProjects(request, response, con);
+        } else if (command.equals("login")) {
+            logIn(request, response, con);
         }
 
     }
@@ -145,6 +148,26 @@ public class SqlServlet extends HttpServlet {
         ArrayList<Partner> partnerInfo = con.getParnerInfo();
         
         request.setAttribute("partnerInfo", partnerInfo);
+    }
+    
+    private void logIn(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        
+        
+        Person person = con.logIn(userName, password);
+        
+        if (person == null) {
+            response.sendRedirect("index.html");
+        }
+        else {
+            getProjects(request, response, con);
+            
+        }
+        
+        
+        
     }
     
 }

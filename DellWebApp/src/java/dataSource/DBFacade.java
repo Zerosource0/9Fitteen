@@ -1,6 +1,7 @@
 package dataSource;
 
 import Data.Partner;
+import Data.Person;
 import Data.Project;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -42,5 +43,9 @@ public class DBFacade {
     
     public ArrayList<Partner> getPartnerInfo(){
         return pm.getPartnerInfo(con);
+    }
+    
+    public Person logIn(String userName, String password) {
+        return pm.logIn(userName, password, con);
     }
 }

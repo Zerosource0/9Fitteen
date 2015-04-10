@@ -69,7 +69,7 @@
                         <div><h3>Partner</h3></div>
                         <div></div>
                         <select name="partnerID" class="form-control">
-                            <option value="" disabled selected>Please Select Partner..</option>
+                            <option value="" disabled selected>Please Select a Partner...</option>
                             <% ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                             
                             for (Partner part : partnerInfo){

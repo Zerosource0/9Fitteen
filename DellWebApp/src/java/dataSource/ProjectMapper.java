@@ -1,6 +1,7 @@
 package dataSource;
 
 import Data.Partner;
+import Data.Person;
 import Data.Project;
 import java.sql.Connection;
 
@@ -108,5 +109,43 @@ public class ProjectMapper {
             e.printStackTrace();
         }
         return rowsInserted == 1;
+    }
+
+    public Person logIn(String login, String password, Connection con) {
+
+        Person pe1 = null;
+
+        String sqlString1 = "Select FKPERSONID "
+                + "from PERSONLOGIN where PERSONEMAIL='" + login + "' and PERSONPASSWORD='" + password + "'";
+
+        try (PreparedStatement pre1 = con.prepareStatement(sqlString1);
+                ResultSet rs1 = pre1.executeQuery();) {
+
+            if (rs1.next() == false) {
+                return null;
+            } else {
+                int rights, id;
+                id = rs1.getInt(1);
+
+                String sqlString2 = "SELECT fkpersontypeid "
+                        + "FROM person, persontype "
+                        + "Where person.personid=" + id + " and fkpersontypeid=persontypeid";
+                
+                try (PreparedStatement pre2 = con.prepareStatement(sqlString2);
+                        ResultSet rs2 = pre2.executeQuery();) {
+                    rs2.next();
+                    rights = rs2.getInt(1);
+                }
+
+                Person pe = new Person(id, rights);
+                pe1 = pe;
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return pe1;
     }
 }
