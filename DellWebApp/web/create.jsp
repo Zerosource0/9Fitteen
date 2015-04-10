@@ -79,14 +79,14 @@ and open the template in the editor.
                         <div></div>
                         <div><h3>Partner</h3></div>
                         <div></div>
-                        <select class="form-control">
-                            <option value="" name="partnerName" disabled selected>Please Select Partner..</option>
+                        <select name="partnerID" class="form-control">
+                            <option value="" disabled selected>Please Select Partner..</option>
                             <% ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                             
-                            for (Partner p : partnerInfo){
+                            for (Partner part : partnerInfo){
                             %>
                             
-                            <option><%=p.getPartnerName()%></option>
+                             <option value="<%= part.getPartnerID()%>" > <%=part.getPartnerName()%> </option>
                             
                             <% } %> 
                         </select>
