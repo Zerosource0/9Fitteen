@@ -86,7 +86,11 @@ public class SqlServlet extends HttpServlet {
 
         String name = request.getParameter("name");
         String desc = request.getParameter("description");
-        int partner =  Integer.parseInt(request.getParameter("partnerID")); //should be partnerID
+        int partner = 1;
+        if (request.getParameter("partnerID") != null) {
+            partner =  Integer.parseInt(request.getParameter("partnerID")); //should be partnerID
+        }
+        
         System.out.println("INT PARTNER SOUT: " + request.getParameter("partnerID"));
         
         Long funds = null;
