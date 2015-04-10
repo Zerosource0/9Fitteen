@@ -122,3 +122,9 @@ table#example {
 #example td:hover {
     cursor: pointer;
 }
+#example a {
+    color: #333;  
+}
+#example a:hover {
+    text-decoration: none;
+}
