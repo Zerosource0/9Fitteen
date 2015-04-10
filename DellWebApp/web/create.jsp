@@ -80,7 +80,7 @@ and open the template in the editor.
                     <form class="form-signin" action="CreateProject" method="POST">
                         <h1 class="form-signin-heading">Create New Project</h1>
                         <div><h3>Project Name *</h3></div>
-                        <input class="form-control" type="text" name="name" required>
+                        <input class="form-control" type="text" name="name" pattern="\b.*[a-zA-Z]+.*\b" title="Project name cannot consist solely of numbers." maxlength="50" required>
                         <div></div>
                         <div><h3>Partner</h3></div>
                         <div></div>
