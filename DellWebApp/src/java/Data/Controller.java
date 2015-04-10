@@ -33,8 +33,8 @@ public class Controller {
         return instance;
     }
    
-    public Project createProject(String projectName, String description, int fkPartnerId, int fundAllocated){
-        Project p = new Project(projectName, description, fkPartnerId, fundAllocated);
+    public Project createProject(String projectName, String description, int fkPartnerId, long fundsAllocated){
+        Project p = new Project(projectName, description, fkPartnerId, fundsAllocated);
         boolean status = dbf.createProject(p);
         if(!status) {
             p = null;

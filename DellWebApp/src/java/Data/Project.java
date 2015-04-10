@@ -14,7 +14,7 @@ public class Project {
     private String dateCreated;
     private String dateDone;
     private String dateLastEdit;
-    private int fundsAllocated;
+    private long fundsAllocated;
     private String poeText;
     private String poePicture1;
     private String poePicture2;
@@ -84,11 +84,11 @@ public class Project {
         this.dateLastEdit = dateLastEdit;
     }
 
-    public int getFundsAllocated() {
+    public long getFundsAllocated() {
         return fundsAllocated;
     }
 
-    public void setFundsAllocated(int fundsAllocated) {
+    public void setFundsAllocated(long fundsAllocated) {
         this.fundsAllocated = fundsAllocated;
     }
 
@@ -125,7 +125,7 @@ public class Project {
     }
 
     // with funds
-    public Project(String projectName, String description, int fkpartnerId, int fundAllocated) {
+    public Project(String projectName, String description, int fkpartnerId, long fundAllocated) {
         this.projectName = projectName;
         this.description = description;
         this.fkPartnerId = fkpartnerId;
@@ -141,7 +141,7 @@ public class Project {
     
 
     
-    public Project(int id, int fkProjetStateID, String projectName, String description, int fkpartnerId, String dateCreated, String dateDone, String dateLastEdit, int fundAllocated, String poeText, String poePicture1, String poePicture2, String poePicture3) {
+    public Project(int id, int fkProjetStateID, String projectName, String description, int fkpartnerId, String dateCreated, String dateDone, String dateLastEdit, long fundAllocated, String poeText, String poePicture1, String poePicture2, String poePicture3) {
         this.id = id;
         this.fkProjetStateID = fkProjetStateID;
         this.projectName = projectName;

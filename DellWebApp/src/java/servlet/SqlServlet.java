@@ -88,11 +88,11 @@ public class SqlServlet extends HttpServlet {
         String desc = request.getParameter("description");
         String partner = request.getParameter("partnerName"); //should be partnerID
 
-        Integer funds = null;
+        Long funds = null;
 
         Project p = null;
         if (request.getParameter("funds").length() > 0) {
-            funds = Integer.parseInt(request.getParameter("funds"));
+            funds = Long.parseLong(request.getParameter("funds"));
             p = con.createProject(name, desc, 1, funds);
         }
         else {

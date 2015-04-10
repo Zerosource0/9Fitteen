@@ -69,7 +69,7 @@ public class ProjectMapper {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getInt(9),
+                        rs.getLong(9),
                         rs.getString(10),
                         rs.getString(11),
                         rs.getString(12),
@@ -101,7 +101,7 @@ public class ProjectMapper {
             statement.setString(1, p.getProjectName());
             statement.setInt(2, p.getFkPartnerId());
             statement.setString(3, p.getDescription());
-            statement.setInt(4, p.getFundsAllocated());
+            statement.setLong(4, p.getFundsAllocated());
             rowsInserted = statement.executeUpdate();
 
         } catch (Exception e) {
