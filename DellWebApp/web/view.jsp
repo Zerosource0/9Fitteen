@@ -43,7 +43,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="CreateProject">Dashboard</a></li>
+                        <li><a href="Dashboard">Dashboard</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="index.html">Log Out</a></li>
@@ -63,7 +63,7 @@
                         
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="CreateServlet">Create New Project</a></li>
+                        <li><a href="CreateProject">Create New Project</a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">

@@ -1,18 +1,7 @@
-<%-- 
-    Document   : Main
-    Created on : 07-Apr-2015, 10:40:23
-    Author     : marcj_000
---%>
-
 <%@page import="java.util.ArrayList"%>
 <%@page import="Data.Partner"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -44,7 +33,7 @@ and open the template in the editor.
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="CreateProject">Dashboard</a></li>
+                        <li><a href="Dashboard">Dashboard</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="index.html">Log Out</a></li>
@@ -60,11 +49,11 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="CreateProject">Overview <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="Dashboard">Overview <span class="sr-only">(current)</span></a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="CreateServlet">Create New Project</a></li>
+                        <li><a href="CreateProject">Create New Project</a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">
@@ -72,10 +61,10 @@ and open the template in the editor.
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <form class="form-signin" action="CreateProject" method="POST">
+                    <form class="form-signin" action="Dashboard" method="POST">
                         <h1 class="form-signin-heading">Create New Project</h1>
                         <div><h3>Project Name *</h3></div>
-                        <input class="form-control" type="text" name="name" pattern="\b.*[a-zA-Z]+.*\b" title="Project name cannot consist solely of numbers." maxlength="50" required>
+                        <input class="form-control" type="text" name="name" pattern="\b.*[a-zA-Z]+.*\b" title="Project name cannot consist solely of numbers." maxlength="50" required autofocus>
                         <div></div>
                         <div><h3>Partner</h3></div>
                         <div></div>
