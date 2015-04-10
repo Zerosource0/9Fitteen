@@ -105,7 +105,7 @@
 
                     <h2 class="sub-header">Recent Projects</h2>
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="example">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -134,7 +134,7 @@
                                 <%
                                     for (Project p : projects) {
 
-                                %> <tr><td> <%= p.getId()%> </td> <%
+                                        %> <tr><td> <a href="whatever-link"><%= p.getId()%></a> </td> <%
                                     %> <td> <%= p.getProjectName()%> </td> <%
                                     %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
                                     %> <td> <%= partnerInfo.get(p.getFkPartnerId()-1).getPartnerName()%> </td> <%
@@ -152,6 +152,7 @@
         <!-- Bootstrap core JavaScript-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="res/js/bootstrap.min.js"></script>
+        <script src="res/js/script.js"></script>
 
     </body>
 </html>
