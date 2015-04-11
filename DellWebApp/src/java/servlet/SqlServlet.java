@@ -28,6 +28,7 @@ public class SqlServlet extends HttpServlet {
             sessionObj.setAttribute("Controller", con);
         } else {
             con = (Controller) sessionObj.getAttribute("Controller");
+            
         }
 
         String command = request.getParameter("command");
@@ -159,7 +160,7 @@ public class SqlServlet extends HttpServlet {
         Person person = con.logIn(userName, password);
         
         if (person == null) {
-            response.sendRedirect("index.html");
+            response.sendRedirect("indexLoginError.html");
         }
         else {
             getProjects(request, response, con);
