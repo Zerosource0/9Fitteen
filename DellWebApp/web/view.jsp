@@ -102,7 +102,6 @@
                         <table class="table table-striped" id="example">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Project State</th>
                                     <th>Partner</th>
@@ -128,8 +127,8 @@
                                 <%
                                     for (Project p : projects) {
 
-                                        %> <tr><td> <a href="whatever-link"><%= p.getId()%></a> </td> <%
-                                    %> <td> <%= p.getProjectName()%> </td> <%
+                                    %> <tr> <%
+                                    %> <td> <a href="details.jsp"><%= p.getProjectName()%></a> </td> <%
                                     %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
                                     %> <td> <%= partnerInfo.get(p.getFkPartnerId()-1).getPartnerName()%> </td> <%
                                     %> <td> <%= p.getDateCreated()%> </td> <%

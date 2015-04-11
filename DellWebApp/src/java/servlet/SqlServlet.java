@@ -128,12 +128,12 @@ public class SqlServlet extends HttpServlet {
 //            projects = new ArrayList<>();
 //            projects.add(new Project("name"));
         }
-
+        
         request.setAttribute("projects", projects);
-
+        
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
-
+        
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
@@ -160,6 +160,7 @@ public class SqlServlet extends HttpServlet {
         
         if (person == null) {
             response.sendRedirect("index.html");
+            
         }
         else {
             getProjects(request, response, con);
