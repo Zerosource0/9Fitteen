@@ -31,8 +31,16 @@ public class SqlServlet extends HttpServlet {
         }
 
         String command = request.getParameter("command");
+        
         if (command == null) {
-            getProjects(request, response, con);
+            
+            String id = request.getParameter("id");
+            if (id == null) {
+                getProjects(request, response, con);
+            }
+            else {
+                details(id, request, response, con);
+            }
         } else if (command.equals("view")) {
             getProjects(request, response, con);
         } else if (command.equals("create")) {
@@ -40,7 +48,8 @@ public class SqlServlet extends HttpServlet {
             getProjects(request, response, con);
         } else if (command.equals("login")) {
             logIn(request, response, con);
-        }
+        } 
+        
 
     }
 
@@ -124,10 +133,6 @@ public class SqlServlet extends HttpServlet {
         if (projects.size() <= 0) {
             System.out.println("Empty List");
         }
-        if (projects == null) {
-//            projects = new ArrayList<>();
-//            projects.add(new Project("name"));
-        }
         
         request.setAttribute("projects", projects);
         
@@ -173,6 +178,16 @@ public class SqlServlet extends HttpServlet {
         
         
         
+    }
+    
+    private void details(String id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        
+        int pid = Integer.parseInt(id);
+        
+        request.setAttribute("id", pid);
+        
+        RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
+        rq.forward(request, response);
     }
     
 }
