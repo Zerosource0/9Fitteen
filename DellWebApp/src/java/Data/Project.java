@@ -61,7 +61,7 @@ public class Project {
     }
 
     public String getDateCreated() {
-        return dateCreated;
+        return dateCreated.substring(0, 10);
     }
 
     public void setDateCreated(String dateCreated) {
