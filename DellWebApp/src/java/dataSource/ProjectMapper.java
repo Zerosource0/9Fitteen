@@ -116,7 +116,7 @@ public class ProjectMapper {
         Person pe1 = null;
 
         String sqlString1 = "Select FKPERSONID "
-                + "from PERSONLOGIN where PERSONEMAIL='" + login + "' and PERSONPASSWORD='" + password + "'";
+                + "from PERSONLOGIN where PERSONEMAIL='" + login.toLowerCase() + "' and PERSONPASSWORD='" + password + "'";
 
         try (PreparedStatement pre1 = con.prepareStatement(sqlString1);
                 ResultSet rs1 = pre1.executeQuery();) {
