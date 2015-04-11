@@ -19,18 +19,12 @@ public class CreateServlet extends HttpServlet {
         HttpSession sessionObj = request.getSession();
         Controller con = (Controller) sessionObj.getAttribute("Controller");
         
+        SqlServlet servlet = new SqlServlet();
         
-        String id = request.getParameter("id");
-        System.out.println(id);
-        response.sendRedirect("details.jsp");
+        servlet.getPartnerInfo(request, response, con);
         
-        
-        //SqlServlet servlet = new SqlServlet();
-        
-        //servlet.getPartnerInfo(request, response, con);
-        
-        //RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
-        //rq.forward(request, response);
+        RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
+        rq.forward(request, response);
         
         
     }
