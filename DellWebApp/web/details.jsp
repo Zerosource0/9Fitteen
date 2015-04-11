@@ -53,7 +53,7 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="Dashboard">Overview <span class="sr-only">(current)</span></a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">
@@ -66,72 +66,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header">Dashboard</h1>
-
-                    <div class="row placeholders">
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </div>
-                    </div>
-
-                    <h2 class="sub-header">Recent Projects</h2>
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="example">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Project State</th>
-                                    <th>Partner</th>
-                                    <th>Date Created</th>
-                                    <th>Date Done</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
-                                   ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
-                                   ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
-                                %> <%= projects.size()%> 
-                                <%
-                                    Enumeration<String> atr = request.getAttributeNames();
-                                    while (atr.hasMoreElements()) {
-                                        if (atr.nextElement().equals("pro")) {
-                                                
-                                %>
-                                            <%=request.getAttribute("pro")%>
-                                <%      }
-                                    }
-                                %>
-                                <%
-                                    for (Project p : projects) {
-
-                                    %> <tr> <%
-                                    %> <td> <a href="details.jsp"><%= p.getProjectName()%></a> </td> <%
-                                    %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
-                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId()-1).getPartnerName()%> </td> <%
-                                    %> <td> <%= p.getDateCreated()%> </td> <%
-                                    %> <td> <%= p.getDateDone()%> </td> </tr> <%
-                                        }
-                                    %>
-                            </tbody>
-                        </table>
-                    </div>
+                    <h1 class="page-header">Project Name</h1>
+                    
                 </div>
             </div>
         </div>

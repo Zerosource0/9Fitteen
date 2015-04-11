@@ -33,6 +33,17 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
+        <% Boolean success = (Boolean) request.getAttribute("success"); 
+            if (success != null) {
+                if (!success) {
+                    %>
+                    <p id="wrongPass">Wrong username or password</p>
+                    <%
+                }
+            }        
+        
+        %>
+        
         <input type="hidden" name="command" value="login"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>

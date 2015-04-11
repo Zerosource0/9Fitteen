@@ -154,15 +154,19 @@ public class SqlServlet extends HttpServlet {
         
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
-        
+        Boolean success = false;
         
         Person person = con.logIn(userName, password);
         
         if (person == null) {
-            response.sendRedirect("index.html");
+            request.setAttribute("success", success);
+            RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
+            rq.forward(request, response);
             
         }
         else {
+            success = true;
+            request.setAttribute("success", success);
             getProjects(request, response, con);
             
         }

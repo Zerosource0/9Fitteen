@@ -19,12 +19,20 @@ public class CreateServlet extends HttpServlet {
         HttpSession sessionObj = request.getSession();
         Controller con = (Controller) sessionObj.getAttribute("Controller");
         
-        SqlServlet servlet = new SqlServlet();
         
-        servlet.getPartnerInfo(request, response, con);
+        String id = request.getParameter("id");
+        System.out.println(id);
+        response.sendRedirect("details.jsp");
         
-        RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
-        rq.forward(request, response);
+        
+        //SqlServlet servlet = new SqlServlet();
+        
+        //servlet.getPartnerInfo(request, response, con);
+        
+        //RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
+        //rq.forward(request, response);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,4 +74,8 @@ public class CreateServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    private void test(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
 }

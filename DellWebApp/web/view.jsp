@@ -128,7 +128,7 @@
                                     for (Project p : projects) {
 
                                     %> <tr> <%
-                                    %> <td> <a href="details.jsp"><%= p.getProjectName()%></a> </td> <%
+                                        %> <td> <a href="CreateProject?id=<%=p.getId()%>_csv" ><%= p.getProjectName()%></a> </td> <%
                                     %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
                                     %> <td> <%= partnerInfo.get(p.getFkPartnerId()-1).getPartnerName()%> </td> <%
                                     %> <td> <%= p.getDateCreated()%> </td> <%
