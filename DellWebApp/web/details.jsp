@@ -57,7 +57,7 @@
                         
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="CreateProject">Create New Project</a></li>
+                        <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">

@@ -48,7 +48,10 @@ public class SqlServlet extends HttpServlet {
             getProjects(request, response, con);
         } else if (command.equals("login")) {
             logIn(request, response, con);
-        } 
+        } else if (command.equals("showCreate")) {
+            showCreate(request, response, con);
+            
+        }
         
 
     }
@@ -190,4 +193,11 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
     
+    private void showCreate(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    
+        getPartnerInfo(request, response, con);
+        
+        RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
+        rq.forward(request, response);
+    }
 }
