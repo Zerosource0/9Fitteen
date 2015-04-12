@@ -30,29 +30,39 @@ public class SqlServlet extends HttpServlet {
             con = (Controller) sessionObj.getAttribute("Controller");
         }
 
+        // Determine what action will be executed by the Servlet
         String command = request.getParameter("command");
-        
+
+        // If there is no command, check for other parameters
         if (command == null) {
-            
+            // Id - used for displaying details of individual projects
             String id = request.getParameter("id");
-            if (id == null) {
-                getProjects(request, response, con);
-            }
+            if (id != null) {
+                showDetails(id, request, response, con);
+            } 
+            // else go back to view.jsp 
             else {
-                details(id, request, response, con);
+                showProjects(request, response, con);
             }
-        } else if (command.equals("view")) {
-            getProjects(request, response, con);
-        } else if (command.equals("create")) {
+        } 
+        // Displays the main view.jsp with an overview of the projects
+        else if (command.equals("view")) {
+            showProjects(request, response, con);
+        } 
+        // Creates a new project in the db and forwards to view.jsp
+        else if (command.equals("create")) {
             createProject(request, response, con);
-            getProjects(request, response, con);
-        } else if (command.equals("login")) {
+            showProjects(request, response, con);
+        } 
+        // checks the log in data and forwards accordingly
+        else if (command.equals("login")) {
             logIn(request, response, con);
-        } else if (command.equals("showCreate")) {
+        } 
+        // shows the create.jsp (Create new Project page)
+        else if (command.equals("showCreate")) {
             showCreate(request, response, con);
-            
+
         }
-        
 
     }
 
@@ -103,32 +113,39 @@ public class SqlServlet extends HttpServlet {
         String desc = request.getParameter("description");
         int partner = 1;
         if (request.getParameter("partnerID") != null) {
-            partner =  Integer.parseInt(request.getParameter("partnerID")); //should be partnerID
+            partner = Integer.parseInt(request.getParameter("partnerID")); //should be partnerID
         }
-        
+
         System.out.println("INT PARTNER SOUT: " + request.getParameter("partnerID"));
-        
+
         Long funds = null;
-       
 
         Project p = null;
-                
+
         if (request.getParameter("funds").length() > 0) {
             funds = Long.parseLong(request.getParameter("funds"));
             p = con.createProject(name, desc, partner, funds);
-        }
-        else {
+        } else {
             p = con.createProject(name, desc, partner);
         }
-        
+
         if (p == null) {
             success = false;
         }
 
         request.setAttribute("pro", success);
-        
+
         request.setAttribute("project", p);
 
+    }
+
+    private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        getProjects(request, response, con);
+        getStateNames(request, response, con);
+        getPartnerInfo(request, response, con);
+
+        RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
+        rq.forward(request, response);
     }
 
     private void getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
@@ -136,14 +153,8 @@ public class SqlServlet extends HttpServlet {
         if (projects.size() <= 0) {
             System.out.println("Empty List");
         }
-        
+
         request.setAttribute("projects", projects);
-        
-        getStateNames(request, response, con);
-        getPartnerInfo(request, response, con);
-        
-        RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
-        rq.forward(request, response);
     }
 
     private void getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
@@ -151,52 +162,53 @@ public class SqlServlet extends HttpServlet {
 
         request.setAttribute("stateNames", stateNames);
     }
-    
+
     public void getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partnerInfo = con.getParnerInfo();
-        
+
         request.setAttribute("partnerInfo", partnerInfo);
     }
-    
+
     private void logIn(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        
+
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         Boolean success = false;
-        
+
         Person person = con.logIn(userName, password);
-        
+
         if (person == null) {
             request.setAttribute("success", success);
             RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
             rq.forward(request, response);
-            
-        }
-        else {
+
+        } else {
             success = true;
             request.setAttribute("success", success);
-            getProjects(request, response, con);
-            
+            showProjects(request, response, con);
+
         }
-        
-        
-        
+
     }
-    
-    private void details(String id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        
+
+    private void showDetails(String id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+
         int pid = Integer.parseInt(id);
-        
+
         request.setAttribute("id", pid);
         
+        getProjects(request, response, con);
+        
+        
+
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
         rq.forward(request, response);
     }
-    
+
     private void showCreate(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-    
+
         getPartnerInfo(request, response, con);
-        
+
         RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
         rq.forward(request, response);
     }
