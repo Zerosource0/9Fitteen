@@ -6,6 +6,7 @@ import Data.Person;
 import Data.Project;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -141,8 +142,7 @@ public class SqlServlet extends HttpServlet {
 
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
-        getStateNames(request, response, con);
-        getPartnerInfo(request, response, con);
+        
 
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
@@ -155,6 +155,8 @@ public class SqlServlet extends HttpServlet {
         }
 
         request.setAttribute("projects", projects);
+        getStateNames(request, response, con);
+        getPartnerInfo(request, response, con);
     }
 
     private void getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
@@ -194,12 +196,15 @@ public class SqlServlet extends HttpServlet {
     private void showDetails(String id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         int pid = Integer.parseInt(id);
-
-        request.setAttribute("id", pid);
         
         getProjects(request, response, con);
+        ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
+        ArrayList<Project> pro = new ArrayList<>();
+        Predicate<Project> predicate = (p) -> p.getId() == pid;
         
+        projects.stream().filter(predicate).forEach(p -> pro.add(p));
         
+        request.setAttribute("project", pro.get(0));
 
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
         rq.forward(request, response);
