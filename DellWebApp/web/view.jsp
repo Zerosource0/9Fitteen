@@ -78,27 +78,22 @@
                     <h1 class="page-header">Dashboard</h1>
 
                     <div class="row placeholders">
-                        <div class="col-xs-6 col-sm-3 placeholder">
+                        <div class="col-xs-6 col-sm-4 placeholder">
                             <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="">
                             <h4><%= projects.size()%></h4>
-                            <span class="text-muted">Projects</span>
+                            <span class="text-muted">Number of Projects</span>
                         </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
+                        <div class="col-xs-6 col-sm-4 placeholder">
+                            <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="">
+                            <h4><%= request.getAttribute("numberOfUsers") %></h4>
+                            <span class="text-muted">Number of Users</span>
                         </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
+                        <div class="col-xs-6 col-sm-4 placeholder">
+                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="">
+                            <h4><%= request.getAttribute("numberOfPartners") %></h4>
+                            <span class="text-muted">Number of Partners</span>
                         </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </div>
-                    </div>
+                                  </div>
 
                     <h2 class="sub-header">Recent Projects</h2>
                     <div class="table-responsive">

@@ -78,7 +78,15 @@ public class Controller {
     public Person logIn(String userName, String password) {
         Person person = dbf.logIn(userName, password);
         
-        return person;
-        
+        return person;   
+    }
+    
+    public int getNumberOfUsers()
+    {
+        return dbf.getNumberOfUsers();
+    }
+    public int getNumberOfPartners()
+    {
+        return dbf.getNumberOfPartners();
     }
 }

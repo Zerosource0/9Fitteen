@@ -62,4 +62,13 @@ public class DBFacade {
     {
         return pm.getLatestProject(con, projectID);
     }
+    
+    public int getNumberOfUsers()
+    {
+        return pm.getNumberOfUsers(con);
+    }
+    public int getNumberOfPartners()
+    {
+        return pm.getNumberOfPartners(con);
+    }
 }

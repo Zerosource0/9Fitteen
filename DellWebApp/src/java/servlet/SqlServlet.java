@@ -148,6 +148,8 @@ public class SqlServlet extends HttpServlet {
         getProjects(request, response, con);
         
 
+        request.setAttribute("numberOfUsers", (int)getNumberOfUsers(request, response, con));
+         request.setAttribute("numberOfPartners", (int)getNumberOfPartners(request, response, con));
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
@@ -243,5 +245,12 @@ public class SqlServlet extends HttpServlet {
     private Project getLatestProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
              Project project = con.getLatestProject(projectID);
              return project;      
+    }
+    
+    private int getNumberOfUsers(HttpServletRequest request,HttpServletResponse response, Controller con) throws ServletException, IOException{
+       return con.getNumberOfUsers();     
+    }
+    private int getNumberOfPartners(HttpServletRequest request,HttpServletResponse response, Controller con) throws ServletException, IOException{
+       return con.getNumberOfPartners();     
     }
 }

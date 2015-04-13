@@ -55,11 +55,10 @@ public class ProjectMapper {
     public Project getLatestProject(Connection con, int projectID) {
         String sqlString1 = "select * from(select * from project order by PROJECTID DESC) where rownum=1";
         Project project = null;
-                System.out.println("HERE");
+        System.out.println("HERE");
 
         try (PreparedStatement statement = con.prepareStatement(sqlString1);
-                ResultSet rs = statement.executeQuery()) 
-        {
+                ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {
                 project = (new Project(
                         rs.getInt(1),
@@ -83,13 +82,13 @@ public class ProjectMapper {
 
         return project;
     }
+
     public Project getProject(Connection con, int projectID) {
-        String sqlString1 = "select * from project where projectid ="+projectID;
+        String sqlString1 = "select * from project where projectid =" + projectID;
         Project project = null;
 
         try (PreparedStatement statement = con.prepareStatement(sqlString1);
-                ResultSet rs = statement.executeQuery()) 
-        {
+                ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {
                 project = (new Project(
                         rs.getInt(1),
@@ -226,6 +225,34 @@ public class ProjectMapper {
         }
 
         return pe1;
+    }
+
+    public int getNumberOfUsers(Connection con) {
+        int numberOfUsers = 0;
+        String sqlString1 = "select count(PERSONID) from PERSON";
+
+        try (PreparedStatement pre2 = con.prepareStatement(sqlString1);
+                ResultSet rs2 = pre2.executeQuery();) {
+                rs2.next();
+             numberOfUsers = rs2.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numberOfUsers;
+    }
+    
+    public int getNumberOfPartners(Connection con) {
+        int numberOfPartners = 0;
+        String sqlString1 = "select count(PartnerID) from PARTNER";
+
+        try (PreparedStatement pre2 = con.prepareStatement(sqlString1);
+                ResultSet rs2 = pre2.executeQuery();) {
+                rs2.next();
+             numberOfPartners = rs2.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numberOfPartners;
     }
 
 }
