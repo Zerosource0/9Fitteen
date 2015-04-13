@@ -1,13 +1,8 @@
-<%-- 
-    Document   : view
-    Created on : 08-Apr-2015, 09:53:49
-    Author     : marcj_000
---%>
-
 <%@page import="Data.Partner"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Data.Project"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
