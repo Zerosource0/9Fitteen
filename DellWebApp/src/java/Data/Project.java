@@ -61,7 +61,7 @@ public class Project {
     }
 
     public String getDateCreated() {
-        return dateCreated.substring(0, 10);
+        return formatDate(dateCreated.substring(0,10));
     }
 
     public void setDateCreated(String dateCreated) {
@@ -69,7 +69,7 @@ public class Project {
     }
 
     public String getDateDone() {
-        return dateDone;
+        return formatDate(dateDone.substring(0,10));
     }
 
     public void setDateDone(String dateDone) {
@@ -77,7 +77,7 @@ public class Project {
     }
 
     public String getDateLastEdit() {
-        return dateLastEdit.substring(0, 10);
+        return formatDate(dateLastEdit.substring(0,10));
     }
 
     public void setDateLastEdit(String dateLastEdit) {
@@ -161,6 +161,24 @@ public class Project {
         this.projectName = projectName;
         this.fkPartnerId = 1;
         
+    }
+    
+    public String formatDate (String date)
+    {
+        String result="";
+        result=result+date.charAt(date.length()-2);
+        result=result+date.charAt(date.length()-1);
+        result=result+date.charAt(date.length()-3);
+        result=result+date.charAt(date.length()-5);
+        result=result+date.charAt(date.length()-4);
+        result=result+date.charAt(date.length()-3);
+        result=result+date.charAt(date.length()-10);
+        result=result+date.charAt(date.length()-9);
+        result=result+date.charAt(date.length()-8);
+        result=result+date.charAt(date.length()-7);
+        
+
+        return result;
     }
     
     
