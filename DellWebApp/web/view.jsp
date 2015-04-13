@@ -23,13 +23,16 @@
         <title>Dell Project Dashboard</title>
 
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
-        
+
         <link href="res/css/dashboard.css" rel="stylesheet">
 
     </head>
 
     <body>
-
+        <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
+            ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
+            ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
+        %> 
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -60,15 +63,15 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
-                        
+
                     </ul>
                     <ul class="nav nav-sidebar">
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
-                        
+
                     </ul>
                     <ul class="nav nav-sidebar">
-                        
-                        
+
+
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -76,9 +79,9 @@
 
                     <div class="row placeholders">
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
+                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="">
+                            <h4><%= projects.size()%></h4>
+                            <span class="text-muted">Projects</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
                             <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
@@ -106,39 +109,37 @@
                                     <th>Project State</th>
                                     <th>Partner</th>
                                     <th>Date Created</th>
-                                    <th>Date Done</th>
+                                    <th>Last Edited</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
-                                   ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
-                                   ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
-                                %> <%= projects.size()%> 
+                                 
                                 <%
                                     Enumeration<String> atr = request.getAttributeNames();
                                     while (atr.hasMoreElements()) {
                                         if (atr.nextElement().equals("pro")) {
-                                                
+
                                 %>
-                                            <%=request.getAttribute("pro")%>
+                                <%=request.getAttribute("pro")%>
                                 <%      }
                                     }
                                 %>
                                 <%
                                     for (Project p : projects) {
 
-                                    %> <tr> <%
-                                        %> <td> <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
-                                    %> <td> <%= stateNames.get(p.getFkProjetStateID()-1)%> </td> <%
-                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId()-1).getPartnerName()%> </td> <%
-                                    %> <td> <%= p.getDateCreated()%> </td> <%
-                                    %> <td> <%= p.getDateDone()%> </td> </tr> <%
+                                %> <tr> <%
+                                    %> <td> <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
+                                    %> <td> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
+                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
+                                    %> <td> <%= p.getDateCreated() %> </td> <%
+                                    %> <td> <%= p.getDateLastEdit() %> </td> </tr> <%
                                         }
                                     %>
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <a href="../src/java/servlet/SqlServlet.java"></a>
             </div>
         </div>
 
