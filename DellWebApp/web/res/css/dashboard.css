@@ -128,3 +128,30 @@ table#example {
 #example a:hover {
     text-decoration: none;
 }
+
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
+    background-color: #0085c3;
+}
+.navbar-inverse .navbar-nav>li>a{
+    background-color: #0085c3;
+    color:white;
+    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    background-color: #0085c3;
+    color:#98CDE6
+}
+.navbar-inverse .navbar-brand{
+    
+    background-color: #0085c3;
+    color: white;
+    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
+}
+.navbar-inverse .navbar-brand:hover{
+    
+    background-color: #0085c3;
+    color: #98CDE6;
+    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
+    
+}
