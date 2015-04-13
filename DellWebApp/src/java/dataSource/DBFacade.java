@@ -28,6 +28,10 @@ public class DBFacade {
         }
         return instance;
     }
+    public boolean createStateChange(Project p, int personID)
+    {
+        return pm.createStateChange(p, personID, con);
+    }
     
     public boolean createProject(Project p){
         return pm.createProject(p, con);
@@ -47,5 +51,15 @@ public class DBFacade {
     
     public Person logIn(String userName, String password) {
         return pm.logIn(userName, password, con);
+    }
+    
+    public Project getProject(int projectID)
+    {
+        return pm.getProject(con, projectID);
+    }
+    
+    public Project getLatestProject(int projectID)
+    {
+        return pm.getLatestProject(con, projectID);
     }
 }

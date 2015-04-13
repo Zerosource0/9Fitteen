@@ -52,6 +52,68 @@ public class ProjectMapper {
         return stateNames;
     }
 
+    public Project getLatestProject(Connection con, int projectID) {
+        String sqlString1 = "select * from(select * from project order by PROJECTID DESC) where rownum=1";
+        Project project = null;
+                System.out.println("HERE");
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) 
+        {
+            if (rs.next()) {
+                project = (new Project(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getLong(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13)
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return project;
+    }
+    public Project getProject(Connection con, int projectID) {
+        String sqlString1 = "select * from project where projectid ="+projectID;
+        Project project = null;
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) 
+        {
+            if (rs.next()) {
+                project = (new Project(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getLong(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13)
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return project;
+    }
+
     public ArrayList<Project> getProjects(Connection con) {
 
         ArrayList<Project> projects = new ArrayList<>();
@@ -83,6 +145,23 @@ public class ProjectMapper {
         }
 
         return projects;
+    }
+
+    public boolean createStateChange(Project p, int personID, Connection con) {
+        int rowsInserted = 0;
+
+        String sqlString1 = "insert into PROJECTSTATEPERSON (FKPersonID, FKProjectStateID, FKProjectID)"
+                + "VALUES (?,?,?)";
+        try (PreparedStatement statement = con.prepareStatement(sqlString1)) {
+
+            statement.setInt(1, personID);
+            statement.setInt(2, p.getFkProjetStateID());
+            statement.setInt(3, p.getId());
+            rowsInserted = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsInserted == 1;
     }
 
     public boolean createProject(Project p, Connection con) {
@@ -130,7 +209,7 @@ public class ProjectMapper {
                 String sqlString2 = "SELECT fkpersontypeid "
                         + "FROM person, persontype "
                         + "Where person.personid=" + id + " and fkpersontypeid=persontypeid";
-                
+
                 try (PreparedStatement pre2 = con.prepareStatement(sqlString2);
                         ResultSet rs2 = pre2.executeQuery();) {
                     rs2.next();
@@ -148,4 +227,5 @@ public class ProjectMapper {
 
         return pe1;
     }
+
 }

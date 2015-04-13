@@ -77,7 +77,7 @@ public class Project {
     }
 
     public String getDateLastEdit() {
-        return dateLastEdit;
+        return dateLastEdit.substring(0, 10);
     }
 
     public void setDateLastEdit(String dateLastEdit) {
@@ -162,6 +162,7 @@ public class Project {
         this.fkPartnerId = 1;
         
     }
+    
     
     
 }

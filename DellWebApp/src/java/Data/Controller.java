@@ -51,6 +51,18 @@ public class Controller {
         return p;
     }
     
+    public boolean createStateChange(Project p, int personID)
+    {
+        return dbf.createStateChange(p, personID);
+    }
+    
+    public Project getProject(int projectID){
+        return dbf.getProject(projectID);
+    }
+    public Project getLatestProject(int projectID){
+        return dbf.getLatestProject(projectID);
+    }
+    
     public ArrayList<Project> getProjects(){
         return dbf.getProjects();
     }

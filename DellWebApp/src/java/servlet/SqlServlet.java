@@ -27,6 +27,7 @@ public class SqlServlet extends HttpServlet {
             //session start
             con = Controller.getInstance();
             sessionObj.setAttribute("Controller", con);
+                        
         } else {
             con = (Controller) sessionObj.getAttribute("Controller");
         }
@@ -132,10 +133,13 @@ public class SqlServlet extends HttpServlet {
 
         if (p == null) {
             success = false;
+        } else
+        {
+            createStateChange(p.getId(), request, response, con);
+            
         }
 
         request.setAttribute("pro", success);
-
         request.setAttribute("project", p);
 
     }
@@ -148,7 +152,7 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    private void getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private ArrayList getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects = con.getProjects();
         if (projects.size() <= 0) {
             System.out.println("Empty List");
@@ -157,18 +161,22 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("projects", projects);
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
+        
+        return projects;
     }
 
-    private void getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private ArrayList getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> stateNames = con.getStateNames();
 
         request.setAttribute("stateNames", stateNames);
+        return stateNames;
     }
 
-    public void getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    public ArrayList getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partnerInfo = con.getParnerInfo();
 
         request.setAttribute("partnerInfo", partnerInfo);
+        return partnerInfo;
     }
 
     private void logIn(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
@@ -185,6 +193,8 @@ public class SqlServlet extends HttpServlet {
             rq.forward(request, response);
 
         } else {
+            HttpSession sessionObj = request.getSession();
+            sessionObj.setAttribute("personID", person.getID());
             success = true;
             request.setAttribute("success", success);
             showProjects(request, response, con);
@@ -216,5 +226,22 @@ public class SqlServlet extends HttpServlet {
 
         RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
         rq.forward(request, response);
+    }
+    
+    private boolean createStateChange(int projectID,HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+        boolean success = false;
+        Project project = getLatestProject(projectID, request, response, con);
+        
+        success = con.createStateChange(project, (int)request.getSession().getAttribute("personID"));
+         return success;
+    }
+    
+    private Project getProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+             Project project = con.getProject(projectID);
+             return project;      
+    }
+    private Project getLatestProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+             Project project = con.getLatestProject(projectID);
+             return project;      
     }
 }
