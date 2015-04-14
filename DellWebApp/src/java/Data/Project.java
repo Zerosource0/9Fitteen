@@ -139,6 +139,14 @@ public class Project {
         this.fkPartnerId = fkPartnerId;
     }
     
+    //For saveProject
+    public Project(int id, String projectName, String description, int fkPartnerId, long fundsAllocated) {
+        this.id = id;
+        this.projectName = projectName;
+        this.description = description;
+        this.fkPartnerId = fkPartnerId;
+        this.fundsAllocated = fundsAllocated;
+    }
 
     
     public Project(int id, int fkProjetStateID, String projectName, String description, int fkpartnerId, String dateCreated, String dateDone, String dateLastEdit, long fundAllocated, String poeText, String poePicture1, String poePicture2, String poePicture3) {

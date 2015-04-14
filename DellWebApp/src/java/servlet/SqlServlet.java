@@ -63,7 +63,15 @@ public class SqlServlet extends HttpServlet {
         // shows the create.jsp (Create new Project page)
         else if (command.equals("showCreate")) {
             showCreate(request, response, con);
-
+        }
+        else if(command.equals("edit")){
+            showEdit(request, response, con);
+        }
+        else if(command.equals("save"))
+        {
+            saveProject(request, response, con);
+            String id = request.getParameter("id");
+            showDetails(id, request, response, con);
         }
 
     }
@@ -107,6 +115,39 @@ public class SqlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void saveProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        
+        
+        String name = request.getParameter("name");
+        String desc = request.getParameter("description");
+        int partnerID = 1;
+        if (request.getParameter("partnerID") != null) {
+            partnerID = Integer.parseInt(request.getParameter("partnerID")); //should be partnerID
+        }
+        Long funds = null;
+        
+        funds = Long.parseLong(request.getParameter("funds"));
+        
+        System.out.println("FUNDS! :  " + funds);
+        
+        Project project = null;
+        
+        project = con.saveProject(Integer.parseInt(request.getParameter("id")), name, desc, partnerID, funds);
+        
+    }
+    
+    private void showEdit(HttpServletRequest request,HttpServletResponse response, Controller con) throws ServletException, IOException{
+        
+        getStateNames(request, response, con);
+        getPartnerInfo(request, response, con);
+        Project p = getProject(Integer.parseInt(request.getParameter("id")), request, response, con); 
+        System.out.println("SOUT PROJECT P: " + p);
+        
+        request.setAttribute("project", p);
+        RequestDispatcher rq = request.getRequestDispatcher("update.jsp");
+        rq.forward(request, response);
+    }
+    
     private void createProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         Boolean success = true;

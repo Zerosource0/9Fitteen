@@ -71,4 +71,7 @@ public class DBFacade {
     {
         return pm.getNumberOfPartners(con);
     }
+    public boolean saveProject(Project p){
+        return pm.saveProject(p, con);
+    }
 }

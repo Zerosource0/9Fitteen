@@ -42,6 +42,16 @@ public class Controller {
         return p;
     }
     
+        public Project saveProject(int projectID, String projectName, String desc, int partnerID,  Long funds){
+        Project p = new Project(projectID, projectName, desc, partnerID, funds);
+        boolean status = dbf.saveProject(p);
+        System.out.println("SOUT STATUS: " + status);
+        if(!status) {
+            p = null;
+        }
+        return p;
+    }
+    
     public Project createProject(String projectName, String description, int fkPartnerId) {
         Project p = new Project(projectName, description, fkPartnerId);
         boolean status = dbf.createProject(p);

@@ -67,25 +67,41 @@
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <form class="form-signin" action="Dashboard" method="POST">
                     <% Project project = (Project) request.getAttribute("project");
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                     %>
-                    <h1 class="page-header"><%= project.getProjectName() %></h1>
+                    <h1 class="page-header"><input class="form-control0" type="text" name="name" value="<%= project.getProjectName() %>"></h1>
 
                     <p> <b>Project State: </b><%= stateNames.get(project.getFkProjetStateID() - 1) %></p>
                     
-                    <p> <b>Partner: </b> <%= partnerInfo.get(project.getFkPartnerId() - 1).getPartnerName() %></p>
+                    <p> <b>Partner: </b> </p>
+                    <select name="partnerID" class="form-control">
+                            <option value="" disabled>Please Select a Partner...</option>
+                            <% 
+                            
+                            for (Partner part : partnerInfo){
+                            %>
+                            
+                            <option value="<%= part.getPartnerID()%>" <% if((int) project.getFkPartnerId() == part.getPartnerID() ) { %> selected <% } %>  > <%=part.getPartnerName()%> </option>
+                            
+                            <% } %> 
+                    </select>
                     
                     <p> <b>Description: </b>
-                     <%= project.getDescription() %></p>
+                        <textarea class="form-control" name="description" rows="5" cols="30"><%= project.getDescription() %></textarea> </p>
+                    
 
                     <p> <b>Created: </b><%= project.getDateCreated() %></p>
                     
                     <p> <b>Last edited: </b><%= project.getDateLastEdit() %></p>
                     
-                    <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %></p>
-                    <a href="Dashboard?command=edit&id=<%=project.getId()%>" ><input type="button" value="Edit"></a>
+                    <p> <b>Funds allocated: </b> <input class="form-control" type="number" name="funds" value="<%= project.getFundsAllocated() %>"> </p>
+                    <input type="hidden" name="id" value="<%= project.getId() %>" required/>
+                    <input type="hidden" name="command" value="save" required/>
+                    <button class="btn btn-block btn-primary btn-lg" >Save</button>
+                    </form>
                 </div>
             </div>
         </div>
