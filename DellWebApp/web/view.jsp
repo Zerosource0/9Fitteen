@@ -13,13 +13,14 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="9 Fitteen">
-        <link rel="icon" href="/favicon.ico">
+        <link rel="shortcut icon" href="http://i.dell.com/images/global/branding/dellecomicon.ico" type="image/x-icon">
 
         <title>Dell Project Dashboard</title>
 
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
 
         <link href="res/css/dashboard.css" rel="stylesheet">
+        <link href="res/css/signin.css" rel="stylesheet">
 
     </head>
 
@@ -69,17 +70,17 @@
 
                     <div class="row placeholders">
                         <div class="col-xs-6 col-sm-4 placeholder">
-                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="">
+                            <img src="res/file148.png" class="img-responsive" alt="test">
                             <h4><%= projects.size()%></h4>
                             <span class="text-muted">Number of Projects</span>
                         </div>
                         <div class="col-xs-6 col-sm-4 placeholder">
-                            <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="">
+                            <img src="res/network11.png" class="img-responsive" alt="">
                             <h4><%= request.getAttribute("numberOfUsers") %></h4>
                             <span class="text-muted">Number of Users</span>
                         </div>
                         <div class="col-xs-6 col-sm-4 placeholder">
-                            <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="">
+                            <img src="res/people8.png" class="img-responsive" alt="">
                             <h4><%= request.getAttribute("numberOfPartners") %></h4>
                             <span class="text-muted">Number of Partners</span>
                         </div>
@@ -87,7 +88,7 @@
 
                     <h2 class="sub-header">Recent Projects</h2>
                     <div class="table-responsive">
-                        <table class="table table-striped" id="example">
+                        <table  class="table table-striped" id="example">
                             <thead>
                                 <tr>
                                     <th>Name</th>

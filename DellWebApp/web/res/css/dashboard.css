@@ -101,31 +101,48 @@ body {
 }
 .placeholder img {
   display: inline-block;
-  border-radius: 50%;
+  
 }
 table#example {
-    border-collapse: collapse;   
+    border-collapse: initial;   
+    border-bottom: 0px;
+    border-top: 0px;
+    border-spacing: 0px;
 }
 #example tr {
-    background-color: #eee;
-    border-top: 1px solid #fff;
+    background-color: #e2e2e2;
+        border-bottom: 0px;
+    border-top: 0px;
+    border-spacing: 0px;
+
 }
 #example tr:hover {
-    background-color: #ccc;
+    background-color: #666666;
 }
 #example th {
-    background-color: #fff;
+    background-color: #e2e2e2;
+    border-color: #666666;
+
 }
 #example th, #example td {
     padding: 3px 5px;
 }
+
+
 #example td:hover {
     cursor: pointer;
 }
+#example td {
+    border-bottom: 0px;
+    border-top: 0px;
+    border-spacing: 0px;
+}
 #example a {
-    color: #333;  
+    color: black; 
+
 }
 #example a:hover {
+    
     text-decoration: none;
 }
 
@@ -168,20 +185,16 @@ table#example {
 }
 .sidebar
 {
-    background-color: white;
+    background-color: #eee;
     color: black;
     font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
-    border-style: none;
+    border-right: 1px solid #666666;    
     
 }
-.sidebar:hover
-{
-     background-color: white;
-    color: black;
-    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
-}
+
 .nav-sidebar > li > a
 {
+    background-color: #ccc;
    color: black;
    
 }
@@ -189,6 +202,7 @@ table#example {
     
 }
 .navbar{
+    
      background-color: #0085c3;
     color: #98CDE6;
     font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
