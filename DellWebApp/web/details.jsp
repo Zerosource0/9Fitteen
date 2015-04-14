@@ -73,7 +73,7 @@
                     %>
                     <h1 class="page-header"><%= project.getProjectName() %></h1>
 
-                    <h2 class="sub-header"><%= project.getId() %></h2>
+                   
 
                     <p> <b>Project State: </b><%= stateNames.get(project.getFkProjetStateID() - 1) %></p>
                     
@@ -86,7 +86,9 @@
                     
                     <p> <b>Last edited: </b><%= project.getDateLastEdit() %></p>
                     
-                    <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %></p>
+                    <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %>$</p>
+                    
+                    
                 </div>
             </div>
         </div>
