@@ -30,7 +30,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Project name</a>
+                    <a class="navbar-brand" href="Dashboard?command=view"></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -50,11 +50,11 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
+                        <li><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
+                        <li class="active"><a href="Dashboard?command=showCreate">Create New Project</a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">

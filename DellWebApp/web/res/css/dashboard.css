@@ -142,6 +142,10 @@ table#example {
     background-color: #0085c3;
     color:#98CDE6
 }
+.navbar-inverse .navbar-nav>li>a:active{
+    background-color: #0085c3;
+    color:#98CDE6
+}
 .navbar-inverse .navbar-brand{
     
     background-color: #0085c3;
@@ -155,3 +159,55 @@ table#example {
     font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
     
 }
+.navbar-inverse .navbar-brand:active{
+    
+    background-color: #0085c3;
+    color: #98CDE6;
+    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
+    
+}
+.sidebar
+{
+    background-color: white;
+    color: black;
+    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
+    border-style: none;
+    
+}
+.sidebar:hover
+{
+     background-color: white;
+    color: black;
+    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
+}
+.nav-sidebar > li > a
+{
+   color: black;
+   
+}
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand{
+    
+}
+.navbar{
+     background-color: #0085c3;
+    color: #98CDE6;
+    font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
+}
+.navbar-brand
+{
+    background-image: url(http://i.dell.com/images/global/brand/ui/logo-wt-bl.png);
+    padding-top:0;
+    padding-right:34px;
+    background-repeat: no-repeat;
+}
+.nav-sidebar ,.nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus
+{
+    color: black;
+}
+
+#details
+{
+    font-size: 1.1em;
+}
+
+

@@ -43,7 +43,10 @@
                     <%
                 }
             }        
-        
+        if(request.getAttribute("reason")!=null)
+        {%>
+        <%=request.getAttribute("reason") %>   
+        <%}
         %>
         
         <input type="hidden" name="command" value="login"/>
