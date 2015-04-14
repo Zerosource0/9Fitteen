@@ -2,7 +2,6 @@
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Data.Project"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +72,7 @@
                     %>
                     <h1 class="page-header"><%= project.getProjectName() %></h1>
 
-                   
+                    <h2 class="sub-header"><%= project.getId() %></h2>
 
                     <p> <b>Project State: </b><%= stateNames.get(project.getFkProjetStateID() - 1) %></p>
                     
@@ -86,9 +85,7 @@
                     
                     <p> <b>Last edited: </b><%= project.getDateLastEdit() %></p>
                     
-                    <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %>$</p>
-                    
-                    
+                    <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %></p>
                 </div>
             </div>
         </div>

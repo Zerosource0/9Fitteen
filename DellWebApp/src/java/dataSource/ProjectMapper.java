@@ -195,27 +195,33 @@ public class ProjectMapper {
 
         String sqlString1 = "Select FKPERSONID "
                 + "from PERSONLOGIN where PERSONEMAIL='" + login.toLowerCase() + "' and PERSONPASSWORD='" + password + "'";
-
+        int rights, id, phoneNumber;
+        Integer fkpartnerid;
+        String name;
         try (PreparedStatement pre1 = con.prepareStatement(sqlString1);
                 ResultSet rs1 = pre1.executeQuery();) {
 
             if (rs1.next() == false) {
                 return null;
             } else {
-                int rights, id;
+                
                 id = rs1.getInt(1);
 
-                String sqlString2 = "SELECT fkpersontypeid "
-                        + "FROM person, persontype "
-                        + "Where person.personid=" + id + " and fkpersontypeid=persontypeid";
+                String sqlString2 = "SELECT * " +
+                                            "FROM person, persontype " +
+                  "Where person.personid="+id+ " and fkpersontypeid=persontypeid" ;
 
                 try (PreparedStatement pre2 = con.prepareStatement(sqlString2);
                         ResultSet rs2 = pre2.executeQuery();) {
                     rs2.next();
-                    rights = rs2.getInt(1);
+                    id=rs2.getInt(1);
+                    name=rs2.getString(2);
+                    phoneNumber=rs2.getInt(3);
+                    rights=rs2.getInt(4);
+                    fkpartnerid=rs2.getInt(5);
                 }
 
-                Person pe = new Person(id, rights);
+                Person pe = new Person(id, rights, fkpartnerid, name, phoneNumber);
                 pe1 = pe;
 
             }
@@ -223,7 +229,11 @@ public class ProjectMapper {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
+        if (pe1!=null) 
+        {
+            System.out.println("id "+pe1.getID()+ " Rights "+pe1.getRights()+" Phone Number "
+            +pe1.getPhoneNumber()+" fkpersonid "+pe1.getFkpersonid() +" Name "+pe1.getName());
+        }
         return pe1;
     }
 
