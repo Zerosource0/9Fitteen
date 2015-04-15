@@ -75,7 +75,12 @@ public class SqlServlet extends HttpServlet {
         }
         else if(command.equals("next")){
             String id = request.getParameter("id");
-            nextProjectState(Integer.parseInt(id), request, response, con);
+            updateProjectState(1, Integer.parseInt(id), request, response, con);
+            showDetails(id, request, response, con);
+        }
+        else if(command.equals("back")){
+            String id = request.getParameter("id");
+            updateProjectState(-1, Integer.parseInt(id), request, response, con);
             showDetails(id, request, response, con);
         }
 
@@ -120,17 +125,25 @@ public class SqlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void nextProjectState(int id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private void updateProjectState(int direction, int id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         
         Project project = getProject(id, request, response, con);
         
         int state = project.getFkProjetStateID();
-        System.out.println("STATE: " + state);
-        if(state < 8){
-            project.setFkProjetStateID(state+1);
+        //next
+        if(direction == 1){
+            if(state < 8){
+            project.setFkProjetStateID(state+direction);
+            }
+        }
+        //back
+        if(direction == -1){
+            if(state > 0){
+            project.setFkProjetStateID(state+direction);
+            }
         }
         
-        con.nextProjectState(project);
+        con.updateProjectState(project);
     }
     
     

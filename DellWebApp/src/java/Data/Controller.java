@@ -99,8 +99,8 @@ public class Controller {
     {
         return dbf.getNumberOfPartners();
     }
-    public Boolean nextProjectState(Project p)
+    public Boolean updateProjectState(Project p)
     {
-        return dbf.nextProjectState(p);
+        return dbf.updateProjectState(p);
     }
 }

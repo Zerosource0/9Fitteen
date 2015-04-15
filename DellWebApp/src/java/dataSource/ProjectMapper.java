@@ -163,7 +163,7 @@ public class ProjectMapper {
         return rowsInserted == 1;
     }
 
-    public boolean nextProjectState(Project p, Connection con)
+    public boolean updateProjectState(Project p, Connection con)
     {
         int rowsUpdated = 0;
         

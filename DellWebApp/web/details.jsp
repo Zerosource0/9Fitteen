@@ -86,7 +86,14 @@
                     
                     <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %></p>
                     <a href="Dashboard?command=edit&id=<%=project.getId()%>" ><input type="button" value="Edit"></a>
+                    
+                    <% if (project.getFkProjetStateID() < 8) {%>
                     <a href="Dashboard?command=next&id=<%=project.getId()%>" ><input type="button" value="Next State"></a>
+                    <% } %>
+                    
+                    <% if (project.getFkProjetStateID() > 1) {%>
+                    <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Last State"></a>
+                    <% } %>
                 </div>
             </div>
         </div>
