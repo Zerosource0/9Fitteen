@@ -164,10 +164,10 @@ public class ProjectMapper {
     }
 
      public boolean saveProject(Project p, Connection con) {
-        int rowsInserted = 0;
+        int rowsUpdated = 0;
         
-        String sqlString1 = "update project set projectname = ?,  projectdescription = ?, fkpartnerid =  fundsallocated = ? where id = "+p.getId()
-            + " values (?,?,?,?)";
+        String sqlString1 = "update project set projectname = ?,  projectdescription = ?, fkpartnerid = ?,  fundsallocated = ? where projectid = "+p.getId();
+
             
         try (PreparedStatement statement = con.prepareStatement(sqlString1)){
             statement.setString(1, p.getProjectName());
@@ -175,10 +175,12 @@ public class ProjectMapper {
             statement.setInt(3, p.getFkPartnerId());
             statement.setLong(4, p.getFundsAllocated());
         
+            rowsUpdated = statement.executeUpdate();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return rowsInserted == 1;
+        return rowsUpdated == 1;
     }
     
     public boolean createProject(Project p, Connection con) {
