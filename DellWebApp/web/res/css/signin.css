@@ -52,4 +52,9 @@ input[type=number]::-webkit-outer-spin-button {
 #wrongPass
 {
     color: red;
+    font-size: 1.2em;
+}
+#loggedOut{
+    color: red;
+    font-size: 1.2em;
 }

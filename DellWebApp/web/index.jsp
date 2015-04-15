@@ -42,12 +42,25 @@
                     <p id="wrongPass">Wrong username or password</p>
                     <%
                 }
-            }        
-        if(request.getAttribute("reason")!=null)
-        {%>
-        <%=request.getAttribute("reason") %>   
-        <%}
-        %>
+            }%>
+            
+             <% Boolean loggedOut = (Boolean) request.getAttribute("loggedOut"); 
+            if (loggedOut != null) {
+                if (loggedOut) {
+                    %>
+                    <p id="loggedOut">You're now logged out</p>
+                    <%
+                }
+            }%>
+            <% Boolean access = (Boolean) request.getAttribute("access"); 
+            if (access != null) {
+                if (!access) {
+                    %>
+                    <p id="loggedOut">You need to login to view this page</p>
+                    <%
+                }
+            }%>
+            
         
         <input type="hidden" name="command" value="login"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
