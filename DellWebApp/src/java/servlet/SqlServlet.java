@@ -81,6 +81,15 @@ public class SqlServlet extends HttpServlet {
                         case "logout":
                             logOut(request, response, con);
                             break;
+                        case "next":
+                            String id2 = request.getParameter("id");
+                            updateProjectState(1, Integer.parseInt(id2), request, response, con);
+                            showDetails(id2, request, response, con);
+                            break;
+                        case "back":
+                            String id3 = request.getParameter("id");
+                            updateProjectState(-1, Integer.parseInt(id3), request, response, con);
+                            showDetails(id3, request, response, con);
                         default:
                             response.sendRedirect("index.jsp");
                             break;
@@ -228,8 +237,6 @@ public class SqlServlet extends HttpServlet {
 
     }
 
- 
-
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
 
@@ -266,7 +273,7 @@ public class SqlServlet extends HttpServlet {
         return partnerInfo;
     }
 
-       private boolean accessAllowed(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private boolean accessAllowed(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         HttpSession sessionObj = request.getSession();
         if (sessionObj.getAttribute("personID") == null) {
             return false;
@@ -284,6 +291,7 @@ public class SqlServlet extends HttpServlet {
         //response.sendRedirect("logOut.jsp");
 
     }
+
     private void logIn(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         String userName = request.getParameter("userName");
