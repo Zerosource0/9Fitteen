@@ -128,7 +128,15 @@
                 <a href="../src/java/servlet/SqlServlet.java"></a>
             </div>
         </div>
-
+<footer class="footer">
+  <div class="container">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-4"><p class="text-muted">This footer is done by Jonas!</p></div>
+      <div class="col-sm-2"></div>
+    
+  </div>
+</footer>
+                            
         <!-- Bootstrap core JavaScript-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="res/js/bootstrap.min.js"></script>

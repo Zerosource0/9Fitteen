@@ -1,7 +1,7 @@
 body {
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #eee;
+  background: url(http://i.dell.com/images/global/general/spacer.gif) no-repeat center fixed;
 }
 
 .form-signin {
