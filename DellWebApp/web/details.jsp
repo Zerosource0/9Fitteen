@@ -18,8 +18,8 @@
         <title>Dell Project Details</title>
 
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
-
         <link href="res/css/dashboard.css" rel="stylesheet">
+        <link href="res/css/signin.css" rel="stylesheet">
 
     </head>
 
