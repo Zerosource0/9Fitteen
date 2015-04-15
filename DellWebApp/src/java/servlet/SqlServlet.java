@@ -27,7 +27,7 @@ public class SqlServlet extends HttpServlet {
             //session start
             con = Controller.getInstance();
             sessionObj.setAttribute("Controller", con);
-                        
+
         } else {
             con = (Controller) sessionObj.getAttribute("Controller");
         }
@@ -37,53 +37,64 @@ public class SqlServlet extends HttpServlet {
 
         // If there is no command, check for other parameters
         if (command == null) {
-            // Id - used for displaying details of individual projects
-            String id = request.getParameter("id");
-            if (id != null) {
-                showDetails(id, request, response, con);
-            } 
-            // else go back to view.jsp 
-            else {
-                showProjects(request, response, con);
+            if (accessAllowed(request, response, con)) {
+                // Id - used for displaying details of individual projects
+                String id = request.getParameter("id");
+                if (id != null) {
+                    showDetails(id, request, response, con);
+                } // else go back to view.jsp 
+                else {
+                    showProjects(request, response, con);
+                }
+            } else {
+                request.setAttribute("access", false);
+                RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
+                rq.forward(request, response);
             }
-        } 
-        // Displays the main view.jsp with an overview of the projects
-        else if (command.equals("view")) {
-            showProjects(request, response, con);
-        } 
-        // Creates a new project in the db and forwards to view.jsp
-        else if (command.equals("create")) {
-            createProject(request, response, con);
-            showProjects(request, response, con);
-        } 
-        // checks the log in data and forwards accordingly
-        else if (command.equals("login")) {
-            logIn(request, response, con);
-        } 
-        // shows the create.jsp (Create new Project page)
-        else if (command.equals("showCreate")) {
-            showCreate(request, response, con);
-        }
-        else if(command.equals("edit")){
-            showEdit(request, response, con);
-        }
-        else if(command.equals("save"))
-        {
-            saveProject(request, response, con);
-            String id = request.getParameter("id");
-            showDetails(id, request, response, con);
-        }
-        else if(command.equals("next")){
-            String id = request.getParameter("id");
-            updateProjectState(1, Integer.parseInt(id), request, response, con);
-            showDetails(id, request, response, con);
-        }
-        else if(command.equals("back")){
-            String id = request.getParameter("id");
-            updateProjectState(-1, Integer.parseInt(id), request, response, con);
-            showDetails(id, request, response, con);
+        } else {
+            if (command.equals("login")) {
+                logIn(request, response, con);
+            } else {
+                if (accessAllowed(request, response, con)) {
+                    // Displays the main view.jsp with an overview of the projects
+                    switch (command) {
+                        // Creates a new project in the db and forwards to view.jsp
+                        case "view":
+                            showProjects(request, response, con);
+                            break;
+                        // checks the log in data and forwards accordingly
+                        case "create":
+                            createProject(request, response, con);
+                            showProjects(request, response, con);
+                            break;
+                        case "showCreate":
+                            showCreate(request, response, con);
+                            break;
+                        case "edit":
+                            showEdit(request, response, con);
+                            break;
+                        case "save":
+                            saveProject(request, response, con);
+                            String id = request.getParameter("id");
+                            showDetails(id, request, response, con);
+                            break;
+                        case "logout":
+                            logOut(request, response, con);
+                            break;
+                        default:
+                            response.sendRedirect("index.jsp");
+                            break;
+                    }
+                } else {
+                    request.setAttribute("access", false);
+                    RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
+                    rq.forward(request, response);
+                }
+            }
+
         }
 
+        // If there is no command, check for other parameters
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -126,33 +137,31 @@ public class SqlServlet extends HttpServlet {
     }// </editor-fold>
 
     private void updateProjectState(int direction, int id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        
+
         Project project = getProject(id, request, response, con);
-        
+
         int state = project.getFkProjetStateID();
         //next
-        if(direction == 1){
-            if(state < 8){
-                state = state+direction;
-             project.setFkProjetStateID(state);
-            }
-        }
-        //back
-        if(direction == -1){
-            if(state > 0){
-                state = state+direction;
+        if (direction == 1) {
+            if (state < 8) {
+                state = state + direction;
                 project.setFkProjetStateID(state);
             }
         }
-        
+        //back
+        if (direction == -1) {
+            if (state > 0) {
+                state = state + direction;
+                project.setFkProjetStateID(state);
+            }
+        }
+
         con.updateProjectState(project);
         updateStateChange(project.getId(), request, response, con);
     }
-    
-    
+
     private void saveProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        
-        
+
         String name = request.getParameter("name");
         String desc = request.getParameter("description");
         int partnerID = 1;
@@ -160,29 +169,29 @@ public class SqlServlet extends HttpServlet {
             partnerID = Integer.parseInt(request.getParameter("partnerID")); //should be partnerID
         }
         Long funds = null;
-        
+
         funds = Long.parseLong(request.getParameter("funds"));
-        
+
         System.out.println("FUNDS! :  " + funds);
-        
+
         Project project = null;
-        
+
         project = con.saveProject(Integer.parseInt(request.getParameter("id")), name, desc, partnerID, funds);
-        
+
     }
-    
-    private void showEdit(HttpServletRequest request,HttpServletResponse response, Controller con) throws ServletException, IOException{
-        
+
+    private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
-        Project p = getProject(Integer.parseInt(request.getParameter("id")), request, response, con); 
+        Project p = getProject(Integer.parseInt(request.getParameter("id")), request, response, con);
         System.out.println("SOUT PROJECT P: " + p);
-        
+
         request.setAttribute("project", p);
         RequestDispatcher rq = request.getRequestDispatcher("update.jsp");
         rq.forward(request, response);
     }
-    
+
     private void createProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         Boolean success = true;
@@ -209,10 +218,9 @@ public class SqlServlet extends HttpServlet {
 
         if (p == null) {
             success = false;
-        } else
-        {
+        } else {
             createStateChange(p.getId(), request, response, con);
-            
+
         }
 
         request.setAttribute("pro", success);
@@ -220,12 +228,13 @@ public class SqlServlet extends HttpServlet {
 
     }
 
+ 
+
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
-        
 
-        request.setAttribute("numberOfUsers", (int)getNumberOfUsers(request, response, con));
-         request.setAttribute("numberOfPartners", (int)getNumberOfPartners(request, response, con));
+        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
+        request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
@@ -239,7 +248,7 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("projects", projects);
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
-        
+
         return projects;
     }
 
@@ -257,6 +266,24 @@ public class SqlServlet extends HttpServlet {
         return partnerInfo;
     }
 
+       private boolean accessAllowed(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        HttpSession sessionObj = request.getSession();
+        if (sessionObj.getAttribute("personID") == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void logOut(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        HttpSession sessionObj = request.getSession();
+        sessionObj.invalidate();
+        request.setAttribute("loggedOut", true);
+        RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
+        rq.forward(request, response);
+        //response.sendRedirect("logOut.jsp");
+
+    }
     private void logIn(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         String userName = request.getParameter("userName");
@@ -284,14 +311,14 @@ public class SqlServlet extends HttpServlet {
     private void showDetails(String id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         int pid = Integer.parseInt(id);
-        
+
         getProjects(request, response, con);
         ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
         ArrayList<Project> pro = new ArrayList<>();
         Predicate<Project> predicate = (p) -> p.getId() == pid;
-        
+
         projects.stream().filter(predicate).forEach(p -> pro.add(p));
-        
+
         request.setAttribute("project", pro.get(0));
 
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
@@ -305,36 +332,38 @@ public class SqlServlet extends HttpServlet {
         RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
         rq.forward(request, response);
     }
-    
-    private boolean createStateChange(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+
+    private boolean createStateChange(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         boolean success = false;
         Project project = getLatestProject(projectID, request, response, con);
-        
-        success = con.createStateChange(project, (int)request.getSession().getAttribute("personID"));
-         return success;
+
+        success = con.createStateChange(project, (int) request.getSession().getAttribute("personID"));
+        return success;
     }
-    
-    private boolean updateStateChange(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+
+    private boolean updateStateChange(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         boolean success = false;
         Project project = getProject(projectID, request, response, con);
-        
-        success = con.createStateChange(project, (int)request.getSession().getAttribute("personID"));
-         return success;
+
+        success = con.createStateChange(project, (int) request.getSession().getAttribute("personID"));
+        return success;
     }
-    
-    private Project getProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
-             Project project = con.getProject(projectID);
-             return project;      
+
+    private Project getProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        Project project = con.getProject(projectID);
+        return project;
     }
-    private Project getLatestProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
-             Project project = con.getLatestProject(projectID);
-             return project;      
+
+    private Project getLatestProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        Project project = con.getLatestProject(projectID);
+        return project;
     }
-    
-    private int getNumberOfUsers(HttpServletRequest request,HttpServletResponse response, Controller con) throws ServletException, IOException{
-       return con.getNumberOfUsers();     
+
+    private int getNumberOfUsers(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        return con.getNumberOfUsers();
     }
-    private int getNumberOfPartners(HttpServletRequest request,HttpServletResponse response, Controller con) throws ServletException, IOException{
-       return con.getNumberOfPartners();     
+
+    private int getNumberOfPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        return con.getNumberOfPartners();
     }
 }

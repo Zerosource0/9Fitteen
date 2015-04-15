@@ -41,7 +41,7 @@
                         <li><a href="Dashboard?command=view">Dashboard</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Profile</a></li>
-                        <li><a href="index.html">Log Out</a></li>
+                        <li><a href="Dashboard?command=logout">Log Out</a></li>
                     </ul>
                     <form class="navbar-form navbar-right">
                         <input type="text" class="form-control" placeholder="Search...">
