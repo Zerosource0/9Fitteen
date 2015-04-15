@@ -149,6 +149,7 @@ table#example {
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
     background-color: #0085c3;
+   
 }
 .navbar-inverse .navbar-nav>li>a{
     background-color: #0085c3;
@@ -202,7 +203,9 @@ table#example {
     
 }
 .navbar{
-    
+     padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left:5px;
      background-color: #0085c3;
     color: #98CDE6;
     font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;
