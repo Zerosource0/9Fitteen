@@ -229,10 +229,10 @@ public class ProjectMapper {
     public Person logIn(String login, String password, Connection con) {
 
         Person pe1 = null;
-
+        
         String sqlString1 = "Select FKPERSONID "
                 + "from PERSONLOGIN where PERSONEMAIL='" + login.toLowerCase() + "' and PERSONPASSWORD='" + password + "'";
-        int rights, id, phoneNumber;
+        int rights, phoneNumber;
         Integer fkpartnerid;
         String name;
         try (PreparedStatement pre1 = con.prepareStatement(sqlString1);
@@ -242,36 +242,59 @@ public class ProjectMapper {
                 return null;
             } else {
                 
-                id = rs1.getInt(1);
-
-                String sqlString2 = "SELECT * " +
-                                            "FROM person, persontype " +
-                  "Where person.personid="+id+ " and fkpersontypeid=persontypeid" ;
-
-                try (PreparedStatement pre2 = con.prepareStatement(sqlString2);
-                        ResultSet rs2 = pre2.executeQuery();) {
-                    rs2.next();
-                    id=rs2.getInt(1);
-                    name=rs2.getString(2);
-                    phoneNumber=rs2.getInt(3);
-                    rights=rs2.getInt(4);
-                    fkpartnerid=rs2.getInt(5);
-                }
-
-                Person pe = new Person(id, rights, fkpartnerid, name, phoneNumber);
-                pe1 = pe;
+                
+                
+                return createPersonClass(con, rs1.getInt(1));
 
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        if (pe1!=null) 
-        {
-            System.out.println("id "+pe1.getID()+ " Rights "+pe1.getRights()+" Phone Number "
-            +pe1.getPhoneNumber()+" fkpersonid "+pe1.getFkpersonid() +" Name "+pe1.getName());
-        }
-        return pe1;
+        
+        return null;
+    }
+    
+    public Person createPersonClass (Connection con, int id)
+    {
+        
+        int rights=0, phoneNumber=0;
+        Integer fkpartnerid=0;
+        String name=null;
+        String sqlString2 = "SELECT * " +
+                                            "FROM person, persontype " +
+                  "Where person.personid="+id+ " and fkpersontypeid=persontypeid" ;
+
+                try (PreparedStatement pre2 = con.prepareStatement(sqlString2);
+                        ResultSet rs2 = pre2.executeQuery();) {
+                    
+                    rs2.next();
+                    id=rs2.getInt(1);
+                    name=rs2.getString(2);
+                    phoneNumber=rs2.getInt(3);
+                    rights=rs2.getInt(4);
+                    fkpartnerid=rs2.getInt(5);
+                    sqlString2=
+                    "Select Partner.PARTNERNAME, PROJECT.*"+
+                    " from Project, person, projectstateperson, partner"+
+                    " where Person.PERSONID="+id+" and Person.PersonID=PROJECTSTATEPERSON.FKPERSONID"+ 
+                    " and PROJECTSTATEPERSON.FKPROJECTID=Project.PROJECTID"+
+                    " and Partner.PARTNERID=Project.FKPARTNERID";
+                    PreparedStatement pre=con.prepareStatement(sqlString2);
+                    ResultSet rs=pre.executeQuery();
+                    
+                    
+                    return new Person(id, rights, fkpartnerid, name, phoneNumber, rs);
+                }
+                catch (SQLException ex) 
+                {
+                    ex.printStackTrace();
+                }
+                
+                
+               
+                return null;
+        
     }
 
     public int getNumberOfUsers(Connection con) {
