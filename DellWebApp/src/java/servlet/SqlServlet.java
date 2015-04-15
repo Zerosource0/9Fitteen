@@ -133,17 +133,20 @@ public class SqlServlet extends HttpServlet {
         //next
         if(direction == 1){
             if(state < 8){
-            project.setFkProjetStateID(state+direction);
+                state = state+direction;
+             project.setFkProjetStateID(state);
             }
         }
         //back
         if(direction == -1){
             if(state > 0){
-            project.setFkProjetStateID(state+direction);
+                state = state+direction;
+                project.setFkProjetStateID(state);
             }
         }
         
         con.updateProjectState(project);
+        updateStateChange(project.getId(), request, response, con);
     }
     
     
@@ -303,9 +306,17 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
     
-    private boolean createStateChange(int projectID,HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+    private boolean createStateChange(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
         boolean success = false;
         Project project = getLatestProject(projectID, request, response, con);
+        
+        success = con.createStateChange(project, (int)request.getSession().getAttribute("personID"));
+         return success;
+    }
+    
+    private boolean updateStateChange(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+        boolean success = false;
+        Project project = getProject(projectID, request, response, con);
         
         success = con.createStateChange(project, (int)request.getSession().getAttribute("personID"));
          return success;
