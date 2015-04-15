@@ -73,6 +73,11 @@ public class SqlServlet extends HttpServlet {
             String id = request.getParameter("id");
             showDetails(id, request, response, con);
         }
+        else if(command.equals("next")){
+            String id = request.getParameter("id");
+            nextProjectState(Integer.parseInt(id), request, response, con);
+            showDetails(id, request, response, con);
+        }
 
     }
 
@@ -115,6 +120,20 @@ public class SqlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void nextProjectState(int id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        
+        Project project = getProject(id, request, response, con);
+        
+        int state = project.getFkProjetStateID();
+        System.out.println("STATE: " + state);
+        if(state < 8){
+            project.setFkProjetStateID(state+1);
+        }
+        
+        con.nextProjectState(project);
+    }
+    
+    
     private void saveProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         
         

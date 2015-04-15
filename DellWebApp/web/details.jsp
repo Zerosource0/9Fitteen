@@ -86,6 +86,7 @@
                     
                     <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %></p>
                     <a href="Dashboard?command=edit&id=<%=project.getId()%>" ><input type="button" value="Edit"></a>
+                    <a href="Dashboard?command=next&id=<%=project.getId()%>" ><input type="button" value="Next State"></a>
                 </div>
             </div>
         </div>

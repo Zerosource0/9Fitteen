@@ -42,7 +42,7 @@ public class Controller {
         return p;
     }
     
-        public Project saveProject(int projectID, String projectName, String desc, int partnerID,  Long funds){
+    public Project saveProject(int projectID, String projectName, String desc, int partnerID,  Long funds){
         Project p = new Project(projectID, projectName, desc, partnerID, funds);
         boolean status = dbf.saveProject(p);
         System.out.println("SOUT STATUS: " + status);
@@ -98,5 +98,9 @@ public class Controller {
     public int getNumberOfPartners()
     {
         return dbf.getNumberOfPartners();
+    }
+    public Boolean nextProjectState(Project p)
+    {
+        return dbf.nextProjectState(p);
     }
 }

@@ -74,4 +74,8 @@ public class DBFacade {
     public boolean saveProject(Project p){
         return pm.saveProject(p, con);
     }
+    public boolean nextProjectState(Project p)
+    {
+        return pm.nextProjectState(p, con);
+    }
 }
