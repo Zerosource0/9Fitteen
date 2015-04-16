@@ -18,6 +18,7 @@ public class Controller {
     //Singleton
     private static Controller instance;
     private DBFacade dbf;
+    private Person person = null;
 
     private Controller()
     {
@@ -61,23 +62,21 @@ public class Controller {
         return p;
     }
     
-    public boolean createStateChange(Project p, int personID)
-    {
+    public boolean createStateChange(Project p, int personID){
         return dbf.createStateChange(p, personID);
     }
     
     public Project getProject(int projectID){
         return dbf.getProject(projectID);
     }
-    public Project getLatestProject(int projectID){
-        return dbf.getLatestProject(projectID);
+    public Project getLatestProject(){
+        return dbf.getLatestProject();
     }
     
     public ArrayList<Project> getProjects(){
         return dbf.getProjects();
     }
     public ArrayList<Project> getProjects(int partnerID){
-        System.out.println("Controller partnerID: "+partnerID);
         return dbf.getProjects(partnerID);
     }
     
@@ -85,14 +84,18 @@ public class Controller {
         return dbf.getStateNames();
     }
     
-    public ArrayList<Partner> getParnerInfo(){
+    public ArrayList<Partner> getPartnerInfo(){
         return dbf.getPartnerInfo();
     }
     
-    public Person logIn(String userName, String password) {
-        Person person = dbf.logIn(userName, password);
+    public boolean logIn(String userName, String password) {
+        person = dbf.logIn(userName, password);
         
-        return person;   
+        return person != null;
+    }
+    
+    public void logOut() {
+        person = null;
     }
     
     public int getNumberOfUsers()
@@ -107,4 +110,14 @@ public class Controller {
     {
         return dbf.updateProjectState(p);
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+    
+    
 }

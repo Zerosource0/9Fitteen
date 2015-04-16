@@ -62,9 +62,9 @@ public class DBFacade {
         return pm.getProject(con, projectID);
     }
     
-    public Project getLatestProject(int projectID)
+    public Project getLatestProject()
     {
-        return pm.getLatestProject(con, projectID);
+        return pm.getLatestProject(con);
     }
     
     public int getNumberOfUsers()

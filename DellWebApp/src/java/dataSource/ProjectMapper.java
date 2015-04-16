@@ -52,7 +52,7 @@ public class ProjectMapper {
         return stateNames;
     }
 
-    public Project getLatestProject(Connection con, int projectID) {
+    public Project getLatestProject(Connection con) {
         String sqlString1 = "select * from(select * from project order by PROJECTID DESC) where rownum=1";
         Project project = null;
         System.out.println("HERE");
