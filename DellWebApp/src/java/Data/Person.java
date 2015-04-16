@@ -11,61 +11,56 @@ import java.util.logging.Logger;
  * @author Adam
  */
 public class Person {
+
     private int id, phoneNumber;
     private int rights;
-    private Integer fkpersonid;
+    private Integer fkpartnerid;
     private ResultSet projects;
     //private ArrayList<String> partnerName, projectName, projectDescr, dateCreated, dateDone, dateLastEdit;
     //private ArrayList<String> poeText, poePicture1, poePicture2, poePicture3;
     //private ArrayList<Integer> projectID, projectStateID, partnerID, fundsAllocaded;
     String name;
-    
-    
-    public Person (int id, int rights, Integer fkpersonid, String name, int phoneNumber, ResultSet projects)
-    {
-        
-        
-        
-        this.id=id;
-        this.rights=rights;
-        this.phoneNumber=phoneNumber;
-        this.name=name;
-        this.fkpersonid=fkpersonid;
-        this.projects=projects;
+
+    public Person(int id, int rights, Integer fkpartnerid, String name, int phoneNumber, ResultSet projects) {
+
+        this.id = id;
+        this.rights = rights;
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+        this.fkpartnerid = fkpartnerid;
+        this.projects = projects;
         //this.pass=pass;
-        
+
     }
-    private void splitData (ResultSet projects)
-    {
-        
+
+    private void splitData(ResultSet projects) {
+
     }
-    public int getID ()
-    {
-      return this.id;
+
+    public int getID() {
+        return this.id;
     }
-    public int getRights ()
-    {
+
+    public int getRights() {
         return this.rights;
     }
-    public int getPhoneNumber ()
-    {
+
+    public int getPhoneNumber() {
         return this.phoneNumber;
     }
-    public Integer getFkpersonid ()
-    {
-        return this.phoneNumber;
+
+    public Integer getFkpartnerid() {
+        return this.fkpartnerid;
     }
-    public String getName ()
-    {
+
+    public String getName() {
         return this.name;
     }
-    public void splitData ()
-    {
+
+    public void splitData() {
         try {
-            if (projects.next())
-            {
-                do
-                {
+            if (projects.next()) {
+                do {
                     System.out.println(projects.getString(1));
                     System.out.println(projects.getString(2));
                     System.out.println(projects.getString(3));
@@ -80,11 +75,9 @@ public class Person {
                     System.out.println(projects.getString(12));
                     System.out.println(projects.getString(13));
                     System.out.println(projects.getString(14));
-                    
-                    
-                    
+
                 } while (projects.next());
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Person.class.getName()).log(Level.SEVERE, null, ex);

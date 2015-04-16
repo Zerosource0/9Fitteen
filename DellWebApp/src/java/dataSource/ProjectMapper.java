@@ -146,6 +146,41 @@ public class ProjectMapper {
         return projects;
     }
 
+    public ArrayList<Project> getProjects(Connection con, int partnerID) {
+
+        ArrayList<Project> projects = new ArrayList<>();
+
+        String sqlString1 = "SELECT * FROM PROJECT PR"
+                + "JOIN PARTNER PA ON PR.FKPARTNERID = PA.PARTNERID"
+                + "WHERE PA.PARTNERID = " + partnerID;
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                projects.add(new Project(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getLong(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13)
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return projects;
+    }
+
     public boolean createStateChange(Project p, int personID, Connection con) {
         int rowsInserted = 0;
 
@@ -163,43 +198,41 @@ public class ProjectMapper {
         return rowsInserted == 1;
     }
 
-    public boolean updateProjectState(Project p, Connection con)
-    {
+    public boolean updateProjectState(Project p, Connection con) {
         int rowsUpdated = 0;
-        
+
         String sqlString1 = "update project set fkprojectstateid = ? where projectid = " + p.getId();
-        
-        try (PreparedStatement statement = con.prepareStatement(sqlString1)){
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1)) {
             statement.setInt(1, p.getFkProjetStateID());
 
             rowsUpdated = statement.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return rowsUpdated == 1;
     }
-    
-     public boolean saveProject(Project p, Connection con) {
+
+    public boolean saveProject(Project p, Connection con) {
         int rowsUpdated = 0;
-        
+
         String sqlString1 = "update project set projectname = ?,  projectdescription = ?, fkpartnerid = ?,  fundsallocated = ? where projectid = " + p.getId();
 
-            
-        try (PreparedStatement statement = con.prepareStatement(sqlString1)){
+        try (PreparedStatement statement = con.prepareStatement(sqlString1)) {
             statement.setString(1, p.getProjectName());
             statement.setString(2, p.getDescription());
             statement.setInt(3, p.getFkPartnerId());
             statement.setLong(4, p.getFundsAllocated());
-        
+
             rowsUpdated = statement.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return rowsUpdated == 1;
     }
-    
+
     public boolean createProject(Project p, Connection con) {
         int rowsInserted = 0;
 
@@ -229,7 +262,7 @@ public class ProjectMapper {
     public Person logIn(String login, String password, Connection con) {
 
         Person pe1 = null;
-        
+
         String sqlString1 = "Select FKPERSONID "
                 + "from PERSONLOGIN where PERSONEMAIL='" + login.toLowerCase() + "' and PERSONPASSWORD='" + password + "'";
         int rights, phoneNumber;
@@ -241,9 +274,7 @@ public class ProjectMapper {
             if (rs1.next() == false) {
                 return null;
             } else {
-                
-                
-                
+
                 return createPersonClass(con, rs1.getInt(1));
 
             }
@@ -251,50 +282,44 @@ public class ProjectMapper {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return null;
     }
-    
-    public Person createPersonClass (Connection con, int id)
-    {
-        
-        int rights=0, phoneNumber=0;
-        Integer fkpartnerid=0;
-        String name=null;
-        String sqlString2 = "SELECT * " +
-                                            "FROM person, persontype " +
-                  "Where person.personid="+id+ " and fkpersontypeid=persontypeid" ;
 
-                try (PreparedStatement pre2 = con.prepareStatement(sqlString2);
-                        ResultSet rs2 = pre2.executeQuery();) {
-                    
-                    rs2.next();
-                    id=rs2.getInt(1);
-                    name=rs2.getString(2);
-                    phoneNumber=rs2.getInt(3);
-                    rights=rs2.getInt(4);
-                    fkpartnerid=rs2.getInt(5);
-                    sqlString2=
-                    "Select Partner.PARTNERNAME, PROJECT.*"+
-                    " from Project, person, projectstateperson, partner"+
-                    " where Person.PERSONID="+id+" and Person.PersonID=PROJECTSTATEPERSON.FKPERSONID"+ 
-                    " and PROJECTSTATEPERSON.FKPROJECTID=Project.PROJECTID"+
-                    " and Partner.PARTNERID=Project.FKPARTNERID";
-                    PreparedStatement pre=con.prepareStatement(sqlString2);
-                    ResultSet rs=pre.executeQuery();
-                    
-                    
-                    return new Person(id, rights, fkpartnerid, name, phoneNumber, rs);
-                }
-                catch (SQLException ex) 
-                {
-                    ex.printStackTrace();
-                }
-                
-                
-               
-                return null;
-        
+    public Person createPersonClass(Connection con, int id) {
+
+        int rights = 0, phoneNumber = 0;
+        Integer fkpartnerid = 0;
+        String name = null;
+        String sqlString2 = "SELECT * "
+                + "FROM person, persontype "
+                + "Where person.personid=" + id + " and fkpersontypeid=persontypeid";
+
+        try (PreparedStatement pre2 = con.prepareStatement(sqlString2);
+                ResultSet rs2 = pre2.executeQuery();) {
+
+            rs2.next();
+            id = rs2.getInt(1);
+            name = rs2.getString(2);
+            phoneNumber = rs2.getInt(3);
+            rights = rs2.getInt(4);
+            fkpartnerid = rs2.getInt(5);
+            sqlString2
+                    = "Select Partner.PARTNERNAME, PROJECT.*"
+                    + " from Project, person, projectstateperson, partner"
+                    + " where Person.PERSONID=" + id + " and Person.PersonID=PROJECTSTATEPERSON.FKPERSONID"
+                    + " and PROJECTSTATEPERSON.FKPROJECTID=Project.PROJECTID"
+                    + " and Partner.PARTNERID=Project.FKPARTNERID";
+            PreparedStatement pre = con.prepareStatement(sqlString2);
+            ResultSet rs = pre.executeQuery();
+
+            return new Person(id, rights, fkpartnerid, name, phoneNumber, rs);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+
     }
 
     public int getNumberOfUsers(Connection con) {
@@ -303,22 +328,22 @@ public class ProjectMapper {
 
         try (PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
-                rs2.next();
-             numberOfUsers = rs2.getInt(1);
+            rs2.next();
+            numberOfUsers = rs2.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return numberOfUsers;
     }
-    
+
     public int getNumberOfPartners(Connection con) {
         int numberOfPartners = 0;
         String sqlString1 = "select count(PartnerID) from PARTNER";
 
         try (PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
-                rs2.next();
-             numberOfPartners = rs2.getInt(1);
+            rs2.next();
+            numberOfPartners = rs2.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }

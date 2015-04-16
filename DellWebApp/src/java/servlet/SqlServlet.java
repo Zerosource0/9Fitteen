@@ -247,17 +247,28 @@ public class SqlServlet extends HttpServlet {
     }
 
     private ArrayList getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        ArrayList<Project> projects = con.getProjects();
+        
+        ArrayList<Project> projects;
+        if(request.getSession().getAttribute("partnerID")!=null)
+        {
+           projects = con.getProjects((int)(request.getSession().getAttribute("partnerID")));
+        }
+        else
+        {
+        projects = con.getProjects();
+        
+        }
+        
         if (projects.size() <= 0) {
             System.out.println("Empty List");
         }
-
         request.setAttribute("projects", projects);
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
 
         return projects;
     }
+        
 
     private ArrayList getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> stateNames = con.getStateNames();
@@ -308,6 +319,7 @@ public class SqlServlet extends HttpServlet {
         } else {
             HttpSession sessionObj = request.getSession();
             sessionObj.setAttribute("personID", person.getID());
+            sessionObj.setAttribute("partnerID", person.getFkpartnerid());
             success = true;
             request.setAttribute("success", success);
             showProjects(request, response, con);

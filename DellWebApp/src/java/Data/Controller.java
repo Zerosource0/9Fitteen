@@ -76,6 +76,9 @@ public class Controller {
     public ArrayList<Project> getProjects(){
         return dbf.getProjects();
     }
+    public ArrayList<Project> getProjects(int partnerID){
+        return dbf.getProjects(partnerID);
+    }
     
     public ArrayList<String> getStateNames(){
         return dbf.getStateNames();
