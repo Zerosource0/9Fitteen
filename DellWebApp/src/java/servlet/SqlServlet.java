@@ -249,9 +249,9 @@ public class SqlServlet extends HttpServlet {
     private ArrayList getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         
         ArrayList<Project> projects;
-        if(request.getSession().getAttribute("partnerID")!=null)
+        if((int)request.getSession().getAttribute("partnerID")!=1)
         {
-           projects = con.getProjects((int)(request.getSession().getAttribute("partnerID")));
+           projects = con.getProjects(((int)request.getSession().getAttribute("partnerID")));
         }
         else
         {
@@ -262,6 +262,7 @@ public class SqlServlet extends HttpServlet {
         if (projects.size() <= 0) {
             System.out.println("Empty List");
         }
+        request.setAttribute("partnerID", request.getSession().getAttribute("partnerID"));
         request.setAttribute("projects", projects);
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
