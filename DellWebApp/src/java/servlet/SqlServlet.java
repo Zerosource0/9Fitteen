@@ -153,8 +153,7 @@ public class SqlServlet extends HttpServlet {
                 state = state + direction;
                 project.setFkProjetStateID(state);
             }
-        }
-        //back
+        } //back
         else if (direction == -1) {
             if (state > 0) {
                 state = state + direction;
@@ -185,6 +184,7 @@ public class SqlServlet extends HttpServlet {
         getPartnerInfo(request, response, con);
 
         request.setAttribute("project", getProject(Integer.parseInt(request.getParameter("id")), request, response, con));
+        request.setAttribute("personName", con.getPerson().getName());
         RequestDispatcher rq = request.getRequestDispatcher("update.jsp");
         rq.forward(request, response);
     }
@@ -226,6 +226,7 @@ public class SqlServlet extends HttpServlet {
 
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
+        request.setAttribute("personName", con.getPerson().getName());
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
@@ -302,7 +303,7 @@ public class SqlServlet extends HttpServlet {
 
         getProjects(request, response, con);
         request.setAttribute("project", getProject(pid, request, response, con));
-
+        request.setAttribute("personName", con.getPerson().getName());
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
         rq.forward(request, response);
     }
@@ -311,7 +312,7 @@ public class SqlServlet extends HttpServlet {
     private void showCreate(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         getPartnerInfo(request, response, con);
-
+        request.setAttribute("personName", con.getPerson().getName());
         RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
         rq.forward(request, response);
     }

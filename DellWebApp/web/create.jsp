@@ -34,10 +34,11 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="Dashboard?command=view">Dashboard</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="Dashboard?command=logout">Log Out</a></li>
+                       <li><a href="#">Settings</a></li>
+                        <li><a href="Dashboard?command=logout">(Logged in as: <%
+                            int firstSpace = ((String) request.getAttribute("personName")).indexOf(' ');
+                                String firstName = ((String) request.getAttribute("personName")).substring(0,firstSpace);%>
+                                <%=firstName%>)Log Out</a></li>
                     </ul>
                     <form class="navbar-form navbar-right">
                         <input type="text" class="form-control" placeholder="Search...">

@@ -32,15 +32,16 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    
+
                     <a class="navbar-brand" href="Dashboard?command=view"></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="Dashboard?command=view">Dashboard</a></li>
                         <li><a href="#">Settings</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="Dashboard?command=logout">Log Out</a></li>
+                        <li><a href="Dashboard?command=logout">(Logged in as: <%
+                            int firstSpace = ((String) request.getAttribute("personName")).indexOf(' ');
+                                String firstName = ((String) request.getAttribute("personName")).substring(0,firstSpace);%>
+                                <%=firstName%>)Log Out</a></li>
                     </ul>
                     <form class="navbar-form navbar-right">
                         <input type="text" class="form-control" placeholder="Search...">
@@ -57,9 +58,9 @@
 
                     </ul>
                     <ul class="nav nav-sidebar">
-                       
+
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
-                        
+
 
                     </ul>
                     <ul class="nav nav-sidebar">
@@ -78,15 +79,15 @@
                         </div>
                         <div class="col-xs-6 col-sm-4 placeholder">
                             <img src="res/network11.png" class="img-responsive" alt="">
-                            <h4><%= request.getAttribute("numberOfUsers") %></h4>
+                            <h4><%= request.getAttribute("numberOfUsers")%></h4>
                             <span class="text-muted">Number of Users</span>
                         </div>
                         <div class="col-xs-6 col-sm-4 placeholder">
                             <img src="res/people8.png" class="img-responsive" alt="">
-                            <h4><%= request.getAttribute("numberOfPartners") %></h4>
+                            <h4><%= request.getAttribute("numberOfPartners")%></h4>
                             <span class="text-muted">Number of Partners</span>
                         </div>
-                                  </div>
+                    </div>
 
                     <h2 class="sub-header">Recent Projects</h2>
                     <div class="table-responsive">
@@ -101,7 +102,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 
+
                                 <%
                                     Enumeration<String> atr = request.getAttributeNames();
                                     while (atr.hasMoreElements()) {
@@ -119,8 +120,8 @@
                                     %> <td> <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
                                     %> <td> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
                                     %> <td> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
-                                    %> <td> <%= p.getDateCreated() %> </td> <%
-                                    %> <td> <%= p.getDateLastEdit() %> </td> </tr> <%
+                                    %> <td> <%= p.getDateCreated()%> </td> <%
+                                    %> <td> <%= p.getDateLastEdit()%> </td> </tr> <%
                                         }
                                     %>
                             </tbody>
@@ -130,7 +131,7 @@
                 <a href="../src/java/servlet/SqlServlet.java"></a>
             </div>
         </div>
-                   
+
         <!-- Bootstrap core JavaScript-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="res/js/bootstrap.min.js"></script>
