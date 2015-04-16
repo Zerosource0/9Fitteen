@@ -147,12 +147,10 @@ public class ProjectMapper {
     }
 
     public ArrayList<Project> getProjects(Connection con, int partnerID) {
-
+        System.out.println("PM partnerID: "+partnerID);
         ArrayList<Project> projects = new ArrayList<>();
 
-        String sqlString1 = "SELECT * FROM PROJECT PR"
-                + "JOIN PARTNER PA ON PR.FKPARTNERID = PA.PARTNERID"
-                + "WHERE PA.PARTNERID = " + partnerID;
+        String sqlString1 = "SELECT * FROM PROJECT PR JOIN PARTNER PA ON PR.FKPARTNERID = PA.PARTNERID WHERE PA.PARTNERID = "+partnerID;
 
         try (PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
@@ -265,9 +263,7 @@ public class ProjectMapper {
 
         String sqlString1 = "Select FKPERSONID "
                 + "from PERSONLOGIN where PERSONEMAIL='" + login.toLowerCase() + "' and PERSONPASSWORD='" + password + "'";
-        int rights, phoneNumber;
-        Integer fkpartnerid;
-        String name;
+
         try (PreparedStatement pre1 = con.prepareStatement(sqlString1);
                 ResultSet rs1 = pre1.executeQuery();) {
 
@@ -304,6 +300,10 @@ public class ProjectMapper {
             phoneNumber = rs2.getInt(3);
             rights = rs2.getInt(4);
             fkpartnerid = rs2.getInt(5);
+            if(fkpartnerid==null)
+            {
+                fkpartnerid = 1;
+            }
             sqlString2
                     = "Select Partner.PARTNERNAME, PROJECT.*"
                     + " from Project, person, projectstateperson, partner"

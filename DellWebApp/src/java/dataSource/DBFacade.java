@@ -41,7 +41,8 @@ public class DBFacade {
         return pm.getProjects(con);
     }
     public ArrayList<Project> getProjects(int partnerID){
-        return pm.getProjects(con);
+        System.out.println("DBF Partner ID"+partnerID);
+        return pm.getProjects(con, partnerID);
     }
     
     public ArrayList<String> getStateNames(){
