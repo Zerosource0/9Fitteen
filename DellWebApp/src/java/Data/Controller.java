@@ -97,6 +97,16 @@ public class Controller {
     public void logOut() {
         person = null;
     }
+    public long getFundsLeft()
+    {
+        return dbf.getFundsLeft();
+    }
+    
+    public void useFunds(int amount)
+    {
+        dbf.useFunds(amount);
+    }
+    
     
     public int getNumberOfUsers()
     {

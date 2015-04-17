@@ -149,15 +149,23 @@ public class SqlServlet extends HttpServlet {
         int state = project.getFkProjetStateID();
         //next
         if (direction == 1) {
-            if (state < 8) {
+            if (state < 9) {
                 state = state + direction;
                 project.setFkProjetStateID(state);
+            }
+            if (state==9)
+            {
+                useFunds((int) project.getFundsAllocated(), request, response, con);
             }
         } //back
         else if (direction == -1) {
             if (state > 0) {
                 state = state + direction;
                 project.setFkProjetStateID(state);
+            }
+            if(state==8)
+            {
+               useFunds(-(int) project.getFundsAllocated(), request, response, con); 
             }
         }
 
@@ -226,6 +234,7 @@ public class SqlServlet extends HttpServlet {
 
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
+        request.setAttribute("fundsLeft", (long) getFundsLeft(request, response, con));
         request.setAttribute("personName", con.getPerson().getName());
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
@@ -339,6 +348,15 @@ public class SqlServlet extends HttpServlet {
         return con.getLatestProject();
     }
 
+    private long getFundsLeft(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+        return con.getFundsLeft();
+    }
+    
+    private void useFunds(int amount, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+        con.useFunds(amount);
+    }
+   
+    
     private int getNumberOfUsers(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getNumberOfUsers();
     }

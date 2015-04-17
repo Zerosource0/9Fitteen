@@ -66,6 +66,14 @@ public class DBFacade {
     {
         return pm.getLatestProject(con);
     }
+    public long getFundsLeft()
+    {
+        return pm.getFundsLeft(con);
+    }
+    public void useFunds(int amount)
+    {
+        pm.useFunds(amount, con);
+    }
     
     public int getNumberOfUsers()
     {
