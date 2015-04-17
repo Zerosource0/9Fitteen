@@ -377,9 +377,5 @@ public class ProjectMapper {
         }
         return numberOfPartners;
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> origin/master
 }
