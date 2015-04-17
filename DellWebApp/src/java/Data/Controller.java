@@ -115,9 +115,14 @@ public class Controller {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(Person person) 
+    {
         this.person = person;
     }
     
-    
+    public ArrayList<Person> getPersons()
+    {
+        return dbf.getPersons();
+    }
+
 }
