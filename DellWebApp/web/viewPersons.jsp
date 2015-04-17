@@ -1,3 +1,4 @@
+<%@page import="Data.Person"%>
 <%@page import="Data.Partner"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.ArrayList"%>
@@ -26,8 +27,9 @@
 
     <body>
         <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
-            ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
             ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
+            ArrayList<Person> persons = (ArrayList<Person>) request.getAttribute("persons");
+            
         %> 
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -89,16 +91,16 @@
                         </div>
                     </div>
 
-                    <h2 class="sub-header">Recent Projects</h2>
+                    <h2 class="sub-header">Users</h2>
                     <div class="table-responsive">
                         <table  class="table table-striped" id="example">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Name</th>
-                                    <th>Project State</th>
+                                    <th>User Type</th>
                                     <th>Partner</th>
-                                    <th>Date Created</th>
-                                    <th>Last Edited</th>
+                                    <th>Phone Number</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,15 +115,15 @@
                                 <%      }
                                     }
                                 %>
-                                <%
-                                    for (Project p : projects) {
+                                <%  
+                                    for (Person person : persons) {
 
                                 %> <tr> <%
-                                    %> <td> <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
-                                    %> <td> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
-                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
-                                    %> <td> <%= p.getDateCreated()%> </td> <%
-                                    %> <td> <%= p.getDateLastEdit()%> </td> </tr> <%
+                                    %> <td> <a href="Dashboard?id=<%=person.getID()%>" ><%= person.getID()%></a> </td> <%
+                                    %> <td> <%= person.getName()%> </td> <%
+                                    %> <td> <%= person.getPersonTypeName()%> </td> <%
+                                    %> <td> <%= partnerInfo.get(person.getFkPartnerID() - 1).getPartnerName()%> </td> <%
+                                    %> <td> <%= person.getPhoneNumber()%> </td> <%
                                         }
                                     %>
                             </tbody>

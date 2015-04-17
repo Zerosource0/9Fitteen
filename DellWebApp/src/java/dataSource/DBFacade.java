@@ -82,4 +82,9 @@ public class DBFacade {
     {
         return pm.updateProjectState(p, con);
     }
+    public ArrayList<Person> getPersons () 
+    {
+        return pm.getPersons(con);
+    }
+
 }

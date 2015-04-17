@@ -146,6 +146,34 @@ public class ProjectMapper {
         return projects;
     }
 
+    public ArrayList<Person> getPersons(Connection con) {
+        
+        ArrayList<Person> persons = new ArrayList<>();
+        
+        String sqlString = "select person.*, PersonType.PERSONTYPENAME " +
+                            "from person, PersonType " +
+                            "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID";
+        
+        try (PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()){
+                while(rs.next()){
+                    persons.add(new Person(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getInt(3),
+                            rs.getInt(4),
+                            rs.getInt(5),
+                            rs.getString(6)
+                    ));
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return persons;
+    }
+    
+    
     public ArrayList<Project> getProjects(Connection con, int partnerID) {
         System.out.println("PM partnerID: "+partnerID);
         ArrayList<Project> projects = new ArrayList<>();
@@ -313,7 +341,7 @@ public class ProjectMapper {
             PreparedStatement pre = con.prepareStatement(sqlString2);
             ResultSet rs = pre.executeQuery();
 
-            return new Person(id, rights, fkpartnerid, name, phoneNumber, rs);
+            return new Person(id, rights, fkpartnerid, name, phoneNumber);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -349,5 +377,5 @@ public class ProjectMapper {
         }
         return numberOfPartners;
     }
-
+    
 }

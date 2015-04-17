@@ -59,6 +59,9 @@ public class SqlServlet extends HttpServlet {
                     // Displays the main view.jsp with an overview of the projects
                     switch (command) {
                         // Creates a new project in the db and forwards to view.jsp
+                        case "showPersons":
+                            showPersons(request, response, con);
+                            break;
                         case "view":
                             showProjects(request, response, con);
                             break;
@@ -230,6 +233,19 @@ public class SqlServlet extends HttpServlet {
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
+    
+    private void showPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        getPersons(request, response, con);
+        
+        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
+        request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
+        request.setAttribute("personName", con.getPerson().getName());
+        getPartnerInfo(request, response, con);
+        getProjects(request, response, con);
+        RequestDispatcher rq = request.getRequestDispatcher("viewPersons.jsp");
+        rq.forward(request, response);
+    }
+    
 
     private ArrayList<Project> getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects;
@@ -250,6 +266,18 @@ public class SqlServlet extends HttpServlet {
         return projects;
     }
 
+    private ArrayList<Person> getPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        
+        ArrayList<Person> persons = con.getPersons();
+        
+        if (persons.size() <= 0) {
+            System.out.println("Persons: Empty List");
+        }
+        request.setAttribute("persons", persons);
+        
+        return persons;
+    }
+    
     private ArrayList<String> getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> stateNames = con.getStateNames();
 
@@ -286,7 +314,7 @@ public class SqlServlet extends HttpServlet {
         if (con.logIn(userName, password)) {
             HttpSession sessionObj = request.getSession();
             sessionObj.setAttribute("personID", con.getPerson().getID());
-            sessionObj.setAttribute("partnerID", con.getPerson().getFkpartnerid());
+            sessionObj.setAttribute("partnerID", con.getPerson().getFkPartnerID());
             request.setAttribute("success", true);
             showProjects(request, response, con);
         } else {
