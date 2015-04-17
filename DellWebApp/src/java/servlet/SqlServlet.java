@@ -223,26 +223,61 @@ public class SqlServlet extends HttpServlet {
 
         System.out.println("INT PARTNER SOUT: " + request.getParameter("partnerID"));
 
-        Project p;
+
+       
+        Project p = null;
 
         if (request.getParameter("funds").length() > 0) {
             Long funds = Long.parseLong(request.getParameter("funds"));
+            if(checkFunds(funds ,request, response, con))
+            {
             p = con.createProject(name, desc, partner, funds);
+            }
+            else
+            {
+                request.setAttribute("enoughmoney", false);
+                System.out.println("NOT ENOUGH MONEY MAN!");
+              
+                
+            }
         } else {
             p = con.createProject(name, desc, partner);
         }
 
         if (p == null) {
             success = false;
+        request.setAttribute("pro", success);
+        return;
         } else {
             createStateChange(request, response, con);
 
+        request.setAttribute("project", p);
         }
 
         request.setAttribute("pro", success);
         request.setAttribute("project", p);
+    
     }
 
+     private boolean checkFunds(long funds, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        ArrayList<Project> projects = getProjects(request, response, con);
+        long totalFundsAllocated = funds;
+        for (Project p : projects) {
+            totalFundsAllocated = totalFundsAllocated + p.getFundsAllocated();
+        }
+
+            System.out.println("Total funds from projects: "+totalFundsAllocated);
+        if (totalFundsAllocated > getFundsAllocated(request, response, con)) {
+            System.out.println("Total funds from db: "+getFundsAllocated(request, response, con));
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private long getFundsAllocated(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        return con.getFundsAllocated();
+    }
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
 
