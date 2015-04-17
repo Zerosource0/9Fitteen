@@ -16,7 +16,7 @@
         <meta name="author" content="9 Fitteen">
         <link rel="shortcut icon" href="http://i.dell.com/images/global/branding/dellecomicon.ico" type="image/x-icon">
 
-        <title>Dell Project Dashboard</title>
+        <title>Dell User Dashboard</title>
 
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
 
@@ -119,7 +119,7 @@
                                     for (Person person : persons) {
 
                                 %> <tr> <%
-                                    %> <td> <a href="Dashboard?id=<%=person.getID()%>" ><%= person.getID()%></a> </td> <%
+                                    %> <td> <a href="Dashboard?personID=<%=person.getID()%>" ><%= person.getID()%></a> </td> <%
                                     %> <td> <%= person.getName()%> </td> <%
                                     %> <td> <%= person.getPersonTypeName()%> </td> <%
                                     %> <td> <%= partnerInfo.get(person.getFkPartnerID() - 1).getPartnerName()%> </td> <%

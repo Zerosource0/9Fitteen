@@ -39,10 +39,17 @@ public class SqlServlet extends HttpServlet {
         if (command == null) {
             if (accessAllowed(request, response, con)) {
                 // Id - used for displaying details of individual projects
+                // personID - used for displaying details of individual persons
+                String personID = request.getParameter("personID");
                 String id = request.getParameter("id");
                 if (id != null) {
                     showDetails(id, request, response, con);
-                } // else go back to view.jsp 
+                } 
+                else if (personID != null)
+                {
+                    showPersonDetails(personID,request, response, con);
+                }
+                // else go back to view.jsp 
                 else {
                     showProjects(request, response, con);
                 }
@@ -182,6 +189,18 @@ public class SqlServlet extends HttpServlet {
 
     }
 
+    private void showPersonDetails (String  personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        ArrayList<Person> persons = getPersons(request, response, con);
+        int pid = Integer.parseInt(personID);
+        System.out.println("persons.get(personID): " + persons.get(pid).getName() + " Id " + pid);
+        
+        getProjects(request, response, con);
+        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("person", persons.get(pid-1));
+        RequestDispatcher rq = request.getRequestDispatcher("personDetails.jsp");
+        rq.forward(request, response);
+    }
+    
     private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
