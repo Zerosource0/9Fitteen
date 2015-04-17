@@ -86,5 +86,9 @@ public class DBFacade {
     {
         return pm.getPersons(con);
     }
+        public long getFundsAllocated()
+    {
+        return pm.getFundsAllocated(con);
+    }
 
 }

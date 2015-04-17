@@ -87,12 +87,17 @@ public class Controller {
     public ArrayList<Partner> getPartnerInfo(){
         return dbf.getPartnerInfo();
     }
+    public long getFundsAllocated()
+    {
+        return dbf.getFundsAllocated();
+    }
     
     public boolean logIn(String userName, String password) {
         person = dbf.logIn(userName, password);
         
         return person != null;
     }
+    
     
     public void logOut() {
         person = null;
