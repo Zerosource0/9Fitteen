@@ -72,20 +72,25 @@
                     <h1 class="page-header">Dashboard</h1>
 
                     <div class="row placeholders">
-                        <div class="col-xs-6 col-sm-4 placeholder">
-                            <img src="res/file148.png" class="img-responsive" alt="test">
+                        <div class="col-xs-6 col-sm-3 placeholder">
+                            <img src="res/photos/file148.png" class="img-responsive" alt="test">
                             <h4><%= projects.size()%></h4>
                             <span class="text-muted">Number of Projects</span>
                         </div>
-                        <div class="col-xs-6 col-sm-4 placeholder">
-                            <img src="res/network11.png" class="img-responsive" alt="">
+                        <div class="col-xs-6 col-sm-3 placeholder">
+                            <img src="res/photos/network11.png" class="img-responsive" alt="">
                             <h4><%= request.getAttribute("numberOfUsers")%></h4>
                             <span class="text-muted">Number of Users</span>
                         </div>
-                        <div class="col-xs-6 col-sm-4 placeholder">
-                            <img src="res/people8.png" class="img-responsive" alt="">
+                        <div class="col-xs-6 col-sm-3 placeholder">
+                            <img src="res/photos/people8.png" class="img-responsive" alt="">
                             <h4><%= request.getAttribute("numberOfPartners")%></h4>
                             <span class="text-muted">Number of Partners</span>
+                        </div>
+                            <div class="col-xs-6 col-sm-3 placeholder">
+                            <img src="res/photos/money132.png" class="img-responsive" alt="">
+                            <h4><%= request.getAttribute("fundsLeft")%> DKK</h4>
+                            <span class="text-muted">Money left for quarter</span>
                         </div>
                     </div>
 
