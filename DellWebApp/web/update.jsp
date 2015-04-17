@@ -102,6 +102,14 @@
                     <input type="hidden" name="id" value="<%= project.getId() %>" required/>
                     <input type="hidden" name="command" value="save" required/>
                     <button class="btn btn-block btn-primary btn-lg" >Save</button>
+                    <% Boolean enoughmoney = (Boolean) request.getAttribute("enoughmoney"); 
+            if (enoughmoney != null) {
+                if (!enoughmoney) {
+                    %>
+                    <p id="loggedOut">Not enough money for that change!</p>
+                    <%
+                }
+            }%>
                     </form>
                 </div>
             </div>

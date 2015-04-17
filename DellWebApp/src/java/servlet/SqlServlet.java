@@ -44,12 +44,9 @@ public class SqlServlet extends HttpServlet {
                 String id = request.getParameter("id");
                 if (id != null) {
                     showDetails(id, request, response, con);
-                } 
-                else if (personID != null)
-                {
-                    showPersonDetails(personID,request, response, con);
-                }
-                // else go back to view.jsp 
+                } else if (personID != null) {
+                    showPersonDetails(personID, request, response, con);
+                } // else go back to view.jsp 
                 else {
                     showProjects(request, response, con);
                 }
@@ -184,23 +181,29 @@ public class SqlServlet extends HttpServlet {
         }
 
         Long funds = Long.parseLong(request.getParameter("funds"));
+        if (checkFunds(funds, request, response, con)) {
 
-        con.saveProject(Integer.parseInt(request.getParameter("id")), name, desc, partnerID, funds);
+            con.saveProject(Integer.parseInt(request.getParameter("id")), name, desc, partnerID, funds);
+        } else {
+            request.setAttribute("enoughmoney", false);
+            System.out.println("NOT ENOUGH MONEY MAN!");
+            showEdit(request, response, con);
+        }
 
     }
 
-    private void showPersonDetails (String  personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private void showPersonDetails(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Person> persons = getPersons(request, response, con);
         int pid = Integer.parseInt(personID);
         System.out.println("persons.get(personID): " + persons.get(pid).getName() + " Id " + pid);
-        
+
         getProjects(request, response, con);
         request.setAttribute("personName", con.getPerson().getName());
-        request.setAttribute("person", persons.get(pid-1));
+        request.setAttribute("person", persons.get(pid - 1));
         RequestDispatcher rq = request.getRequestDispatcher("personDetails.jsp");
         rq.forward(request, response);
     }
-    
+
     private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
@@ -223,22 +226,16 @@ public class SqlServlet extends HttpServlet {
 
         System.out.println("INT PARTNER SOUT: " + request.getParameter("partnerID"));
 
-
-       
         Project p = null;
 
         if (request.getParameter("funds").length() > 0) {
             Long funds = Long.parseLong(request.getParameter("funds"));
-            if(checkFunds(funds ,request, response, con))
-            {
-            p = con.createProject(name, desc, partner, funds);
-            }
-            else
-            {
+            if (checkFunds(funds, request, response, con)) {
+                p = con.createProject(name, desc, partner, funds);
+            } else {
                 request.setAttribute("enoughmoney", false);
                 System.out.println("NOT ENOUGH MONEY MAN!");
-              
-                
+                showCreate(request, response, con);
             }
         } else {
             p = con.createProject(name, desc, partner);
@@ -246,29 +243,29 @@ public class SqlServlet extends HttpServlet {
 
         if (p == null) {
             success = false;
-        request.setAttribute("pro", success);
-        return;
+            request.setAttribute("pro", success);
+            return;
         } else {
             createStateChange(request, response, con);
 
-        request.setAttribute("project", p);
+            request.setAttribute("project", p);
         }
 
         request.setAttribute("pro", success);
         request.setAttribute("project", p);
-    
+
     }
 
-     private boolean checkFunds(long funds, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private boolean checkFunds(long funds, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects = getProjects(request, response, con);
         long totalFundsAllocated = funds;
         for (Project p : projects) {
             totalFundsAllocated = totalFundsAllocated + p.getFundsAllocated();
         }
 
-            System.out.println("Total funds from projects: "+totalFundsAllocated);
+        System.out.println("Total funds from projects: " + totalFundsAllocated);
         if (totalFundsAllocated > getFundsAllocated(request, response, con)) {
-            System.out.println("Total funds from db: "+getFundsAllocated(request, response, con));
+            System.out.println("Total funds from db: " + getFundsAllocated(request, response, con));
             return false;
         } else {
             return true;
@@ -278,19 +275,21 @@ public class SqlServlet extends HttpServlet {
     private long getFundsAllocated(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getFundsAllocated();
     }
+
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
 
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("moneyLeft", (long)con.getFundsAllocated());
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }
-    
+
     private void showPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getPersons(request, response, con);
-        
+
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getPerson().getName());
@@ -299,7 +298,6 @@ public class SqlServlet extends HttpServlet {
         RequestDispatcher rq = request.getRequestDispatcher("viewPersons.jsp");
         rq.forward(request, response);
     }
-    
 
     private ArrayList<Project> getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects;
@@ -321,17 +319,17 @@ public class SqlServlet extends HttpServlet {
     }
 
     private ArrayList<Person> getPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        
+
         ArrayList<Person> persons = con.getPersons();
-        
+
         if (persons.size() <= 0) {
             System.out.println("Persons: Empty List");
         }
         request.setAttribute("persons", persons);
-        
+
         return persons;
     }
-    
+
     private ArrayList<String> getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> stateNames = con.getStateNames();
 

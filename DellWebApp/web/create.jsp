@@ -92,11 +92,11 @@
                         <div><h3></h3></div>
                         <input type="hidden" name="command" value="create" required/>
                         <button class="btn btn-block btn-primary btn-lg" >Create</button>
-                         <% Boolean enoughmoney = (Boolean) request.getAttribute("enougmoney"); 
+                         <% Boolean enoughmoney = (Boolean) request.getAttribute("enoughmoney"); 
             if (enoughmoney != null) {
                 if (!enoughmoney) {
                     %>
-                    <p id="loggedOut">Not enough money!</p>
+                    <p id="loggedOut">Not enough money for that project!</p>
                     <%
                 }
             }%>
