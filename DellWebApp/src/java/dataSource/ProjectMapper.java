@@ -206,6 +206,70 @@ public class ProjectMapper {
 
         return projects;
     }
+    
+    public ArrayList<Project> getProjectsMyAction(Connection con, int partnerID) {
+        System.out.println("PM partnerID: "+partnerID);
+        ArrayList<Project> projects = new ArrayList<>();
+
+        String sqlString1 = "select * from Project PR join partner PA on PR.fkpartnerid = pa.partnerid where partnerid = "+ partnerID +" and PR.FKPROJECTSTATEID in (3,5,6)";
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                projects.add(new Project(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getLong(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13)
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return projects;
+    }
+    public ArrayList<Project> getProjectsMyAction(Connection con) {
+        ArrayList<Project> projects = new ArrayList<>();
+
+        String sqlString1 = "select * from Project where FKPROJECTSTATEID in (1,2,4,7,8) order by datelastedit DESC";
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                projects.add(new Project(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getLong(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13)
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return projects;
+    }
 
     public boolean createStateChange(Project p, int personID, Connection con) {
         int rowsInserted = 0;

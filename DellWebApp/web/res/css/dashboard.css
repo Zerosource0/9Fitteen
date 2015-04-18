@@ -138,6 +138,7 @@ table#example {
 }
 #example a {
     color: black; 
+    width: 50px;
 
 }
 #example a:hover {

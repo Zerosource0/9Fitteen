@@ -40,6 +40,12 @@ public class DBFacade {
     public ArrayList<Project> getProjects(){
         return pm.getProjects(con);
     }
+    public ArrayList<Project> getProjectsMyAction(int partnerID){
+        return pm.getProjectsMyAction(con, partnerID);
+    }
+    public ArrayList<Project> getProjectsMyAction(){
+        return pm.getProjectsMyAction(con);
+    }
     public ArrayList<Project> getProjects(int partnerID){
         System.out.println("DBF Partner ID"+partnerID);
         return pm.getProjects(con, partnerID);

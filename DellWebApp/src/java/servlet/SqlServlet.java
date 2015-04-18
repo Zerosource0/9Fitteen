@@ -6,7 +6,6 @@ import Data.Person;
 import Data.Project;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.function.Predicate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -156,7 +155,7 @@ public class SqlServlet extends HttpServlet {
         int state = project.getFkProjetStateID();
         //next
         if (direction == 1) {
-            if (state < 8) {
+            if (state < 9) {
                 state = state + direction;
                 project.setFkProjetStateID(state);
             }
@@ -278,7 +277,8 @@ public class SqlServlet extends HttpServlet {
 
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
-
+        getProjectsMyAction(request, response, con);
+        
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getPerson().getName());
@@ -310,8 +310,27 @@ public class SqlServlet extends HttpServlet {
         if (projects.size() <= 0) {
             System.out.println("Empty List");
         }
+        
         request.setAttribute("partnerID", request.getSession().getAttribute("partnerID"));
         request.setAttribute("projects", projects);
+        getStateNames(request, response, con);
+        getPartnerInfo(request, response, con);
+
+        return projects;
+    }
+    private ArrayList<Project> getProjectsMyAction(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        ArrayList<Project> projects;
+        
+            if ((int) request.getSession().getAttribute("partnerID") != 1) {
+            projects = con.getProjectsMyAction(((int) request.getSession().getAttribute("partnerID")));
+        } else {
+            projects = con.getProjectsMyAction();
+        }
+
+        if (projects.size() <= 0) {
+            System.out.println("My action - Empty List");
+        }
+        request.setAttribute("projectsMyAction", projects);
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
 

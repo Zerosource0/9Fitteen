@@ -27,6 +27,7 @@
 
     <body>
         <% ArrayList<Project> projects = (ArrayList<Project>) request.getAttribute("projects");
+        ArrayList<Project> projectsMyAction = (ArrayList<Project>) request.getAttribute("projectsMyAction");
             ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
             ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
         %> 
@@ -95,7 +96,8 @@
                         </div>
                     </div>
 
-                    <h2 class="sub-header">Recent Projects</h2>
+                            
+                            <h2 class="sub-header">Projects needing my actions</h2>
                     <div class="table-responsive">
                         <table  class="table table-striped" id="example">
                             <thead>
@@ -119,11 +121,41 @@
                                 <%      }
                                     }
                                 %>
+                               
+                                <%
+                                    for (Project p : projectsMyAction) {
+
+                                %> <tr> <%
+                                    %> <td width="35%" > <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
+                                    %> <td> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
+                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
+                                    %> <td> <%= p.getDateCreated()%> </td> <%
+                                    %> <td> <%= p.getDateLastEdit()%> </td> </tr> <%
+                                        }
+                                    %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h2 class="sub-header">All My Projects</h2>
+                    <div class="table-responsive">
+                        <table  class="table table-striped" id="example">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Project State</th>
+                                    <th>Partner</th>
+                                    <th>Date Created</th>
+                                    <th>Last Edited</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                               
                                 <%
                                     for (Project p : projects) {
 
                                 %> <tr> <%
-                                    %> <td> <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
+                                    %> <td width="35%" > <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
                                     %> <td> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
                                     %> <td> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
                                     %> <td> <%= p.getDateCreated()%> </td> <%
