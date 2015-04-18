@@ -158,12 +158,20 @@ public class SqlServlet extends HttpServlet {
             if (state < 9) {
                 state = state + direction;
                 project.setFkProjetStateID(state);
+                if (state==9)
+            {
+                useFunds((int) project.getFundsAllocated(), request, response, con);
+            }
             }
         } //back
         else if (direction == -1) {
             if (state > 0) {
                 state = state + direction;
                 project.setFkProjetStateID(state);
+                if(state==8)
+            {
+               useFunds(-(int) project.getFundsAllocated(), request, response, con); 
+            }
             }
         }
 
@@ -259,7 +267,22 @@ public class SqlServlet extends HttpServlet {
         ArrayList<Project> projects = getProjects(request, response, con);
         long totalFundsAllocated = funds;
         for (Project p : projects) {
-            totalFundsAllocated = totalFundsAllocated + p.getFundsAllocated();
+            if(p.getFkProjetStateID()!=9)
+            {
+                if(request.getParameter("id")==null)
+                {
+                    totalFundsAllocated = totalFundsAllocated + p.getFundsAllocated();
+                }
+                else
+                {
+                    if(p.getId()!= Integer.parseInt(request.getParameter("id")))
+                    {
+                totalFundsAllocated = totalFundsAllocated + p.getFundsAllocated();
+                        
+                    }
+                }
+                
+            }
         }
 
         System.out.println("Total funds from projects: " + totalFundsAllocated);
@@ -274,7 +297,10 @@ public class SqlServlet extends HttpServlet {
     private long getFundsAllocated(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getFundsAllocated();
     }
-
+    
+    private void useFunds(int amount, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException{
+        con.useFunds(amount);
+    }
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
         getProjectsMyAction(request, response, con);

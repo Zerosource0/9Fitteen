@@ -96,5 +96,9 @@ public class DBFacade {
     {
         return pm.getFundsAllocated(con);
     }
+         public void useFunds(int amount)
+    {
+        pm.useFunds(amount, con);
+    }
 
 }

@@ -456,4 +456,18 @@ public class ProjectMapper {
         return FundsLeft;
     }
 
+    
+        public int useFunds(int amount, Connection con) {
+        int FundsLeft = 0;
+        String sqlString1 = "update QUARTER SET totalfund = totalfund - "+amount;
+
+        try (PreparedStatement pre2 = con.prepareStatement(sqlString1);
+                ResultSet rs2 = pre2.executeQuery();) {
+            rs2.next();
+            FundsLeft = rs2.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return FundsLeft;
+    }
 }

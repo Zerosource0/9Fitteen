@@ -97,6 +97,10 @@ public class Controller {
     {
         return dbf.getFundsAllocated();
     }
+     public void useFunds(int amount)
+    {
+        dbf.useFunds(amount);
+    }
     
     public boolean logIn(String userName, String password) {
         person = dbf.logIn(userName, password);
