@@ -152,7 +152,7 @@ public class ProjectMapper {
         
         String sqlString = "select person.*, PersonType.PERSONTYPENAME " +
                             "from person, PersonType " +
-                            "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID";
+                            "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID ORDER BY personid";
         
         try (PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()){
