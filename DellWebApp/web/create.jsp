@@ -1,6 +1,5 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Data.Partner"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +33,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                       <li><a href="#">Settings</a></li>
+                       <li><a href="Dashboard?command=settings">Settings</a></li>
                         <li><a href="Dashboard?command=logout">(Logged in as: <%
                             int firstSpace = ((String) request.getAttribute("personName")).indexOf(' ');
                                 String firstName = ((String) request.getAttribute("personName")).substring(0,firstSpace);%>
@@ -56,6 +55,7 @@
                     </ul>
                     <ul class="nav nav-sidebar">
                         <li class="active"><a href="Dashboard?command=showCreate">Create New Project</a></li>
+                        <li><a href="Dashboard?command=showPersons">Show Users</a></li>
                         
                     </ul>
                     <ul class="nav nav-sidebar">

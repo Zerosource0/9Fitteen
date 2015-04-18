@@ -39,7 +39,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="Dashboard?command=settings">Settings</a></li>
                         <li><a href="Dashboard?command=logout">(Logged in as: <%
                             int firstSpace = ((String) request.getAttribute("personName")).indexOf(' ');
                                 String firstName = ((String) request.getAttribute("personName")).substring(0,firstSpace);%>
@@ -56,13 +56,13 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
+                        <li><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
 
                     </ul>
                     <ul class="nav nav-sidebar">
 
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
-                        <li><a href="Dashboard?command=showPersons">Show Users</a></li>
+                        <li class="active"><a href="Dashboard?command=showPersons">Show Users</a></li>
 
                     </ul>
                     <ul class="nav nav-sidebar">

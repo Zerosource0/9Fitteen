@@ -92,6 +92,8 @@ public class SqlServlet extends HttpServlet {
                             updateProjectState(1, Integer.parseInt(id2), request, response, con);
                             showDetails(id2, request, response, con);
                             break;
+                        case "settings":
+                            showSettings(request, response, con);
                         case "back":
                             String id3 = request.getParameter("id");
                             updateProjectState(-1, Integer.parseInt(id3), request, response, con);
@@ -452,6 +454,14 @@ public class SqlServlet extends HttpServlet {
         Project project = getProject(projectID, request, response, con);
 
         return con.createStateChange(project, (int) request.getSession().getAttribute("personID"));
+    }
+    
+    private void showSettings(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        
+        request.setAttribute("personName", con.getPerson().getName());
+        
+        RequestDispatcher rq = request.getRequestDispatcher("settings.jsp");
+        rq.forward(request, response);
     }
 
     // Returns a single project, selected by ID
