@@ -33,7 +33,7 @@ public class SqlServlet extends HttpServlet {
 
         // Determine what action will be executed by the Servlet
         String command = request.getParameter("command");
-
+        
         // If there is no command, check for other parameters
         if (command == null) {
             if (accessAllowed(request, response, con)) {
@@ -262,6 +262,7 @@ public class SqlServlet extends HttpServlet {
         int pid = Integer.parseInt(partnerID);
         request.setAttribute("partner", partners.get(pid-1));
         request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
         getProjects(request, response, con);
         
         RequestDispatcher rq = request.getRequestDispatcher("partnerDetails.jsp");
@@ -275,6 +276,7 @@ public class SqlServlet extends HttpServlet {
         getProjects(request, response, con);
         request.setAttribute("personName", con.getPerson().getName());
         request.setAttribute("person", persons.get(pid - 1));
+        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("personDetails.jsp");
         rq.forward(request, response);
     }
@@ -288,6 +290,7 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("personTypes", con.getPersonTypes());
         request.setAttribute("personName", con.getPerson().getName());
         request.setAttribute("partner", partners.get(pid - 1));
+        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("partnerUpdate.jsp");
         rq.forward(request, response);
     }
@@ -301,6 +304,7 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("personTypes", con.getPersonTypes());
         request.setAttribute("personName", con.getPerson().getName());
         request.setAttribute("person", persons.get(pid - 1));
+        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("personUpdate.jsp");
         rq.forward(request, response);
     }
@@ -308,9 +312,10 @@ public class SqlServlet extends HttpServlet {
     private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
-
+        
         request.setAttribute("project", getProject(Integer.parseInt(request.getParameter("id")), request, response, con));
         request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("update.jsp");
         rq.forward(request, response);
     }
@@ -443,6 +448,7 @@ public class SqlServlet extends HttpServlet {
         }
         
         request.setAttribute("partnerID", request.getSession().getAttribute("partnerID"));
+        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
         request.setAttribute("projects", projects);
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);

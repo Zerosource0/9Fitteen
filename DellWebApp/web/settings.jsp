@@ -53,11 +53,7 @@
                         <li><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
                         
                     </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
-                        <li><a href="Dashboard?command=showPersons">Show Users</a></li>
-                        
-                    </ul>
+                    
                     <ul class="nav nav-sidebar">
                         
                     </ul>

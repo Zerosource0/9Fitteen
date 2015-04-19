@@ -58,14 +58,17 @@
                         <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
 
                     </ul>
-                    <ul class="nav nav-sidebar">
+                    <%
+                         Integer a=0;
+                         a=(Integer) request.getAttribute("rights");
+                        %>
+                        <%if (a!=5) 
+                        {%>
+                        
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
                         <li><a href="Dashboard?command=showPersons">Show Users</a></li>
-
-                    </ul>
-                    <ul class="nav nav-sidebar">
-
-
+                        <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <%}%>
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

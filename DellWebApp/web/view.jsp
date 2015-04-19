@@ -60,10 +60,17 @@
 
                     </ul>
                     <ul class="nav nav-sidebar">
-
+                        <%
+                         Integer a=0;
+                         a=(Integer) request.getAttribute("rights");
+                        %>
+                        <%if (a!=5) 
+                        {%>
+                        
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
                         <li><a href="Dashboard?command=showPersons">Show Users</a></li>
                         <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <%}%>
                     </ul>
                     <ul class="nav nav-sidebar">
 
