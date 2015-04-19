@@ -1,3 +1,4 @@
+<%@page import="Data.PersonType"%>
 <%@page import="Data.Person"%>
 <%@page import="Data.Partner"%>
 <%@page import="java.util.Enumeration"%>
@@ -16,7 +17,7 @@
         <meta name="author" content="9 Fitteen">
         <link rel="icon" href="/favicon.ico">
 
-        <title>Dell User Details</title>
+        <title>Dell Partner Details</title>
 
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
         <link href="res/css/dashboard.css" rel="stylesheet">
@@ -61,8 +62,8 @@
                     </ul>
                     <ul class="nav nav-sidebar">
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
-                        <li class="active"><a href="Dashboard?command=showPersons">Show Users</a></li>
-                        <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <li><a href="Dashboard?command=showPersons">Show Users</a></li>
+                        <li class="active"><a href="Dashboard?command=showPartners">Show Partners</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
 
@@ -70,21 +71,28 @@
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <% Person person = (Person) request.getAttribute("person");
-                       ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
+                    <form class="form-signin" action="Dashboard" method="POST">
+                    <% 
+                       Partner partner = (Partner) request.getAttribute("partner");
                     %>
-                    <h1 class="page-header"><%= person.getName() %></h1>
+                    <h1 class="page-header"><input class="form-control0" type="text" name="name" value="<%= partner.getPartnerName() %>"></h1>
 
-                    <p> <b>User ID: </b><%= person.getID() %></p>
+                    <p> <b>Partner ID: </b><%= partner.getPartnerID() %></p>
+    
+                    <p> <b>Address: </b> </p>
+                    <p> <b><input class="form-control0" type="text" name="address" value="<%= partner.getPartnerAddress() %>"></p>
                     
-                    <p> <b>User Type: </b><%= person.getPersonTypeName() %></p>
+                    <p> <b>Zip Code: </b> </p>
+                    <p> <b><input class="form-control0" type="text" name="zip" value="<%= partner.getPartnerZip() %>"></p>    
+                            
+                    <p> <b>Country: </b> </p>
+                    <p> <b><input class="form-control0" type="text" name="country" value="<%= partner.getPartnerCountry() %>"></p>
+                            
+                    <input type="hidden" name="partnerID" value="<%= partner.getPartnerID() %>" required/>
+                    <input type="hidden" name="command" value="savePartner" required/>
+                    <button class="btn btn-block btn-primary btn-lg" >Save</button>
                     
-                    <p> <b>Partner: </b> <%= partnerInfo.get(person.getFkPartnerID() - 1).getPartnerName() %></p>                    
-                    
-                    <p> <b>Phone Number: </b><%= person.getPhoneNumber() %></p>
-                    
-                    <a href="Dashboard?command=editPerson&personID=<%=person.getID()%>" ><input type="button" value="Edit"></a>
-                    
+                    </form>
                 </div>
             </div>
         </div>

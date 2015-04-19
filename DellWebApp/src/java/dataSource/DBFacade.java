@@ -109,4 +109,7 @@ public class DBFacade {
     public boolean savePerson(Person per) {
         return pm.savePerson(per, con);
     }
+    public boolean savePartner(Partner partner) {
+        return pm.savePartner(partner, con);
+    }
 }

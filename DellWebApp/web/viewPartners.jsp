@@ -16,7 +16,7 @@
         <meta name="author" content="9 Fitteen">
         <link rel="shortcut icon" href="http://i.dell.com/images/global/branding/dellecomicon.ico" type="image/x-icon">
 
-        <title>Dell User Dashboard</title>
+        <title>Dell Partner Dashboard</title>
 
         <link href="res/css/bootstrap.min.css" rel="stylesheet">
 
@@ -62,8 +62,8 @@
                     <ul class="nav nav-sidebar">
 
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
-                        <li class="active"><a href="Dashboard?command=showPersons">Show Users</a></li>
-                        <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <li><a href="Dashboard?command=showPersons">Show Users</a></li>
+                        <li class="active"><a href="Dashboard?command=showPartners">Show Partners</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
 
@@ -91,16 +91,16 @@
                         </div>
                     </div>
 
-                    <h2 class="sub-header">Users</h2>
+                    <h2 class="sub-header">Partners</h2>
                     <div class="table-responsive">
                         <table  class="table table-striped" id="example">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>User Type</th>
-                                    <th>Partner</th>
-                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>Zip Code</th>
+                                    <th>Country</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,14 +116,14 @@
                                     }
                                 %>
                                 <%  
-                                    for (Person person : persons) {
+                                    for (Partner partner : partnerInfo) {
 
                                 %> <tr> <%
-                                    %> <td> <a href="Dashboard?personID=<%=person.getID()%>" ><%= person.getID()%></a> </td> <%
-                                    %> <td> <%= person.getName()%> </td> <%
-                                    %> <td> <%= person.getPersonTypeName()%> </td> <%
-                                    %> <td> <%= partnerInfo.get(person.getFkPartnerID() - 1).getPartnerName()%> </td> <%
-                                    %> <td> <%= person.getPhoneNumber()%> </td> <%
+                                    %> <td> <a href="Dashboard?partnerID=<%=partner.getPartnerID()%>" ><%= partner.getPartnerID()%></a> </td> <%
+                                    %> <td> <%= partner.getPartnerName()%> </td> <%
+                                    %> <td> <%= partner.getPartnerAddress()%> </td> <%
+                                    %> <td> <%= partner.getPartnerZip()%> </td> <%
+                                    %> <td> <%= partner.getPartnerCountry()%> </td> <%
                                         }
                                     %>
                             </tbody>

@@ -325,6 +325,26 @@ public class ProjectMapper {
         return rowsUpdated == 1;
     }
 
+    public boolean savePartner(Partner partner, Connection con){
+    
+        int rowsUpdated = 0;
+        
+        String sqlString = "update partner set partnername = ?, partneraddress = ?, partnerzipcode = ?, partnercountry = ? where partnerid = "+ partner.getPartnerID();
+        try (PreparedStatement statement = con.prepareStatement(sqlString)) {
+            statement.setString(1, partner.getPartnerName());
+            statement.setString(2, partner.getPartnerAddress());
+            statement.setInt(3, partner.getPartnerZip());
+            statement.setString(4, partner.getPartnerCountry());
+
+            rowsUpdated = statement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rowsUpdated == 1;
+    }
+        
+    
     public boolean savePerson(Person per, Connection con)
     {
         int rowsUpdated = 0;

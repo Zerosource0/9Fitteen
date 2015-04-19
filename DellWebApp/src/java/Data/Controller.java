@@ -46,7 +46,7 @@ public class Controller {
     public Project saveProject(int projectID, String projectName, String desc, int partnerID,  Long funds){
         Project p = new Project(projectID, projectName, desc, partnerID, funds);
         boolean status = dbf.saveProject(p);
-        System.out.println("SOUT STATUS: " + status);
+       
         if(!status) {
             p = null;
         }
@@ -56,13 +56,22 @@ public class Controller {
     public Person savePerson(int personID, String name, int phoneNumber, int personTypeID, int partnerID){
         Person per = new Person(personID, name, phoneNumber, personTypeID, partnerID);
         boolean status = dbf.savePerson(per);
-        System.out.println("SOUT STATUS: " + status);
+        
         if(!status) {
             per = null;
         }
         return per;
     }
     
+    public Partner savePartner(int partnerID, String name, String address, int zip, String country){
+        Partner partner = new Partner(partnerID, name, address, zip, country);
+        boolean status = dbf.savePartner(partner);
+        
+        if(!status) {
+            partner = null;
+        }
+        return partner;
+    }
     
     public Project createProject(String projectName, String description, int fkPartnerId) {
         Project p = new Project(projectName, description, fkPartnerId);
@@ -154,5 +163,4 @@ public class Controller {
     {
         return dbf.getPersonTypes();
     }
-    
 }
