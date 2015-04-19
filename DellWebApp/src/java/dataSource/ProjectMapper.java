@@ -2,6 +2,7 @@ package dataSource;
 
 import Data.Partner;
 import Data.Person;
+import Data.PersonType;
 import Data.Project;
 import java.sql.Connection;
 
@@ -146,6 +147,26 @@ public class ProjectMapper {
         return projects;
     }
 
+    public ArrayList<PersonType> getPersonTypes(Connection con) {
+       
+        ArrayList<PersonType> personTypes = new ArrayList<>();
+        
+        String sqlString = "select * from persontype";
+        
+       try (PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()){
+                while(rs.next()){
+                    personTypes.add(
+                            new PersonType(rs.getInt(1),rs.getString(2))                   
+                    );
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return personTypes;
+    }
+    
     public ArrayList<Person> getPersons(Connection con) {
         
         ArrayList<Person> persons = new ArrayList<>();
@@ -304,6 +325,26 @@ public class ProjectMapper {
         return rowsUpdated == 1;
     }
 
+    public boolean savePerson(Person per, Connection con)
+    {
+        int rowsUpdated = 0;
+        
+        String sqlString = "update person set personname = ?, personphonenumber = ?, fkpersontypeid = ?, fkpartnerid = ? where personid = " + per.getID();
+    
+        try (PreparedStatement statement = con.prepareStatement(sqlString)) {
+            statement.setString(1, per.getName());
+            statement.setInt(2, per.getPhoneNumber());
+            statement.setInt(3, per.getFkPersonTypeID());
+            statement.setInt(4, per.getFkPartnerID());
+
+            rowsUpdated = statement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rowsUpdated == 1;
+    }
+    
     public boolean saveProject(Project p, Connection con) {
         int rowsUpdated = 0;
 

@@ -46,6 +46,13 @@ public class Person {
         this.fkPartnerID = fkPartnerID;
         this.PersonTypeName = PersonTypeName;
     }
+    public Person(int id, String name, int phoneNumber, int fkPersonTypeID, Integer fkPartnerID) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.fkPersonTypeID = fkPersonTypeID;
+        this.fkPartnerID = fkPartnerID;
+    }
 
     public int getID() {
         return this.id;

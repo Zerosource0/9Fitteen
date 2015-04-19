@@ -76,6 +76,10 @@ public class SqlServlet extends HttpServlet {
                         case "showCreate":
                             showCreate(request, response, con);
                             break;
+                        case "editPerson":
+                            String personID = request.getParameter("personID");
+                            showPersonEdit(personID, request, response, con);
+                            break;
                         case "edit":
                             showEdit(request, response, con);
                             break;
@@ -83,6 +87,11 @@ public class SqlServlet extends HttpServlet {
                             saveProject(request, response, con);
                             String id = request.getParameter("id");
                             showDetails(id, request, response, con);
+                            break;
+                        case "savePerson":
+                            savePerson(request, response, con);
+                            personID = request.getParameter("personID");
+                            showPersonDetails(personID, request, response, con);
                             break;
                         case "logout":
                             logOut(request, response, con);
@@ -150,6 +159,8 @@ public class SqlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    
     private void updateProjectState(int direction, int id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         Project project = getProject(id, request, response, con);
@@ -180,6 +191,18 @@ public class SqlServlet extends HttpServlet {
         con.updateProjectState(project);
         updateStateChange(project.getId(), request, response, con);
     }
+    
+    private void savePerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
+        int personTypeID = Integer.parseInt(request.getParameter("personTypeID"));
+        int partnerID = 1;
+        if (request.getParameter("partnerID") != null) {
+            partnerID = Integer.parseInt(request.getParameter("partnerID")); 
+        }
+        con.savePerson(Integer.parseInt(request.getParameter("personID")), name, phoneNumber, personTypeID, partnerID);
+    }
+    
 
     private void saveProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
@@ -213,6 +236,19 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    private void showPersonEdit(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        ArrayList<Person> persons = getPersons(request, response, con);
+        int pid = Integer.parseInt(personID);
+        System.out.println("persons.get(personID): " + persons.get(pid).getName() + " Id " + pid);
+
+        getProjects(request, response, con);
+        request.setAttribute("personTypes", con.getPersonTypes());
+        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("person", persons.get(pid - 1));
+        RequestDispatcher rq = request.getRequestDispatcher("personUpdate.jsp");
+        rq.forward(request, response);
+    }
+    
     private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);

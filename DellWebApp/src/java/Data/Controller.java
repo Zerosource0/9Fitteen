@@ -53,6 +53,17 @@ public class Controller {
         return p;
     }
     
+    public Person savePerson(int personID, String name, int phoneNumber, int personTypeID, int partnerID){
+        Person per = new Person(personID, name, phoneNumber, personTypeID, partnerID);
+        boolean status = dbf.savePerson(per);
+        System.out.println("SOUT STATUS: " + status);
+        if(!status) {
+            per = null;
+        }
+        return per;
+    }
+    
+    
     public Project createProject(String projectName, String description, int fkPartnerId) {
         Project p = new Project(projectName, description, fkPartnerId);
         boolean status = dbf.createProject(p);
@@ -139,5 +150,9 @@ public class Controller {
     {
         return dbf.getPersons();
     }
-
+    public ArrayList<PersonType> getPersonTypes()
+    {
+        return dbf.getPersonTypes();
+    }
+    
 }

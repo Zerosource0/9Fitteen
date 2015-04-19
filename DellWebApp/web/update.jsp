@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <form class="form-signin" action="Dashboard" method="POST">
-                    <% Project project = (Project) request.getAttribute("project");
+                    <%  Project project = (Project) request.getAttribute("project");
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                     %>

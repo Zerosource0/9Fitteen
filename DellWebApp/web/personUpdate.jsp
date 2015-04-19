@@ -1,3 +1,4 @@
+<%@page import="Data.PersonType"%>
 <%@page import="Data.Person"%>
 <%@page import="Data.Partner"%>
 <%@page import="java.util.Enumeration"%>
@@ -70,21 +71,50 @@
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <% Person person = (Person) request.getAttribute("person");
+                    <form class="form-signin" action="Dashboard" method="POST">
+                    <% 
+                       ArrayList<PersonType> personTypes = (ArrayList<PersonType>) request.getAttribute("personTypes");
+                       Person person = (Person) request.getAttribute("person");
                        ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                     %>
-                    <h1 class="page-header"><%= person.getName() %></h1>
+                    <h1 class="page-header"><input class="form-control0" type="text" name="name" value="<%= person.getName() %>"></h1>
 
                     <p> <b>User ID: </b><%= person.getID() %></p>
                     
-                    <p> <b>User Type: </b><%= person.getPersonTypeName() %></p>
+                    <p> <b>User Type: </b></p>
+                    <select name="personTypeID" class="form-control">
+                            <option value="" disabled>Please Select a User Type</option>
+                            <% 
+                            
+                            for (PersonType pt : personTypes){
+                            %>
+                            
+                            <option value="<%= pt.getPersonTypeID()%>" <% if((int) person.getFkPersonTypeID() == pt.getPersonTypeID() ) { %> selected <% } %>  > <%=pt.getPersonTypeName()%> </option>
+                            
+                            <% } %> 
+                    </select>     
                     
-                    <p> <b>Partner: </b> <%= partnerInfo.get(person.getFkPartnerID() - 1).getPartnerName() %></p>                    
+                    <p> <b>Partner: </b> </p>
+                    <select name="partnerID" class="form-control">
+                            <option value="" disabled>Please Select a Partner...</option>
+                            <% 
+                            
+                            for (Partner part : partnerInfo){
+                            %>
+                            
+                            <option value="<%= part.getPartnerID()%>" <% if((int) person.getFkPartnerID() == part.getPartnerID() ) { %> selected <% } %>  > <%=part.getPartnerName()%> </option>
+                            
+                            <% } %> 
+                    </select>                    
                     
-                    <p> <b>Phone Number: </b><%= person.getPhoneNumber() %></p>
+                     <p> <b>Phone Number: </b> </p>
+                    <p> <b><input class="form-control0" type="text" name="phoneNumber" value="<%= person.getPhoneNumber() %>"></p>
                     
-                    <a href="Dashboard?command=editPerson&personID=<%=person.getID()%>" ><input type="button" value="Edit"></a>
+                    <input type="hidden" name="personID" value="<%= person.getID() %>" required/>
+                    <input type="hidden" name="command" value="savePerson" required/>
+                    <button class="btn btn-block btn-primary btn-lg" >Save</button>
                     
+                    </form>
                 </div>
             </div>
         </div>
