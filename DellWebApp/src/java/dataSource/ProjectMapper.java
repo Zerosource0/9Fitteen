@@ -148,58 +148,57 @@ public class ProjectMapper {
     }
 
     public ArrayList<PersonType> getPersonTypes(Connection con) {
-       
+
         ArrayList<PersonType> personTypes = new ArrayList<>();
-        
+
         String sqlString = "select * from persontype";
-        
-       try (PreparedStatement statement = con.prepareStatement(sqlString);
-                ResultSet rs = statement.executeQuery()){
-                while(rs.next()){
-                    personTypes.add(
-                            new PersonType(rs.getInt(1),rs.getString(2))                   
-                    );
-                }
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                personTypes.add(
+                        new PersonType(rs.getInt(1), rs.getString(2))
+                );
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return personTypes;
     }
-    
+
     public ArrayList<Person> getPersons(Connection con) {
-        
+
         ArrayList<Person> persons = new ArrayList<>();
-        
-        String sqlString = "select person.*, PersonType.PERSONTYPENAME " +
-                            "from person, PersonType " +
-                            "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID ORDER BY personid";
-        
+
+        String sqlString = "select person.*, PersonType.PERSONTYPENAME "
+                + "from person, PersonType "
+                + "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID ORDER BY personid";
+
         try (PreparedStatement statement = con.prepareStatement(sqlString);
-                ResultSet rs = statement.executeQuery()){
-                while(rs.next()){
-                    persons.add(new Person(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getInt(3),
-                            rs.getInt(4),
-                            rs.getInt(5),
-                            rs.getString(6)
-                    ));
-                }
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                persons.add(new Person(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6)
+                ));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return persons;
     }
-    
-    
+
     public ArrayList<Project> getProjects(Connection con, int partnerID) {
-        System.out.println("PM partnerID: "+partnerID);
+        System.out.println("PM partnerID: " + partnerID);
         ArrayList<Project> projects = new ArrayList<>();
 
-        String sqlString1 = "SELECT * FROM PROJECT PR JOIN PARTNER PA ON PR.FKPARTNERID = PA.PARTNERID WHERE PA.PARTNERID = "+partnerID;
+        String sqlString1 = "SELECT * FROM PROJECT PR JOIN PARTNER PA ON PR.FKPARTNERID = PA.PARTNERID WHERE PA.PARTNERID = " + partnerID;
 
         try (PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
@@ -227,12 +226,12 @@ public class ProjectMapper {
 
         return projects;
     }
-    
+
     public ArrayList<Project> getProjectsMyAction(Connection con, int partnerID) {
-        System.out.println("PM partnerID: "+partnerID);
+        System.out.println("PM partnerID: " + partnerID);
         ArrayList<Project> projects = new ArrayList<>();
 
-        String sqlString1 = "select * from Project PR join partner PA on PR.fkpartnerid = pa.partnerid where partnerid = "+ partnerID +" and PR.FKPROJECTSTATEID in (3,5,6)";
+        String sqlString1 = "select * from Project PR join partner PA on PR.fkpartnerid = pa.partnerid where partnerid = " + partnerID + " and PR.FKPROJECTSTATEID in (3,5,6)";
 
         try (PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
@@ -260,6 +259,7 @@ public class ProjectMapper {
 
         return projects;
     }
+
     public ArrayList<Project> getProjectsMyAction(Connection con) {
         ArrayList<Project> projects = new ArrayList<>();
 
@@ -325,11 +325,11 @@ public class ProjectMapper {
         return rowsUpdated == 1;
     }
 
-    public boolean savePartner(Partner partner, Connection con){
-    
+    public boolean savePartner(Partner partner, Connection con) {
+
         int rowsUpdated = 0;
-        
-        String sqlString = "update partner set partnername = ?, partneraddress = ?, partnerzipcode = ?, partnercountry = ? where partnerid = "+ partner.getPartnerID();
+
+        String sqlString = "update partner set partnername = ?, partneraddress = ?, partnerzipcode = ?, partnercountry = ? where partnerid = " + partner.getPartnerID();
         try (PreparedStatement statement = con.prepareStatement(sqlString)) {
             statement.setString(1, partner.getPartnerName());
             statement.setString(2, partner.getPartnerAddress());
@@ -343,14 +343,12 @@ public class ProjectMapper {
         }
         return rowsUpdated == 1;
     }
-        
-    
-    public boolean savePerson(Person per, Connection con)
-    {
+
+    public boolean savePerson(Person per, Connection con) {
         int rowsUpdated = 0;
-        
+
         String sqlString = "update person set personname = ?, personphonenumber = ?, fkpersontypeid = ?, fkpartnerid = ? where personid = " + per.getID();
-    
+
         try (PreparedStatement statement = con.prepareStatement(sqlString)) {
             statement.setString(1, per.getName());
             statement.setInt(2, per.getPhoneNumber());
@@ -364,7 +362,7 @@ public class ProjectMapper {
         }
         return rowsUpdated == 1;
     }
-    
+
     public boolean saveProject(Project p, Connection con) {
         int rowsUpdated = 0;
 
@@ -453,8 +451,7 @@ public class ProjectMapper {
             phoneNumber = rs2.getInt(3);
             rights = rs2.getInt(4);
             fkpartnerid = rs2.getInt(5);
-            if(fkpartnerid==null)
-            {
+            if (fkpartnerid == null) {
                 fkpartnerid = 1;
             }
             sqlString2
@@ -502,7 +499,7 @@ public class ProjectMapper {
         }
         return numberOfPartners;
     }
-    
+
     public int getFundsAllocated(Connection con) {
         int FundsLeft = 0;
         String sqlString1 = "select totalFund from Quarter";
@@ -517,10 +514,9 @@ public class ProjectMapper {
         return FundsLeft;
     }
 
-    
-        public int useFunds(int amount, Connection con) {
+    public int useFunds(int amount, Connection con) {
         int FundsLeft = 0;
-        String sqlString1 = "update QUARTER SET totalfund = totalfund - "+amount;
+        String sqlString1 = "update QUARTER SET totalfund = totalfund - " + amount;
 
         try (PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
@@ -531,4 +527,40 @@ public class ProjectMapper {
         }
         return FundsLeft;
     }
+    
+    public String getPassword(int personID, Connection con) {
+        String password = null;
+        
+        String sqlString = "SELECT PERSONPASSWORD FROM PERSONLOGIN WHERE FKPERSONID = " + personID;
+        
+        try(PreparedStatement pre = con.prepareStatement(sqlString);
+               ResultSet rs = pre.executeQuery() ) {
+            
+            if (rs.next()) {
+                password = rs.getString(1);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return password;
+    }
+    
+    public boolean changePassword(String password, int personID, Connection con) {
+        int rowsUpdated = 0;
+        
+        String sqlString = "UPDATE PERSONLOGIN SET PERSONPASSWORD = '" + password + "' WHERE FKPERSONID = " + personID;
+        
+        try(PreparedStatement statement = con.prepareStatement(sqlString)) {
+            
+            rowsUpdated = statement.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return rowsUpdated == 1;
+    }
+
 }

@@ -8,141 +8,139 @@ package Data;
 import dataSource.DBFacade;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author marcj_000
  */
 public class Controller {
-    
+
     //Singleton
     private static Controller instance;
     private DBFacade dbf;
     private Person person = null;
 
-    private Controller()
-    {
+    private Controller() {
         dbf = DBFacade.getInstance();
     }
 
-    public static Controller getInstance()
-    {
-        if (instance == null)
-        {
+    public static Controller getInstance() {
+        if (instance == null) {
             instance = new Controller();
         }
         return instance;
     }
-   
-    public Project createProject(String projectName, String description, int fkPartnerId, long fundsAllocated){
+
+    public Project createProject(String projectName, String description, int fkPartnerId, long fundsAllocated) {
         Project p = new Project(projectName, description, fkPartnerId, fundsAllocated);
         boolean status = dbf.createProject(p);
-        if(!status) {
+        if (!status) {
             p = null;
         }
         return p;
     }
-    
-    public Project saveProject(int projectID, String projectName, String desc, int partnerID,  Long funds){
+
+    public Project saveProject(int projectID, String projectName, String desc, int partnerID, Long funds) {
         Project p = new Project(projectID, projectName, desc, partnerID, funds);
         boolean status = dbf.saveProject(p);
-       
-        if(!status) {
+
+        if (!status) {
             p = null;
         }
         return p;
     }
-    
-    public Person savePerson(int personID, String name, int phoneNumber, int personTypeID, int partnerID){
+
+    public Person savePerson(int personID, String name, int phoneNumber, int personTypeID, int partnerID) {
         Person per = new Person(personID, name, phoneNumber, personTypeID, partnerID);
         boolean status = dbf.savePerson(per);
-        
-        if(!status) {
+
+        if (!status) {
             per = null;
         }
         return per;
     }
-    
-    public Partner savePartner(int partnerID, String name, String address, int zip, String country){
+
+    public Partner savePartner(int partnerID, String name, String address, int zip, String country) {
         Partner partner = new Partner(partnerID, name, address, zip, country);
         boolean status = dbf.savePartner(partner);
-        
-        if(!status) {
+
+        if (!status) {
             partner = null;
         }
         return partner;
     }
-    
+
     public Project createProject(String projectName, String description, int fkPartnerId) {
         Project p = new Project(projectName, description, fkPartnerId);
         boolean status = dbf.createProject(p);
-        if(!status) {
+        if (!status) {
             p = null;
         }
         return p;
     }
-    
-    public boolean createStateChange(Project p, int personID){
+
+    public boolean createStateChange(Project p, int personID) {
         return dbf.createStateChange(p, personID);
     }
-    
-    public Project getProject(int projectID){
+
+    public Project getProject(int projectID) {
         return dbf.getProject(projectID);
     }
-    public Project getLatestProject(){
+
+    public Project getLatestProject() {
         return dbf.getLatestProject();
     }
-    
-    public ArrayList<Project> getProjects(){
+
+    public ArrayList<Project> getProjects() {
         return dbf.getProjects();
     }
-     public ArrayList<Project> getProjectsMyAction(int partnerID){
+
+    public ArrayList<Project> getProjectsMyAction(int partnerID) {
         return dbf.getProjectsMyAction(partnerID);
     }
-     public ArrayList<Project> getProjectsMyAction(){
+
+    public ArrayList<Project> getProjectsMyAction() {
         return dbf.getProjectsMyAction();
     }
-    public ArrayList<Project> getProjects(int partnerID){
+
+    public ArrayList<Project> getProjects(int partnerID) {
         return dbf.getProjects(partnerID);
     }
-    
-    public ArrayList<String> getStateNames(){
+
+    public ArrayList<String> getStateNames() {
         return dbf.getStateNames();
     }
-    
-    public ArrayList<Partner> getPartnerInfo(){
+
+    public ArrayList<Partner> getPartnerInfo() {
         return dbf.getPartnerInfo();
     }
-    public long getFundsAllocated()
-    {
+
+    public long getFundsAllocated() {
         return dbf.getFundsAllocated();
     }
-     public void useFunds(int amount)
-    {
+
+    public void useFunds(int amount) {
         dbf.useFunds(amount);
     }
-    
+
     public boolean logIn(String userName, String password) {
         person = dbf.logIn(userName, password);
-        
+
         return person != null;
     }
-    
-    
+
     public void logOut() {
         person = null;
     }
-    
-    public int getNumberOfUsers()
-    {
+
+    public int getNumberOfUsers() {
         return dbf.getNumberOfUsers();
     }
-    public int getNumberOfPartners()
-    {
+
+    public int getNumberOfPartners() {
         return dbf.getNumberOfPartners();
     }
-    public Boolean updateProjectState(Project p)
-    {
+
+    public Boolean updateProjectState(Project p) {
         return dbf.updateProjectState(p);
     }
 
@@ -150,17 +148,27 @@ public class Controller {
         return person;
     }
 
-    public void setPerson(Person person) 
-    {
+    public void setPerson(Person person) {
         this.person = person;
     }
-    
-    public ArrayList<Person> getPersons()
-    {
+
+    public ArrayList<Person> getPersons() {
         return dbf.getPersons();
     }
-    public ArrayList<PersonType> getPersonTypes()
-    {
+
+    public ArrayList<PersonType> getPersonTypes() {
         return dbf.getPersonTypes();
+    }
+
+    public boolean checkPassword(String current) {
+        return current.equals(dbf.getPassword(person.getID()));
+    }
+
+    public boolean changePassword(String password, String retype) {
+        if (password.equals(retype)) {
+            return dbf.changePassword(password, person.getID());
+        }
+
+        return false;
     }
 }

@@ -112,4 +112,12 @@ public class DBFacade {
     public boolean savePartner(Partner partner) {
         return pm.savePartner(partner, con);
     }
+    
+    public String getPassword(int personID) {
+        return pm.getPassword(personID, con);
+    }
+    
+    public boolean changePassword(String password, int personID) {
+        return pm.changePassword(password, personID, con);
+    }
 }

@@ -106,8 +106,15 @@ public class SqlServlet extends HttpServlet {
                             savePartner(request, response, con);
                             partnerID = request.getParameter("partnerID");
                             showPartnerDetails(partnerID, request, response, con);
+                            break;
                         case "logout":
                             logOut(request, response, con);
+                            break;
+                        case "password":
+                            String current = request.getParameter("current");
+                            String password = request.getParameter("new");
+                            String retype = request.getParameter("retype");
+                            changePassword(current, password, retype, request, response, con);
                             break;
                         case "next":
                             String id2 = request.getParameter("id");
@@ -116,6 +123,7 @@ public class SqlServlet extends HttpServlet {
                             break;
                         case "settings":
                             showSettings(request, response, con);
+                            break;
                         case "back":
                             String id3 = request.getParameter("id");
                             updateProjectState(-1, Integer.parseInt(id3), request, response, con);
@@ -516,6 +524,30 @@ public class SqlServlet extends HttpServlet {
             RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
             rq.forward(request, response);
         }
+    }
+    
+    private void changePassword(String current, String password, String retype, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        String message = null;
+        if (con.checkPassword(current)) {
+            System.out.println("Password checked ...");
+            if (con.changePassword(password, retype)) {
+                System.out.println("Password updated ...");
+                message = "Password successfully updated!";
+            }
+            else {
+                System.out.println("Update failed ...");
+                message = "Update failed. Try again.";
+            }
+        }
+        else {
+            System.out.println("Check failed ...");
+            message = "The entered password does not match your current one.";
+        }
+        
+        request.setAttribute("message", message);
+        
+        showSettings(request, response, con);
+        
     }
 
     // Retrieves the selected project, gets other essential data and forwards

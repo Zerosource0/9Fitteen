@@ -64,6 +64,20 @@
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <h1 class="page-header">Settings</h1>
+                    
+                    <form class="form-signin" method="POST" action="Dashboard">
+                        <h2 class="form-signin-heading">Password</h2>
+                        <p>Current password:       <input name="current" class="form-inline" type="password" autofocus required></p>
+                        <p>New password:           <input name="new" class="form-inline" type="password" required></p>
+                        <p>Retype new password:    <input name="retype" class="form-inline" type="password" required></p>
+                        <input type="hidden" name="command" value="password">
+                        <% if (request.getAttribute("message") != null) {
+                            
+                        %>
+                        <p><%= (String) request.getAttribute("message") %></p>
+                        <% } %>
+                        <button class="btn btn-block btn-primary btn-lg" >Change password</button>
+                    </form>
                 </div>
             </div>
         </div>
