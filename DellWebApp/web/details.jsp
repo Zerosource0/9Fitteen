@@ -93,7 +93,12 @@
                     <a href="Dashboard?command=edit&id=<%=project.getId()%>" ><input type="button" value="Edit"></a>
                     
                     <% if (project.getFkProjetStateID() < 9) {%>
-                    <a href="Dashboard?command=next&id=<%=project.getId()%>" ><input type="button" value="Next State"></a>
+                        <% if (a!=5 || (a==5 && project.getFkProjetStateID()==3)  
+                                || (a==5 && project.getFkProjetStateID()==5) 
+                                || (a==5 && project.getFkProjetStateID()==6)) 
+                                 {%>
+                            <a href="Dashboard?command=next&id=<%=project.getId()%>" ><input type="button" value="Next State"></a>
+                            <%} %>
                     <% } %>
                     
                     <% if (project.getFkProjetStateID() > 1) {%>
