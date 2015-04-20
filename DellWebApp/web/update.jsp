@@ -82,11 +82,16 @@
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                     %>
+                    <% if (a!=5) {%>
                     <h1 class="page-header"><input class="form-control0" type="text" name="name" value="<%= project.getProjectName() %>"></h1>
-
+                    <% }
+                    else { %>
+                    <h1 class="page-header"><input disabled="" class="form-control0" type="text" name="name" value="<%= project.getProjectName() %>"></h1>
+                    <% } %>
                     <p> <b>Project State: </b><%= stateNames.get(project.getFkProjetStateID() - 1) %></p>
                     
                     <p> <b>Partner: </b> </p>
+                    <% if (a!=5) {%>
                     <select name="partnerID" class="form-control">
                             <option value="" disabled>Please Select a Partner...</option>
                             <% 
@@ -98,7 +103,20 @@
                             
                             <% } %> 
                     </select>
-                    
+                    <% }
+                    else {%>
+                    <select disabled="" name="partnerID" class="form-control">
+                            <option value="" disabled>Please Select a Partner...</option>
+                            <% 
+                            
+                            for (Partner part : partnerInfo){
+                            %>
+                            
+                            <option value="<%= part.getPartnerID()%>" <% if((int) project.getFkPartnerId() == part.getPartnerID() ) { %> selected <% } %>  > <%=part.getPartnerName()%> </option>
+                            
+                            <% } %> 
+                    </select>
+                    <% } %>
                     <p> <b>Description: </b>
                         <textarea class="form-control" name="description" rows="5" cols="30"><%= project.getDescription() %></textarea> </p>
                     
@@ -106,8 +124,12 @@
                     <p> <b>Created: </b><%= project.getDateCreated() %></p>
                     
                     <p> <b>Last edited: </b><%= project.getDateLastEdit() %></p>
-                    
+                    <% if(a!=5) {%>
                     <p> <b>Funds allocated: </b> <input class="form-control" type="number" name="funds" value="<%= project.getFundsAllocated() %>"> </p>
+                    <% } 
+                    else {%>
+                    <p> <b>Funds allocated: </b> <input disabled="" class="form-control" type="number" name="funds" value="<%= project.getFundsAllocated() %>"> </p>
+                    <% } %>
                     <input type="hidden" name="id" value="<%= project.getId() %>" required/>
                     <input type="hidden" name="command" value="save" required/>
                     <button class="btn btn-block btn-primary btn-lg" >Save</button>
