@@ -251,7 +251,8 @@ public class SqlServlet extends HttpServlet {
         if (request.getParameter("partnerID") != null) {
             partnerID = Integer.parseInt(request.getParameter("partnerID")); 
         }
-        con.savePerson(Integer.parseInt(request.getParameter("personID")), name, phoneNumber, personTypeID, partnerID);
+        String email = request.getParameter("email");
+        con.savePerson(Integer.parseInt(request.getParameter("personID")), name, phoneNumber, personTypeID, partnerID, email);
     }
     
 
@@ -314,7 +315,6 @@ public class SqlServlet extends HttpServlet {
     
     private void showPersonEdit(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         int pid = Integer.parseInt(personID);
-        
 
         getProjects(request, response, con);
         request.setAttribute("personTypes", con.getPersonTypes());

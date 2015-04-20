@@ -91,8 +91,7 @@
                         </div>
                     </div>
 
-                    <h2  class="sub-header">Users 
-                      <form class="form-signin" action="Dashboard" method="POST">  
+                    <h2  class="sub-header">Users <form class="form-signin" action="Dashboard" method="POST">
                         <snapToRight><button class="btn btn-block btn-primary btn-lg" >Add Person</button><input type="hidden" name="command" value="addPerson" required/> </snaptoright>                         
                       </form>
                     </h2>

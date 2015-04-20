@@ -184,7 +184,8 @@ public class ProjectMapper {
                         rs.getInt(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getString(6)
+                        rs.getString(6),
+                        ""
                 ));
             }
 
@@ -359,6 +360,19 @@ public class ProjectMapper {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        
+        if(rowsUpdated == 1){
+        rowsUpdated = 0;
+        String sqlString3 = "UPDATE PERSONLOGIN SET PERSONEMAIL = ? where fkpersonid = " + per.getID();
+
+            try (PreparedStatement statement3 = con.prepareStatement(sqlString3)) {
+
+                rowsUpdated = statement3.executeUpdate();
+                System.out.println("ROWSUPDATED: " + rowsUpdated);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return rowsUpdated == 1;
     }
@@ -597,16 +611,29 @@ public class ProjectMapper {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+            String sqlString3 = "INSERT INTO PERSONLOGIN (FKPERSONID,PERSONEMAIL,PERSONPASSWORD)"
+                    + " VALUES (" + person.getID() + ",'email','password')";
+
+            try (PreparedStatement statement3 = con.prepareStatement(sqlString3)) {
+
+                rowsInserted = statement3.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        person.setEmail("email");
         return person;
     }
-    
-    public boolean deletePerson(int personID, Connection con){
-        
+
+    public boolean deletePerson(int personID, Connection con) {
+
         int rowsUpdated = 0;
-        
-        String sqlString = "delete from person where personid = "+personID;
-        
+
+        String sqlString = "delete from person where personid = " + personID;
+
         try (PreparedStatement statement1 = con.prepareStatement(sqlString)) {
 
             rowsUpdated = statement1.executeUpdate();
@@ -616,26 +643,31 @@ public class ProjectMapper {
         }
         return rowsUpdated == 1;
     }
-    
-    public Person getPerson(int personID, Connection con){
-        Person person = null;
-        String sqlString = "select * from person where personid = "+personID;
-        
-        try (PreparedStatement statement2 = con.prepareStatement(sqlString);
-                    ResultSet rs = statement2.executeQuery()) {
-                if (rs.next()) {
-                    person = new Person(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getInt(3),
-                            rs.getInt(4),
-                            rs.getInt(5)
-                    );
-                }
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }        
+    public Person getPerson(int personID, Connection con) {
+        Person person = null;
+        String sqlString = "select person.*, PersonType.PERSONTYPENAME, personlogin.personemail "
+                + "from person, PersonType, personlogin "
+                + "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID and PERSONLOGIN.fkpersonID=PERSON.PERSONID and PERSON.PERSONID = " + personID
+                + " ORDER BY personid";
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                person = new Person(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return person;
     }
 }

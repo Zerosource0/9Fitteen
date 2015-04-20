@@ -49,8 +49,8 @@ public class Controller {
         return p;
     }
 
-    public Person savePerson(int personID, String name, int phoneNumber, int personTypeID, int partnerID) {
-        Person per = new Person(personID, name, phoneNumber, personTypeID, partnerID);
+    public Person savePerson(int personID, String name, int phoneNumber, int personTypeID, int partnerID, String email) {
+        Person per = new Person(personID, name, phoneNumber, personTypeID, partnerID, email);
         boolean status = dbf.savePerson(per);
 
         if (!status) {

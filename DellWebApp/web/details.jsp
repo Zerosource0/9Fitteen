@@ -58,6 +58,7 @@
                         <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
 
                     </ul>
+                    <ul class="nav nav-sidebar">
                     <%
                          Integer a=0;
                          a=(Integer) request.getAttribute("rights");
