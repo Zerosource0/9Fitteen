@@ -5,6 +5,7 @@ import Data.Person;
 import Data.PersonType;
 import Data.Project;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -133,5 +134,15 @@ public class DBFacade {
     }
     public Person getPerson(int personID){
         return pm.getPerson(personID, con);
+    }
+    
+    public boolean closeConnection() {
+        try {
+            con.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

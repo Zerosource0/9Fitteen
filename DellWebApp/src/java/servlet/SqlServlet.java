@@ -4,18 +4,28 @@ import Data.Controller;
 import Data.Partner;
 import Data.Person;
 import Data.Project;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 @WebServlet(name = "SqlServlet", urlPatterns = {"/Dashboard"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 50,
+        // THIS HAS TO BE YOUR OWN PHYSICAL DRIVE
+        location = "D:\\Dev\\Java\\9Fitteen")
 public class SqlServlet extends HttpServlet {
+
+    private static final String SAVE_DIR = "upload";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -135,6 +145,10 @@ public class SqlServlet extends HttpServlet {
                         case "settings":
                             showSettings(request, response, con);
                             break;
+                        case "upload":
+                            upload(request, response, con);
+                            showProjects(request, response, con);
+                            break;
                         case "back":
                             String id3 = request.getParameter("id");
                             updateProjectState(-1, Integer.parseInt(id3), request, response, con);
@@ -242,27 +256,27 @@ public class SqlServlet extends HttpServlet {
         }
         con.savePartner(partnerID, name, address, zip, country);
     }
-      private void showReport(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        
+
+    private void showReport(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+
         getProjects(request, response, con);
         getProjectsMyAction(request, response, con);
-        getCountries(request,response,con);
-        
+        getCountries(request, response, con);
+
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
-        request.setAttribute("moneyLeft", (long)con.getFundsAllocated());
-         RequestDispatcher rq = request.getRequestDispatcher("report.jsp");
+        request.setAttribute("moneyLeft", (long) con.getFundsAllocated());
+        RequestDispatcher rq = request.getRequestDispatcher("report.jsp");
         rq.forward(request, response);
     }
-    
+
     private ArrayList<String> getCountries(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-         ArrayList<String> countries = con.getCountries();
+        ArrayList<String> countries = con.getCountries();
 
         request.setAttribute("countries", countries);
         return countries;
     }
-
 
     private void savePerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
@@ -648,5 +662,55 @@ public class SqlServlet extends HttpServlet {
 
     private Person getPerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getPerson(Integer.parseInt(personID));
+    }
+
+    private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+
+        // gets absolute path of web app
+        String appPath = "D:/";
+
+        // upload directory
+        String savePath = appPath + File.separator + SAVE_DIR;
+
+        // create dir if non existent
+        File fileSaveDir = new File(savePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
+
+        System.out.println("Save Path: " + savePath);
+
+        for (Part part : request.getParts()) {
+            if (part.getName().equals("file")) {
+                String fileName = extractFileName(part);
+                System.out.println("File name: " + fileName + " " + part.getName());
+                try {
+                    part.write("/" + fileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+        request.setAttribute("message", "Upload has been successfully done!");
+
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+
+                s = s.substring(s.indexOf("=") + 2, s.length() - 1);
+                while (s.contains("\\")) {
+                    //int i = s.charAt(s.indexOf("\\"));
+                    s = s.substring(1);
+                }
+                return s;
+            }
+        }
+        return "";
     }
 }

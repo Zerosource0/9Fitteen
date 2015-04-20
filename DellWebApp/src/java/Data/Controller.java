@@ -133,6 +133,7 @@ public class Controller {
 
     public void logOut() {
         person = null;
+        closeConnection();
     }
 
     public int getNumberOfUsers() {
@@ -185,5 +186,9 @@ public class Controller {
     
     public Person getPerson(int personID){
         return dbf.getPerson(personID);
+    }
+    
+    public boolean closeConnection() {
+        return dbf.closeConnection();
     }
 }

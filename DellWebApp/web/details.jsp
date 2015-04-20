@@ -2,7 +2,6 @@
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Data.Project"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +71,7 @@
                         <%}%>
                     </ul>
                 </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
                     <% Project project = (Project) request.getAttribute("project");
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
@@ -105,6 +104,16 @@
                     <% if (project.getFkProjetStateID() > 1) {%>
                     <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Last State"></a>
                     <% } %>
+                </div>
+                <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+                    
+                    <h2>Upload</h2>
+                    <form method="POST" action="Dashboard" enctype="multipart/form-data">
+                        <p>Select file to upload: <input type="file" name="file" size="60" /> </p>
+                        <input type="hidden" name="command" value="upload" />
+                        <input type="submit" value="Upload" />
+                    </form>
+                    
                 </div>
             </div>
         </div>
