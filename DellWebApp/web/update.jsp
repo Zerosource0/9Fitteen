@@ -87,6 +87,7 @@
                     <% }
                     else { %>
                     <h1 class="page-header"><input disabled="" class="form-control0" type="text" name="name" value="<%= project.getProjectName() %>"></h1>
+                    <input type="hidden" name="name" value="<%= project.getProjectName() %>"/>
                     <% } %>
                     <p> <b>Project State: </b><%= stateNames.get(project.getFkProjetStateID() - 1) %></p>
                     
@@ -105,17 +106,26 @@
                     </select>
                     <% }
                     else {%>
-                    <select disabled="" name="partnerID" class="form-control">
-                            <option value="" disabled>Please Select a Partner...</option>
+                    <select disabled  name="partnerID" class="form-control">
+                        <option value=""  >Please Select a Partner...</option>
                             <% 
-                            
+                            int partnerID=1;
                             for (Partner part : partnerInfo){
                             %>
                             
-                            <option value="<%= part.getPartnerID()%>" <% if((int) project.getFkPartnerId() == part.getPartnerID() ) { %> selected <% } %>  > <%=part.getPartnerName()%> </option>
+                            <option disabled value="<%= part.getPartnerID()%>" <% if((int) project.getFkPartnerId() == part.getPartnerID() ) { %> 
+                            selected 
+                            <%
+                                
+                                partnerID=part.getPartnerID();
+                                
+                            %>
+                            <% } %>  > <%=part.getPartnerName()%> </option>
                             
                             <% } %> 
+                            
                     </select>
+                            <input type="hidden" name="partnerID" value="<%= partnerID %>"/>
                     <% } %>
                     <p> <b>Description: </b>
                         <textarea class="form-control" name="description" rows="5" cols="30"><%= project.getDescription() %></textarea> </p>
@@ -128,7 +138,8 @@
                     <p> <b>Funds allocated: </b> <input class="form-control" type="number" name="funds" value="<%= project.getFundsAllocated() %>"> </p>
                     <% } 
                     else {%>
-                    <p> <b>Funds allocated: </b> <input disabled="" class="form-control" type="number" name="funds" value="<%= project.getFundsAllocated() %>"> </p>
+                    <p> <b>Funds allocated: </b> <input disabled class="form-control" type="number" name="funds" value="<%= project.getFundsAllocated() %>"> </p>
+                    <input class type="hidden" name="funds" value="<%= project.getFundsAllocated() %>"/>
                     <% } %>
                     <input type="hidden" name="id" value="<%= project.getId() %>" required/>
                     <input type="hidden" name="command" value="save" required/>
