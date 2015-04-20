@@ -91,7 +91,11 @@
                         </div>
                     </div>
 
-                    <h2 class="sub-header">Users</h2>
+                    <h2  class="sub-header">Users 
+                      <form class="form-signin" action="Dashboard" method="POST">  
+                        <snapToRight><button class="btn btn-block btn-primary btn-lg" >Add Person</button><input type="hidden" name="command" value="addPerson" required/> </snaptoright>                         
+                      </form>
+                    </h2>
                     <div class="table-responsive">
                         <table  class="table table-striped" id="example">
                             <thead>

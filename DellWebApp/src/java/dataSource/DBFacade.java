@@ -120,4 +120,14 @@ public class DBFacade {
     public boolean changePassword(String password, int personID) {
         return pm.changePassword(password, personID, con);
     }
+    
+    public Person addPerson(){
+        return pm.addPerson(con);
+    }
+    public boolean deletePerson(int personID){
+        return pm.deletePerson(personID,con);
+    }
+    public Person getPerson(int personID){
+        return pm.getPerson(personID, con);
+    }
 }

@@ -60,11 +60,20 @@ public class SqlServlet extends HttpServlet {
         } else {
             if (command.equals("login")) {
                 logIn(request, response, con);
-            } else {
+            } 
+            else {
                 if (accessAllowed(request, response, con)) {
                     // Displays the main view.jsp with an overview of the projects
                     switch (command) {
                         // Creates a new project in the db and forwards to view.jsp
+                        case "deletePerson":
+                            String personID = request.getParameter("personID");
+                            deletePerson(personID, request, response, con);
+                            showPersons(request, response, con);
+                            break;
+                        case "addPerson":
+                            addPerson(request, response, con);
+                            break;
                         case "showPartners":
                             showPartners(request, response, con);
                             break;
@@ -86,7 +95,7 @@ public class SqlServlet extends HttpServlet {
                             String partnerID = request.getParameter("partnerID");
                             showPartnerEdit(partnerID, request, response, con);
                         case "editPerson":
-                            String personID = request.getParameter("personID");
+                            personID = request.getParameter("personID");
                             showPersonEdit(personID, request, response, con);
                             break;
                         case "edit":
@@ -128,6 +137,7 @@ public class SqlServlet extends HttpServlet {
                             String id3 = request.getParameter("id");
                             updateProjectState(-1, Integer.parseInt(id3), request, response, con);
                             showDetails(id3, request, response, con);
+                            break;
                         default:
                             response.sendRedirect("index.jsp");
                             break;
@@ -180,7 +190,15 @@ public class SqlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void deletePerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        con.deletePerson(Integer.parseInt(personID));
+    }
     
+    private void addPerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        Person person = con.addPerson();
+        String personID = ""+ person.getID();
+        showPersonEdit(personID, request, response, con);
+    }
     
     private void updateProjectState(int direction, int id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
@@ -261,8 +279,8 @@ public class SqlServlet extends HttpServlet {
         ArrayList<Partner> partners = getPartnerInfo(request, response, con);
         int pid = Integer.parseInt(partnerID);
         request.setAttribute("partner", partners.get(pid-1));
-        request.setAttribute("personName", con.getPerson().getName());
-        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
+        request.setAttribute("personName", con.getCurrentUser().getName());
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         getProjects(request, response, con);
         
         RequestDispatcher rq = request.getRequestDispatcher("partnerDetails.jsp");
@@ -270,13 +288,12 @@ public class SqlServlet extends HttpServlet {
     }
     
     private void showPersonDetails(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        ArrayList<Person> persons = getPersons(request, response, con);
         int pid = Integer.parseInt(personID);
 
         getProjects(request, response, con);
-        request.setAttribute("personName", con.getPerson().getName());
-        request.setAttribute("person", persons.get(pid - 1));
-        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
+        request.setAttribute("personName", con.getCurrentUser().getName());
+        request.setAttribute("person", con.getPerson(pid));
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("personDetails.jsp");
         rq.forward(request, response);
     }
@@ -288,23 +305,22 @@ public class SqlServlet extends HttpServlet {
         
         getProjects(request, response, con);
         request.setAttribute("personTypes", con.getPersonTypes());
-        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("personName", con.getCurrentUser().getName());
         request.setAttribute("partner", partners.get(pid - 1));
-        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("partnerUpdate.jsp");
         rq.forward(request, response);
     }
     
     private void showPersonEdit(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        ArrayList<Person> persons = getPersons(request, response, con);
         int pid = Integer.parseInt(personID);
-        System.out.println("persons.get(personID): " + persons.get(pid).getName() + " Id " + pid);
+        
 
         getProjects(request, response, con);
         request.setAttribute("personTypes", con.getPersonTypes());
-        request.setAttribute("personName", con.getPerson().getName());
-        request.setAttribute("person", persons.get(pid - 1));
-        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
+        request.setAttribute("personName", con.getCurrentUser().getName());
+        request.setAttribute("person", con.getPerson(pid));
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("personUpdate.jsp");
         rq.forward(request, response);
     }
@@ -314,8 +330,8 @@ public class SqlServlet extends HttpServlet {
         getPartnerInfo(request, response, con);
         
         request.setAttribute("project", getProject(Integer.parseInt(request.getParameter("id")), request, response, con));
-        request.setAttribute("personName", con.getPerson().getName());
-        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
+        request.setAttribute("personName", con.getCurrentUser().getName());
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("update.jsp");
         rq.forward(request, response);
     }
@@ -406,7 +422,7 @@ public class SqlServlet extends HttpServlet {
         
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
-        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("personName", con.getCurrentUser().getName());
         request.setAttribute("moneyLeft", (long)con.getFundsAllocated());
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
@@ -417,7 +433,7 @@ public class SqlServlet extends HttpServlet {
 
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
-        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("personName", con.getCurrentUser().getName());
         getPartnerInfo(request, response, con);
         getProjects(request, response, con);
         RequestDispatcher rq = request.getRequestDispatcher("viewPersons.jsp");
@@ -429,7 +445,7 @@ public class SqlServlet extends HttpServlet {
 
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
-        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("personName", con.getCurrentUser().getName());
         getProjects(request, response, con);
         RequestDispatcher rq = request.getRequestDispatcher("viewPartners.jsp");
         rq.forward(request, response);
@@ -448,7 +464,7 @@ public class SqlServlet extends HttpServlet {
         }
         
         request.setAttribute("partnerID", request.getSession().getAttribute("partnerID"));
-        request.setAttribute("rights", con.getPerson().getFkPersonTypeID());
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         request.setAttribute("projects", projects);
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
@@ -521,8 +537,8 @@ public class SqlServlet extends HttpServlet {
         // If the log in succeeds, returns true
         if (con.logIn(userName, password)) {
             HttpSession sessionObj = request.getSession();
-            sessionObj.setAttribute("personID", con.getPerson().getID());
-            sessionObj.setAttribute("partnerID", con.getPerson().getFkPartnerID());
+            sessionObj.setAttribute("personID", con.getCurrentUser().getID());
+            sessionObj.setAttribute("partnerID", con.getCurrentUser().getFkPartnerID());
             request.setAttribute("success", true);
             showProjects(request, response, con);
         } else {
@@ -563,7 +579,7 @@ public class SqlServlet extends HttpServlet {
 
         getProjects(request, response, con);
         request.setAttribute("project", getProject(pid, request, response, con));
-        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("personName", con.getCurrentUser().getName());
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
         rq.forward(request, response);
     }
@@ -572,7 +588,7 @@ public class SqlServlet extends HttpServlet {
     private void showCreate(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         getPartnerInfo(request, response, con);
-        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("personName", con.getCurrentUser().getName());
         RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
         rq.forward(request, response);
     }
@@ -591,7 +607,7 @@ public class SqlServlet extends HttpServlet {
     
     private void showSettings(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         
-        request.setAttribute("personName", con.getPerson().getName());
+        request.setAttribute("personName", con.getCurrentUser().getName());
         
         RequestDispatcher rq = request.getRequestDispatcher("settings.jsp");
         rq.forward(request, response);
@@ -613,5 +629,9 @@ public class SqlServlet extends HttpServlet {
 
     private int getNumberOfPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getNumberOfPartners();
+    }
+    
+    private Person getPerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        return con.getPerson(Integer.parseInt(personID));
     }
 }

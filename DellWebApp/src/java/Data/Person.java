@@ -38,6 +38,13 @@ public class Person {
 
     }
 
+    public Person(String name, int phoneNumber, int fkPersonTypeID, Integer fkPartnerID) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.fkPersonTypeID = fkPersonTypeID;
+        this.fkPartnerID = fkPartnerID;
+    }
+
     public Person(int id, String name, int phoneNumber, int fkPersonTypeID, Integer fkPartnerID, String PersonTypeName) {
         this.id = id;
         this.name = name;

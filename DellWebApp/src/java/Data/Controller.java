@@ -144,7 +144,7 @@ public class Controller {
         return dbf.updateProjectState(p);
     }
 
-    public Person getPerson() {
+    public Person getCurrentUser() {
         return person;
     }
 
@@ -170,5 +170,17 @@ public class Controller {
         }
 
         return false;
+    }
+    
+    public Person addPerson(){
+        return dbf.addPerson();
+    }
+    
+    public boolean deletePerson(int personID){
+        return dbf.deletePerson(personID);
+    }
+    
+    public Person getPerson(int personID){
+        return dbf.getPerson(personID);
     }
 }

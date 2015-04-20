@@ -527,40 +527,115 @@ public class ProjectMapper {
         }
         return FundsLeft;
     }
-    
+
     public String getPassword(int personID, Connection con) {
         String password = null;
-        
+
         String sqlString = "SELECT PERSONPASSWORD FROM PERSONLOGIN WHERE FKPERSONID = " + personID;
-        
-        try(PreparedStatement pre = con.prepareStatement(sqlString);
-               ResultSet rs = pre.executeQuery() ) {
-            
+
+        try (PreparedStatement pre = con.prepareStatement(sqlString);
+                ResultSet rs = pre.executeQuery()) {
+
             if (rs.next()) {
                 password = rs.getString(1);
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return password;
     }
-    
+
     public boolean changePassword(String password, int personID, Connection con) {
         int rowsUpdated = 0;
-        
+
         String sqlString = "UPDATE PERSONLOGIN SET PERSONPASSWORD = '" + password + "' WHERE FKPERSONID = " + personID;
-        
-        try(PreparedStatement statement = con.prepareStatement(sqlString)) {
-            
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString)) {
+
             rowsUpdated = statement.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return rowsUpdated == 1;
     }
 
+    public Person addPerson(Connection con) {
+        Person person = null;
+        int rowsInserted = 0;
+
+        String sqlString = "INSERT INTO PERSON (PERSONNAME,PERSONPHONENUMBER,FKPersonTypeID) "
+                + "VALUES ('Name',12345678,1)";
+
+        try (PreparedStatement statement1 = con.prepareStatement(sqlString)) {
+
+            rowsInserted = statement1.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sqlString2 = "Select * from person where personname = 'Name'";
+
+        if (rowsInserted == 1) {
+
+            try (PreparedStatement statement2 = con.prepareStatement(sqlString2);
+                    ResultSet rs = statement2.executeQuery()) {
+                if (rs.next()) {
+                    person = new Person(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getInt(3),
+                            rs.getInt(4),
+                            rs.getInt(5)
+                    );
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return person;
+    }
+    
+    public boolean deletePerson(int personID, Connection con){
+        
+        int rowsUpdated = 0;
+        
+        String sqlString = "delete from person where personid = "+personID;
+        
+        try (PreparedStatement statement1 = con.prepareStatement(sqlString)) {
+
+            rowsUpdated = statement1.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsUpdated == 1;
+    }
+    
+    public Person getPerson(int personID, Connection con){
+        Person person = null;
+        String sqlString = "select * from person where personid = "+personID;
+        
+        try (PreparedStatement statement2 = con.prepareStatement(sqlString);
+                    ResultSet rs = statement2.executeQuery()) {
+                if (rs.next()) {
+                    person = new Person(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getInt(3),
+                            rs.getInt(4),
+                            rs.getInt(5)
+                    );
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }        
+        return person;
+    }
 }

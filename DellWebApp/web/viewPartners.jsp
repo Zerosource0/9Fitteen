@@ -91,7 +91,7 @@
                         </div>
                     </div>
 
-                    <h2 class="sub-header">Partners</h2>
+                    <h2 class="sub-header">Partners <snapToRight><a href="Dashboard?command=addPartner" ><input type="button" value="Add New Partner"></a></snaptoright></h2>
                     <div class="table-responsive">
                         <table  class="table table-striped" id="example">
                             <thead>
