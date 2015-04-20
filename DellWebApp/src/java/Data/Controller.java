@@ -109,6 +109,9 @@ public class Controller {
     public ArrayList<String> getStateNames() {
         return dbf.getStateNames();
     }
+        public ArrayList<String> getCountries() {
+        return dbf.getCountries();
+    }
 
     public ArrayList<Partner> getPartnerInfo() {
         return dbf.getPartnerInfo();

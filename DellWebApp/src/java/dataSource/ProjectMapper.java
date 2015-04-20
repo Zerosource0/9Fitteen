@@ -395,6 +395,24 @@ public class ProjectMapper {
         }
         return rowsUpdated == 1;
     }
+    
+    public ArrayList<String> getCountries(Connection con) {
+        ArrayList<String> countries = new ArrayList<>();
+
+        String sqlString1 = "select DISTINCT PARTNERCOUNTRY from partner";
+
+        try (PreparedStatement statement = con.prepareStatement(sqlString1);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                countries.add(rs.getString(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return countries;
+    }
+
 
     public boolean createProject(Project p, Connection con) {
         int rowsInserted = 0;

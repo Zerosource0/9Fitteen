@@ -62,6 +62,10 @@ public class DBFacade {
     public ArrayList<Partner> getPartnerInfo() {
         return pm.getPartnerInfo(con);
     }
+     public ArrayList<String> getCountries() {
+        return pm.getCountries(con);
+    }
+
 
     public Person logIn(String userName, String password) {
         return pm.logIn(userName, password, con);
