@@ -5,9 +5,10 @@ import Data.Partner;
 import Data.Person;
 import Data.Project;
 import Data.Report;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -697,11 +698,12 @@ public class SqlServlet extends HttpServlet {
     private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException 
     {
         
-        Project project = (Project) request.getAttribute("project");
         int projectID=3, projectStateID=3;
-//        projectID=(Integer) request.getAttribute("projectID");
- //       projectStateID=(Integer) request.getAttribute("projectStateID");
-        con.upload(projectID, projectStateID, null);
+        InputStream is;
+        is=request.getPart("projectID").getInputStream();
+        projectID=getIntFromInputStream(is);
+        is=request.getPart("projectStateID").getInputStream();
+        projectStateID=getIntFromInputStream(is);
         Part filePart = request.getPart("file");
         if (filePart != null)
         {
@@ -765,4 +767,32 @@ public class SqlServlet extends HttpServlet {
         return "";
                */
     }
+    private static int getIntFromInputStream(InputStream is) {
+ 
+		BufferedReader br = null;
+		StringBuilder sb = new StringBuilder();
+ 
+		String line;
+		try {
+ 
+			br = new BufferedReader(new InputStreamReader(is));
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+ 
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+                
+		return Integer.parseInt(sb.toString());
+ 
+	}
 }

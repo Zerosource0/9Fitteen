@@ -117,11 +117,10 @@
                     <h2>Upload</h2>
                     <form method="POST" action="Dashboard" enctype="multipart/form-data">
                         <p>Select file to upload: <input type="file" name="file" size="60" /> </p>
-                        <% project = (Project) request.getAttribute("project"); %>
                         <input type="hidden" name="projectID" value="<%=projectID%>" />
                         <input type="hidden" name="projectStateID" value="<%=projectStateID%>" />
                         <input type="hidden" name="command" value="upload" />
-                        <input type="submit" value="Upload" />
+                        <input type="submit" value="Upload"/>
                     </form>
                 </div>
                 
