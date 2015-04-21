@@ -104,6 +104,10 @@
                                 <tr>
                                     
                                     <td width="10%" > <%= s %></td> 
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
                                      <%   }
                                     %>
                             </tbody>

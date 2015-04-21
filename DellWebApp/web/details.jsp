@@ -105,6 +105,15 @@
                     <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Last State"></a>
                     <% } %>
                 </div>
+                
+                <div>
+                    <form action="Dashboard">
+                        <textarea name="comment" rows="5" cols="30" ></textarea>
+                        <input type="hidden" name="command" value="comment" />
+                        <input type="submit" value="Submit" />
+                    </form>
+                </div>
+                
                 <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
                     
                     <h2>Upload</h2>
