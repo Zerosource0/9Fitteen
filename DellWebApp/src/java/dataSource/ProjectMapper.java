@@ -730,7 +730,12 @@ public class ProjectMapper {
         try (PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                comments.add("Commments");
+                String comment = rs.getString("COMMENTS");
+                System.out.println("Comment: " + comment);
+                if (comment != null) {
+                    comments.add(comment);
+                }
+                
             }
 
         } catch (SQLException e) {

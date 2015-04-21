@@ -79,11 +79,12 @@ public class SqlServlet extends HttpServlet {
                     switch (command) {
                         // Creates a new project in the db and forwards to view.jsp
                         case "comment":
-                            String personID = request.getParameter("personID");
-                            saveComment(personID, request, response, con);
+                            String projectID = request.getParameter("projectID");
+                            saveComment(projectID, request, response, con);
+                            showDetails(projectID, request, response, con);
                             break;
                         case "deletePerson":
-                            personID = request.getParameter("personID");
+                            String personID = request.getParameter("personID");
                             deletePerson(personID, request, response, con);
                             showPersons(request, response, con);
                             break;
@@ -222,10 +223,12 @@ public class SqlServlet extends HttpServlet {
     
     private void saveComment(String pid, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         int projectID = Integer.parseInt(pid);
+        System.out.println("Project ID: " + projectID);
         
         Project project = getProject(projectID, request, response, con);
         
-        String comment = "" + request.getAttribute("comment");
+        String comment = request.getParameter("comment");
+        System.out.println("Comment: " + comment);
         
         con.saveComment(project, (int) request.getSession().getAttribute("personID"),comment);
     }

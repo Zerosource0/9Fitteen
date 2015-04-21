@@ -77,6 +77,7 @@
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                         Integer projectID=project.getId(), projectStateID=project.getFkProjetStateID();
+                        ArrayList<String> comments = (ArrayList<String>) request.getAttribute("comments");
                         
                     %>
                     <h1 class="page-header"><%= project.getProjectName() %></h1>
@@ -111,6 +112,7 @@
                     <form action="Dashboard">
                         <textarea name="comment" rows="5" cols="30" ></textarea>
                         <input type="hidden" name="command" value="comment" />
+                        <input type="hidden" name="projectID" value="<%=project.getId()%>" />
                         <input type="submit" value="Submit" />
                     </form>
                 </div>
@@ -127,6 +129,11 @@
                  
                 
                 <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+                    <% for (String comment : comments) {
+                        %>
+                        <p><%= comment %></p>
+                        <%
+                    } %>
                 </div>
             </div>
         </div>
