@@ -111,7 +111,7 @@
                     <p> <b><input class="form-control0" type="text" name="phoneNumber" value="<%= person.getPhoneNumber() %>"></p>
                     
                     <p> <b>Username: </b> </p>
-                    <p> <b><input class="form-control0" type="text" name="userName" value="<%= person.getEmail() %>"></p>        
+                    <p> <b><input class="form-control0" type="text" name="email" value="<%= person.getEmail() %>"></p>        
                             
                     <input type="hidden" name="personID" value="<%= person.getID() %>" required/>
                     <input type="hidden" name="command" value="savePerson" required/>

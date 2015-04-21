@@ -207,6 +207,7 @@ public class SqlServlet extends HttpServlet {
     }// </editor-fold>
 
     private void deletePerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        System.out.println("DELETING PERSONID: " + personID);
         con.deletePerson(Integer.parseInt(personID));
     }
 
@@ -348,12 +349,12 @@ public class SqlServlet extends HttpServlet {
     }
 
     private void showPersonEdit(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        int pid = Integer.parseInt(personID);
+        
 
         getProjects(request, response, con);
         request.setAttribute("personTypes", con.getPersonTypes());
         request.setAttribute("personName", con.getCurrentUser().getName());
-        request.setAttribute("person", con.getPerson(pid));
+        request.setAttribute("person", getPerson(personID,request, response, con));
         request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         RequestDispatcher rq = request.getRequestDispatcher("personUpdate.jsp");
         rq.forward(request, response);

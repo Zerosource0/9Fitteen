@@ -364,7 +364,7 @@ public class ProjectMapper {
         
         if(rowsUpdated == 1){
         rowsUpdated = 0;
-        String sqlString3 = "UPDATE PERSONLOGIN SET PERSONEMAIL = ? where fkpersonid = " + per.getID();
+        String sqlString3 = "UPDATE PERSONLOGIN SET PERSONEMAIL = '" + per.getEmail() + "' where fkpersonid = " + per.getID();
 
             try (PreparedStatement statement3 = con.prepareStatement(sqlString3)) {
 
@@ -649,10 +649,20 @@ public class ProjectMapper {
     public boolean deletePerson(int personID, Connection con) {
 
         int rowsUpdated = 0;
+        
+        String sqlString1 = "DELETE FROM PERSONLOGIN WHERE FKPERSONID = " + personID;
+        
+        try (PreparedStatement statement1 = con.prepareStatement(sqlString1)) {
 
-        String sqlString = "delete from person where personid = " + personID;
+            rowsUpdated = statement1.executeUpdate();
 
-        try (PreparedStatement statement1 = con.prepareStatement(sqlString)) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        String sqlString2 = "delete from person where personid = " + personID;
+
+        try (PreparedStatement statement1 = con.prepareStatement(sqlString2)) {
 
             rowsUpdated = statement1.executeUpdate();
 
