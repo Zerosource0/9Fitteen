@@ -68,6 +68,7 @@
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
                         <li><a href="Dashboard?command=showPersons">Show Users</a></li>
                         <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <li><a href="Dashboard?command=showReport">See report</a></li>
                         <%}%>
                     </ul>
                 </div>
