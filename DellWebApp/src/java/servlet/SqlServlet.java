@@ -4,6 +4,7 @@ import Data.Controller;
 import Data.Partner;
 import Data.Person;
 import Data.Project;
+import Data.Report;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -277,17 +278,23 @@ public class SqlServlet extends HttpServlet {
         }
         con.savePartner(partnerID, name, address, zip, country);
     }
+    
+    private Report getReport(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        return con.getReport();
+    }
 
     private void showReport(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         getProjects(request, response, con);
         getProjectsMyAction(request, response, con);
         getCountries(request, response, con);
+        getReport(request,response,con);
 
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         request.setAttribute("moneyLeft", (long) con.getFundsAllocated());
+        request.setAttribute("report", getReport(request, response, con));
         RequestDispatcher rq = request.getRequestDispatcher("report.jsp");
         rq.forward(request, response);
     }

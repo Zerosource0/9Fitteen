@@ -89,6 +89,11 @@ public class Controller {
     public Project getLatestProject() {
         return dbf.getLatestProject();
     }
+    
+    public Report getReport()
+    {
+        return dbf.getReport();
+    }
 
     public ArrayList<Project> getProjects() {
         return dbf.getProjects();

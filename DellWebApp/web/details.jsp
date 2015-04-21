@@ -103,26 +103,25 @@
                     
                     <% if (project.getFkProjetStateID() > 1) {%>
                     <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Last State"></a>
-                    <% } %>
-                </div>
-                
-                <div>
+                    <% } %> 
+                     <div>
                     <form action="Dashboard">
                         <textarea name="comment" rows="5" cols="30" ></textarea>
                         <input type="hidden" name="command" value="comment" />
                         <input type="submit" value="Submit" />
                     </form>
                 </div>
-                
-                <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                    
                     <h2>Upload</h2>
                     <form method="POST" action="Dashboard" enctype="multipart/form-data">
                         <p>Select file to upload: <input type="file" name="file" size="60" /> </p>
                         <input type="hidden" name="command" value="upload" />
                         <input type="submit" value="Upload" />
                     </form>
-                    
+                </div>
+                
+                 
+                
+                <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <%@page import="java.text.NumberFormat"%>
 <%@page import="Data.Partner"%>
+<%@page import="Data.Report"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Data.Project"%>
@@ -31,6 +32,7 @@
             ArrayList<String> countries = (ArrayList<String>) request.getAttribute("countries");
             ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
             ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
+            Report report = (Report)request.getAttribute("report");
         %> 
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -98,16 +100,16 @@
                             </thead>
                             <tbody>
                                 <%
-                                    for (String s : countries) {
+                                    for(int i = 0;i<report.getCountries().size();i++) {
 
                                 %> 
                                 <tr>
                                     
-                                    <td width="10%" > <%= s %></td> 
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td width="10%" > <%= report.getCountries().get(i) %></td> 
+                                    <td> <%= report.getNoPartners().get(i) %></td>
+                                    <td> <%= report.getNoProjectDone().get(i) %></td>
+                                    <td> <%= report.getMoneySpent().get(i) %> </td>
+                                    <td> <%= report.getAvgSpentPartner().get(i) %></td>
                                      <%   }
                                     %>
                             </tbody>

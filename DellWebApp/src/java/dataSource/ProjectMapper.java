@@ -4,6 +4,7 @@ import Data.Partner;
 import Data.Person;
 import Data.PersonType;
 import Data.Project;
+import Data.Report;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -671,7 +672,28 @@ public class ProjectMapper {
         }
         return rowsUpdated == 1;
     }
+    public Report getReport(Connection con){
+        Report report = new Report();
+        
+        String sqlString = "select DISTINCT PARTNERCOUNTRY, (select count(partnerid) from partner PAR where PAR.PARTNERCOUNTRY = PA.PARTNERCOUNTRY),(select count(projectID) from project PR join partner PART on PR.FKpartnerID = PART.partnerid where PR.FKPROJECTSTATEID = 9 and PART.PARTNERCOUNTRY = PA.PARTNERCOUNTRY),(select sum(FUNDSALLOCATED) from project PRO join partner PARTN on PRO.FKPARTNERID = PARTN.PARTNERID where PRO.FKPROJECTSTATEID = 9 and PARTN.PARTNERCOUNTRY = PA.PARTNERCOUNTRY) ,((select sum(FUNDSALLOCATED) from project PRO join partner PARTN on PRO.FKPARTNERID = PARTN.PARTNERID where PRO.FKPROJECTSTATEID = 9 and PARTN.PARTNERCOUNTRY = PA.PARTNERCOUNTRY)/(select count(partnerid) from partner PAR where PAR.PARTNERCOUNTRY = PA.PARTNERCOUNTRY)) from partner PA ORDER BY PA.PARTNERCOUNTRY";
+        
+        try (PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                        report.getCountries().add(rs.getString(1));
+                        report.getNoPartners().add(rs.getInt(2));
+                        report.getNoProjectDone().add(rs.getInt(3));
+                        report.getMoneySpent().add(rs.getInt(4));
+                        report.getAvgSpentPartner().add(rs.getInt(5));  
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return report;
+    
+    }
+    
     public Person getPerson(int personID, Connection con) {
         Person person = null;
         String sqlString = "select person.*, PersonType.PERSONTYPENAME, personlogin.personemail "

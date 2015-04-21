@@ -4,6 +4,7 @@ import Data.Partner;
 import Data.Person;
 import Data.PersonType;
 import Data.Project;
+import Data.Report;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -74,6 +75,10 @@ public class DBFacade {
 
     public Project getProject(int projectID) {
         return pm.getProject(con, projectID);
+    }
+    
+    public Report getReport(){
+        return pm.getReport(con);
     }
 
     public Project getLatestProject() {
