@@ -583,7 +583,7 @@ public class SqlServlet extends HttpServlet {
     private void logOut(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         HttpSession sessionObj = request.getSession();
         sessionObj.invalidate();
-        con.logOut();
+        
         request.setAttribute("loggedOut", true);
         RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
         rq.forward(request, response);
