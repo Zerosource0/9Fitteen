@@ -698,4 +698,40 @@ public class ProjectMapper {
         }
         return person;
     }
+    
+    public ArrayList<String> getComments(int projectID, Connection con){
+        ArrayList<String> comments = new ArrayList();
+        
+        String sqlString = "Select comments from projectsStatePerson where FKprojectID = " + projectID + " order by dateofstatechange";
+        
+        try (PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                comments.add("Commments");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comments;
+    }
+    
+    public boolean saveComment(Project p, int personID, String comment, Connection con) {
+        int rowsInserted = 0;
+
+        String sqlString1 = "insert into PROJECTSTATEPERSON (FKPersonID, FKProjectStateID, FKProjectID, Comments)"
+                + "VALUES (?,?,?,?)";
+        try (PreparedStatement statement = con.prepareStatement(sqlString1)) {
+
+            statement.setInt(1, personID);
+            statement.setInt(2, p.getFkProjetStateID());
+            statement.setInt(3, p.getId());
+            statement.setString(4, comment);
+            rowsInserted = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsInserted == 1;
+    }
+            
 }

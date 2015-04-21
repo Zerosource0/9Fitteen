@@ -145,4 +145,12 @@ public class DBFacade {
             return false;
         }
     }
+    
+    public boolean saveComment(Project p, int personID, String comment){
+        return pm.saveComment(p, personID, comment, con);
+    }
+    
+    public ArrayList<String> getComments(int projectID){
+        return pm.getComments(projectID, con);
+    }
 }

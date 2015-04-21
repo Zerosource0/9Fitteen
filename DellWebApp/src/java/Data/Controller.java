@@ -191,4 +191,11 @@ public class Controller {
     public boolean closeConnection() {
         return dbf.closeConnection();
     }
+    
+    public boolean saveComment(Project p, int personID, String comment){
+        return dbf.saveComment(p, personID, comment);
+    }
+    public ArrayList<String> getComments(int projectID){
+        return dbf.getComments(projectID);
+    }
 }

@@ -75,8 +75,12 @@ public class SqlServlet extends HttpServlet {
                     // Displays the main view.jsp with an overview of the projects
                     switch (command) {
                         // Creates a new project in the db and forwards to view.jsp
-                        case "deletePerson":
+                        case "comment":
                             String personID = request.getParameter("personID");
+                            saveComment(personID, request, response, con);
+                            break;
+                        case "deletePerson":
+                            personID = request.getParameter("personID");
                             deletePerson(personID, request, response, con);
                             showPersons(request, response, con);
                             break;
@@ -206,6 +210,22 @@ public class SqlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void getComments(String projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        ArrayList<String> comments = con.getComments(Integer.parseInt(projectID));
+        
+        request.setAttribute("comments", comments);
+    }
+    
+    private void saveComment(String pid, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+        int projectID = Integer.parseInt(pid);
+        
+        Project project = getProject(projectID, request, response, con);
+        
+        String comment = "" + request.getAttribute("comment");
+        
+        con.saveComment(project, (int) request.getSession().getAttribute("personID"),comment);
+    }
+    
     private void deletePerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         System.out.println("DELETING PERSONID: " + personID);
         con.deletePerson(Integer.parseInt(personID));
@@ -608,6 +628,7 @@ public class SqlServlet extends HttpServlet {
         int pid = Integer.parseInt(id);
 
         getProjects(request, response, con);
+        getComments(id, request, response, con);
         request.setAttribute("project", getProject(pid, request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
