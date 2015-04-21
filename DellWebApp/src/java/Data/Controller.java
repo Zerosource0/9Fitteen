@@ -6,6 +6,7 @@
 package Data;
 
 import dataSource.DBFacade;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -94,7 +95,10 @@ public class Controller {
     {
         return dbf.getReport();
     }
-
+    public boolean upload (int projectID, int projectStateID, InputStream inputStream)
+    {
+        return dbf.upload(projectID, projectStateID, inputStream);
+    }
     public ArrayList<Project> getProjects() {
         return dbf.getProjects();
     }

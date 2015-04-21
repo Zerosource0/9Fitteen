@@ -5,6 +5,7 @@ import Data.Person;
 import Data.PersonType;
 import Data.Project;
 import Data.Report;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,7 +36,10 @@ public class DBFacade {
     public boolean createStateChange(Project p, int personID) {
         return pm.createStateChange(p, personID, con);
     }
-
+    public boolean upload (int projectID, int projectStateID, InputStream inputStream)
+    {
+        return pm.upload(projectID, projectStateID, inputStream, con);
+    }
     public boolean createProject(Project p) {
         return pm.createProject(p, con);
     }

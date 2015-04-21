@@ -76,6 +76,8 @@
                     <% Project project = (Project) request.getAttribute("project");
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
+                        Integer projectID=project.getId(), projectStateID=project.getFkProjetStateID();
+                        
                     %>
                     <h1 class="page-header"><%= project.getProjectName() %></h1>
 
@@ -115,6 +117,9 @@
                     <h2>Upload</h2>
                     <form method="POST" action="Dashboard" enctype="multipart/form-data">
                         <p>Select file to upload: <input type="file" name="file" size="60" /> </p>
+                        <% project = (Project) request.getAttribute("project"); %>
+                        <input type="hidden" name="projectID" value="<%=projectID%>" />
+                        <input type="hidden" name="projectStateID" value="<%=projectStateID%>" />
                         <input type="hidden" name="command" value="upload" />
                         <input type="submit" value="Upload" />
                     </form>

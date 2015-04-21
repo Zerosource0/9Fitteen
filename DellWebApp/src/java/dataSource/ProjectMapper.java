@@ -5,6 +5,7 @@ import Data.Person;
 import Data.PersonType;
 import Data.Project;
 import Data.Report;
+import java.io.InputStream;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -754,6 +755,29 @@ public class ProjectMapper {
             e.printStackTrace();
         }
         return rowsInserted == 1;
+    }
+    
+    public boolean upload (int projectID, int projectStateID, InputStream inputStream, Connection con)
+    {
+        
+        
+        
+        try
+        {
+            String sql = "INSERT INTO poe_pictures (fkprojectid, fkprojectstateid, poe) values (?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, projectID);
+            statement.setInt(2, projectStateID);
+            if (inputStream != null) statement.setBlob(3, inputStream);
+            int row=statement.executeUpdate();
+            return row>0;
+        
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return false;
     }
             
 }

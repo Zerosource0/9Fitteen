@@ -7,6 +7,7 @@ import Data.Project;
 import Data.Report;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -693,8 +694,29 @@ public class SqlServlet extends HttpServlet {
         return con.getPerson(Integer.parseInt(personID));
     }
 
-    private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-
+    private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException 
+    {
+        
+        Project project = (Project) request.getAttribute("project");
+        int projectID=3, projectStateID=3;
+//        projectID=(Integer) request.getAttribute("projectID");
+ //       projectStateID=(Integer) request.getAttribute("projectStateID");
+        con.upload(projectID, projectStateID, null);
+        Part filePart = request.getPart("file");
+        if (filePart != null)
+        {
+            InputStream inputStream=filePart.getInputStream();
+            con.upload(projectID, projectStateID, inputStream);
+            
+        }
+        else 
+        {
+            System.out.println("filePart is NULL");
+            return;
+        }
+        
+        
+        /*
         // gets absolute path of web app
         String appPath = "D:/";
 
@@ -708,7 +730,7 @@ public class SqlServlet extends HttpServlet {
         }
 
         System.out.println("Save Path: " + savePath);
-
+        
         for (Part part : request.getParts()) {
             if (part.getName().equals("file")) {
                 String fileName = extractFileName(part);
@@ -741,5 +763,6 @@ public class SqlServlet extends HttpServlet {
             }
         }
         return "";
+               */
     }
 }
