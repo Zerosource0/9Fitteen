@@ -215,6 +215,7 @@ public class SqlServlet extends HttpServlet {
 
     private void getComments(String projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> comments = con.getComments(Integer.parseInt(projectID));
+        System.out.println("Number of comments on this project: " + comments.size());
         
         request.setAttribute("comments", comments);
     }

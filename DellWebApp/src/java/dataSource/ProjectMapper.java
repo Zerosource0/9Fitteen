@@ -725,7 +725,7 @@ public class ProjectMapper {
     public ArrayList<String> getComments(int projectID, Connection con){
         ArrayList<String> comments = new ArrayList();
         
-        String sqlString = "Select comments from projectsStatePerson where FKprojectID = " + projectID + " order by dateofstatechange";
+        String sqlString = "Select comments from projectStatePerson where FKprojectID = " + projectID + " order by dateofstatechange";
         
         try (PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
