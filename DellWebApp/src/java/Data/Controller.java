@@ -153,8 +153,32 @@ public class Controller {
         return dbf.getNumberOfPartners();
     }
 
-    public Boolean updateProjectState(Project p) {
-        return dbf.updateProjectState(p);
+    public Boolean updateProjectState(int projectID, int direction) {
+        Project project = getProject(projectID);
+        
+        int state = project.getFkProjetStateID();
+        //next
+        if (direction == 1) {
+            if (state < 9) {
+                state = state + direction;
+                project.setFkProjetStateID(state);
+                if (state == 9) {
+                    useFunds((int) project.getFundsAllocated());
+                }
+            }
+        } //back
+        else if (direction == -1) {
+            if (state > 0) {
+                state = state + direction;
+                project.setFkProjetStateID(state);
+                if (state == 8) {
+                    useFunds(-(int) project.getFundsAllocated());
+                }
+            }
+        }
+        
+        createStateChange(project, person.getID());
+        return dbf.updateProjectState(project);
     }
 
     public Person getCurrentUser() {
