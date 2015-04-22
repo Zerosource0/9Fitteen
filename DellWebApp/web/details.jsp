@@ -110,7 +110,7 @@
                     <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Last State"></a>
                     <% } %> 
                      <div>
-                    <form action="Dashboard">
+                    <form action="Dashboard" method="POST">
                         <textarea name="comment" rows="5" cols="30" ></textarea>
                         <input type="hidden" name="command" value="comment" />
                         <input type="hidden" name="projectID" value="<%=project.getId()%>" />
@@ -135,8 +135,8 @@
                             String b = com.getPersonName()+" @ " + com.getTimeStamp()+": ";
                             String c = com.getComment();
                         %>
-                        <p><%= a %></p>
                         <p><%= b %></p>
+                        <p><%= c %></p>
                         <%
                     } %>
                 </div>
