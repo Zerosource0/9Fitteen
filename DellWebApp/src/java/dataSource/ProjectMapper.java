@@ -72,11 +72,7 @@ public class ProjectMapper {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getLong(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13)
+                        rs.getLong(9)
                 ));
             }
         } catch (SQLException e) {
@@ -102,11 +98,7 @@ public class ProjectMapper {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getLong(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13)
+                        rs.getLong(9)
                 ));
             }
         } catch (SQLException e) {
@@ -134,11 +126,7 @@ public class ProjectMapper {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getLong(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13)
+                        rs.getLong(9)
                 ));
             }
 
@@ -215,11 +203,7 @@ public class ProjectMapper {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getLong(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13)
+                        rs.getLong(9)
                 ));
             }
 
@@ -248,11 +232,7 @@ public class ProjectMapper {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getLong(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13)
+                        rs.getLong(9)
                 ));
             }
 
@@ -280,11 +260,8 @@ public class ProjectMapper {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getLong(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13)
+                        rs.getLong(9)
+
                 ));
             }
 

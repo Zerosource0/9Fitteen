@@ -15,10 +15,7 @@ public class Project {
     private String dateDone;
     private String dateLastEdit;
     private long fundsAllocated;
-    private String poeText;
-    private String poePicture1;
-    private String poePicture2;
-    private String poePicture3;
+   
 
     public int getId() {
         return id;
@@ -92,37 +89,7 @@ public class Project {
         this.fundsAllocated = fundsAllocated;
     }
 
-    public String getPoeText() {
-        return poeText;
-    }
-
-    public void setPoeText(String poeText) {
-        this.poeText = poeText;
-    }
-
-    public String getPoePicture1() {
-        return poePicture1;
-    }
-
-    public void setPoePicture1(String poePicture1) {
-        this.poePicture1 = poePicture1;
-    }
-
-    public String getPoePicture2() {
-        return poePicture2;
-    }
-
-    public void setPoePicture2(String poePicture2) {
-        this.poePicture2 = poePicture2;
-    }
-
-    public String getPoePicture3() {
-        return poePicture3;
-    }
-
-    public void setPoePicture3(String poePicture3) {
-        this.poePicture3 = poePicture3;
-    }
+   
 
     // with funds
     public Project(String projectName, String description, int fkpartnerId, long fundAllocated) {
@@ -149,7 +116,7 @@ public class Project {
     }
 
     
-    public Project(int id, int fkProjetStateID, String projectName, String description, int fkpartnerId, String dateCreated, String dateDone, String dateLastEdit, long fundAllocated, String poeText, String poePicture1, String poePicture2, String poePicture3) {
+    public Project(int id, int fkProjetStateID, String projectName, String description, int fkpartnerId, String dateCreated, String dateDone, String dateLastEdit, long fundAllocated) {
         this.id = id;
         this.fkProjetStateID = fkProjetStateID;
         this.projectName = projectName;
@@ -159,10 +126,7 @@ public class Project {
         this.dateDone = dateDone;
         this.dateLastEdit = dateLastEdit;
         this.fundsAllocated = fundAllocated;
-        this.poeText = poeText;
-        this.poePicture1 = poePicture1;
-        this.poePicture2 = poePicture2;
-        this.poePicture3 = poePicture3;
+        
     }
 
     public Project(String projectName) {
