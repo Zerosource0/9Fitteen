@@ -73,7 +73,7 @@
                         <%}%>
                     </ul>
                 </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+                <div class="col-sm-6 col-sm-offset-3 col-md-5 col-md-offset-2 main">
                     <% Project project = (Project) request.getAttribute("project");
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
@@ -109,14 +109,7 @@
                     <% if (project.getFkProjetStateID() > 1) {%>
                     <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Last State"></a>
                     <% } %> 
-                     <div>
-                    <form action="Dashboard" method="POST">
-                        <textarea name="comment" rows="5" cols="30" ></textarea>
-                        <input type="hidden" name="command" value="comment" />
-                        <input type="hidden" name="projectID" value="<%=project.getId()%>" />
-                        <input type="submit" value="Submit" />
-                    </form>
-                </div>
+                     
                     <h2>Upload</h2>
                     <form method="POST" action="Dashboard" enctype="multipart/form-data">
                         <p>Select file to upload: <input type="file" name="file" size="60" /> </p>
@@ -129,8 +122,15 @@
                 
                  
                 
-                <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                    <h2>Comments</h2>
+                <div class="col-sm-3  col-md-5  main">
+                    <h1 class="page-header">Comments</h1>
+                    <form action="Dashboard" method="POST">
+                        <textarea name="comment" rows="5" cols="30" ></textarea>
+                        <input type="hidden" name="command" value="comment" />
+                        <input type="hidden" name="projectID" value="<%=project.getId()%>" />
+                        <br>
+                        <input type="submit" value="Submit" />
+                    </form>
                     <% for (Comment com : comments) {
                             String b = com.getPersonName()+" @ " + com.getTimeStamp()+": ";
                             String c = com.getComment();
