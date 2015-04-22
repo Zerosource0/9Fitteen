@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Data;
 
 /**
@@ -11,10 +6,10 @@ package Data;
  */
 public class Comment {
     
-    String comment;
-    int personID;
-    String timeStamp;
-    String personName;
+    private String comment;
+    private int personID;
+    private String timeStamp;
+    private String personName;
 
     public Comment(String comment, int personID, String timeStamp) {
         this.comment = comment;

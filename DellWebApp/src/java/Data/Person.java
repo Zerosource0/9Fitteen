@@ -1,15 +1,5 @@
 package Data;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-/**
- *
- * @author Adam
- */
 public class Person {
 
     private int id;

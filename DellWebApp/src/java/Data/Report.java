@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Data;
 
 import java.util.ArrayList;
@@ -12,38 +7,35 @@ import java.util.ArrayList;
  * @author Jonas
  */
 public class Report {
-   ArrayList<String> Countries = new ArrayList(); 
-   ArrayList<Integer> NoPartners = new ArrayList(); 
-   ArrayList<Integer> NoProjectDone = new ArrayList(); 
-   ArrayList<Integer> MoneySpent = new ArrayList(); 
-   ArrayList<Integer> avgSpentPartner = new ArrayList();
+
+    private final ArrayList<String> countries = new ArrayList();
+    private final ArrayList<Integer> noPartners = new ArrayList();
+    private final ArrayList<Integer> noProjectDone = new ArrayList();
+    private final ArrayList<Integer> moneySpent = new ArrayList();
+    private final ArrayList<Integer> avgSpentPartner = new ArrayList();
 
     public Report() {
-        
+
     }
-   
-   
 
     public ArrayList<String> getCountries() {
-        return Countries;
+        return countries;
     }
 
     public ArrayList<Integer> getNoPartners() {
-        return NoPartners;
+        return noPartners;
     }
 
     public ArrayList<Integer> getNoProjectDone() {
-        return NoProjectDone;
+        return noProjectDone;
     }
 
     public ArrayList<Integer> getMoneySpent() {
-        return MoneySpent;
+        return moneySpent;
     }
 
     public ArrayList<Integer> getAvgSpentPartner() {
         return avgSpentPartner;
     }
 
-   
-    
 }

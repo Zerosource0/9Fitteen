@@ -11,11 +11,11 @@ package Data;
  */
 public class Partner {
     
-    int partnerID;
-    String partnerName;
-    String partnerAddress;
-    int partnerZip;
-    String partnerCountry;
+    private int partnerID;
+    private String partnerName;
+    private String partnerAddress;
+    private int partnerZip;
+    private String partnerCountry;
 
     public int getPartnerID() {
         return partnerID;

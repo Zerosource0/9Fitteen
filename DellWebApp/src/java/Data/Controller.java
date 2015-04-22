@@ -208,10 +208,11 @@ public class Controller {
         
         ArrayList<Comment> comments = dbf.getComments(projectID);
         
-        for (Comment com : comments){  
-            Person p = getPerson(com.personID);
-            com.setPersonName(p.getName());
-        }
+        // for each comment in the list get the name of the personID
+        comments.stream().forEach((com) -> {  
+            String name = getPerson(com.getPersonID()).getName();
+            com.setPersonName(name);
+        });
         
         return comments;
     }
