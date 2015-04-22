@@ -204,7 +204,15 @@ public class Controller {
     public boolean saveComment(Project p, int personID, String comment){
         return dbf.saveComment(p, personID, comment);
     }
-    public ArrayList<String> getComments(int projectID){
-        return dbf.getComments(projectID);
+    public ArrayList<Comment> getComments(int projectID){
+        
+        ArrayList<Comment> comments = dbf.getComments(projectID);
+        
+        for (Comment com : comments){  
+            Person p = getPerson(com.personID);
+            com.setPersonName(p.getName());
+        }
+        
+        return comments;
     }
 }

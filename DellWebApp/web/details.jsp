@@ -1,3 +1,4 @@
+<%@page import="Data.Comment"%>
 <%@page import="Data.Partner"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.ArrayList"%>
@@ -77,7 +78,7 @@
                         ArrayList<String> stateNames = (ArrayList<String>) request.getAttribute("stateNames");
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                         Integer projectID=project.getId(), projectStateID=project.getFkProjetStateID();
-                        ArrayList<String> comments = (ArrayList<String>) request.getAttribute("comments");
+                        ArrayList<Comment> comments = (ArrayList<Comment>) request.getAttribute("comments");
                         
                     %>
                     <h1 class="page-header"><%= project.getProjectName() %></h1>
@@ -129,9 +130,13 @@
                  
                 
                 <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                    <% for (String comment : comments) {
+                    <h2>Comments</h2>
+                    <% for (Comment com : comments) {
+                            String b = com.getPersonName()+" @ " + com.getTimeStamp()+": ";
+                            String c = com.getComment();
                         %>
-                        <p><%= comment %></p>
+                        <p><%= a %></p>
+                        <p><%= b %></p>
                         <%
                     } %>
                 </div>

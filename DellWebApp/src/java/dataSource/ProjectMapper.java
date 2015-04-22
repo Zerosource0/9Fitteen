@@ -1,5 +1,6 @@
 package dataSource;
 
+import Data.Comment;
 import Data.Partner;
 import Data.Person;
 import Data.PersonType;
@@ -699,20 +700,20 @@ public class ProjectMapper {
         return person;
     }
     
-    public ArrayList<String> getComments(int projectID, Connection con){
-        ArrayList<String> comments = new ArrayList();
+    public ArrayList<Comment> getComments(int projectID, Connection con){
+        ArrayList<Comment> comments = new ArrayList();
         
-        String sqlString = "Select comments from projectStatePerson where FKprojectID = " + projectID + " order by dateofstatechange";
+        String sqlString = "Select comments, fkpersonid, dateofstatechange from projectStatePerson where FKprojectID = " + projectID + " order by dateofstatechange";
         
         try (PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                String comment = rs.getString("COMMENTS");
-                System.out.println("Comment: " + comment);
-                if (comment != null) {
-                    comments.add(comment);
-                }
-                
+               comments.add( new Comment(
+                    rs.getString(1),
+                    rs.getInt(2),
+                    rs.getString(3)
+                    )
+                );   
             }
 
         } catch (SQLException e) {

@@ -1,5 +1,6 @@
 package dataSource;
 
+import Data.Comment;
 import Data.Partner;
 import Data.Person;
 import Data.PersonType;
@@ -159,7 +160,7 @@ public class DBFacade {
         return pm.saveComment(p, personID, comment, con);
     }
     
-    public ArrayList<String> getComments(int projectID){
+    public ArrayList<Comment> getComments(int projectID){
         return pm.getComments(projectID, con);
     }
 }

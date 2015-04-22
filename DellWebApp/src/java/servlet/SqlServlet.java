@@ -1,5 +1,6 @@
 package servlet;
 
+import Data.Comment;
 import Data.Controller;
 import Data.Partner;
 import Data.Person;
@@ -215,8 +216,7 @@ public class SqlServlet extends HttpServlet {
     }// </editor-fold>
 
     private void getComments(String projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        ArrayList<String> comments = con.getComments(Integer.parseInt(projectID));
-        System.out.println("Number of comments on this project: " + comments.size());
+        ArrayList<Comment> comments = con.getComments(Integer.parseInt(projectID));
         
         request.setAttribute("comments", comments);
     }
