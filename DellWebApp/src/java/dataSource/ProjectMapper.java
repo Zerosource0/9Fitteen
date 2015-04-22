@@ -262,7 +262,6 @@ public class ProjectMapper {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getLong(9)
-
                 ));
             }
 
@@ -341,10 +340,10 @@ public class ProjectMapper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        if(rowsUpdated == 1){
-        rowsUpdated = 0;
-        String sqlString3 = "UPDATE PERSONLOGIN SET PERSONEMAIL = '" + per.getEmail() + "' where fkpersonid = " + per.getID();
+
+        if (rowsUpdated == 1) {
+            rowsUpdated = 0;
+            String sqlString3 = "UPDATE PERSONLOGIN SET PERSONEMAIL = '" + per.getEmail() + "' where fkpersonid = " + per.getID();
 
             try (PreparedStatement statement3 = con.prepareStatement(sqlString3)) {
 
@@ -375,7 +374,7 @@ public class ProjectMapper {
         }
         return rowsUpdated == 1;
     }
-    
+
     public ArrayList<String> getCountries(Connection con) {
         ArrayList<String> countries = new ArrayList<>();
 
@@ -392,7 +391,6 @@ public class ProjectMapper {
 
         return countries;
     }
-
 
     public boolean createProject(Project p, Connection con) {
         int rowsInserted = 0;
@@ -629,9 +627,9 @@ public class ProjectMapper {
     public boolean deletePerson(int personID, Connection con) {
 
         int rowsUpdated = 0;
-        
+
         String sqlString1 = "DELETE FROM PERSONLOGIN WHERE FKPERSONID = " + personID;
-        
+
         try (PreparedStatement statement1 = con.prepareStatement(sqlString1)) {
 
             rowsUpdated = statement1.executeUpdate();
@@ -639,7 +637,7 @@ public class ProjectMapper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         String sqlString2 = "delete from person where personid = " + personID;
 
         try (PreparedStatement statement1 = con.prepareStatement(sqlString2)) {
@@ -651,28 +649,29 @@ public class ProjectMapper {
         }
         return rowsUpdated == 1;
     }
-    public Report getReport(Connection con){
+
+    public Report getReport(Connection con) {
         Report report = new Report();
-        
+
         String sqlString = "select DISTINCT PARTNERCOUNTRY, (select count(partnerid) from partner PAR where PAR.PARTNERCOUNTRY = PA.PARTNERCOUNTRY),(select count(projectID) from project PR join partner PART on PR.FKpartnerID = PART.partnerid where PR.FKPROJECTSTATEID = 9 and PART.PARTNERCOUNTRY = PA.PARTNERCOUNTRY),(select sum(FUNDSALLOCATED) from project PRO join partner PARTN on PRO.FKPARTNERID = PARTN.PARTNERID where PRO.FKPROJECTSTATEID = 9 and PARTN.PARTNERCOUNTRY = PA.PARTNERCOUNTRY) ,((select sum(FUNDSALLOCATED) from project PRO join partner PARTN on PRO.FKPARTNERID = PARTN.PARTNERID where PRO.FKPROJECTSTATEID = 9 and PARTN.PARTNERCOUNTRY = PA.PARTNERCOUNTRY)/(select count(partnerid) from partner PAR where PAR.PARTNERCOUNTRY = PA.PARTNERCOUNTRY)) from partner PA ORDER BY PA.PARTNERCOUNTRY";
-        
+
         try (PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                        report.getCountries().add(rs.getString(1));
-                        report.getNoPartners().add(rs.getInt(2));
-                        report.getNoProjectDone().add(rs.getInt(3));
-                        report.getMoneySpent().add(rs.getInt(4));
-                        report.getAvgSpentPartner().add(rs.getInt(5));  
+                report.getCountries().add(rs.getString(1));
+                report.getNoPartners().add(rs.getInt(2));
+                report.getNoProjectDone().add(rs.getInt(3));
+                report.getMoneySpent().add(rs.getInt(4));
+                report.getAvgSpentPartner().add(rs.getInt(5));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return report;
-    
+
     }
-    
+
     public Person getPerson(int personID, Connection con) {
         Person person = null;
         String sqlString = "select person.*, PersonType.PERSONTYPENAME, personlogin.personemail "
@@ -699,21 +698,26 @@ public class ProjectMapper {
         }
         return person;
     }
-    
-    public ArrayList<Comment> getComments(int projectID, Connection con){
+
+    public ArrayList<Comment> getComments(int projectID, Connection con) {
         ArrayList<Comment> comments = new ArrayList();
-        
+
         String sqlString = "Select comments, fkpersonid, dateofstatechange from projectStatePerson where FKprojectID = " + projectID + " order by dateofstatechange";
-        
+
         try (PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-               comments.add( new Comment(
-                    rs.getString(1),
-                    rs.getInt(2),
-                    rs.getString(3)
+                String comment = rs.getString(1);
+                System.out.println("Comment: " + comment);
+                if (comment != null) {
+                    comments.add(new Comment(
+                            comment,
+                            rs.getInt(2),
+                            rs.getString(3)
                     )
-                );   
+                    );
+                }
+
             }
 
         } catch (SQLException e) {
@@ -721,7 +725,7 @@ public class ProjectMapper {
         }
         return comments;
     }
-    
+
     public boolean saveComment(Project p, int personID, String comment, Connection con) {
         int rowsInserted = 0;
 
@@ -739,28 +743,24 @@ public class ProjectMapper {
         }
         return rowsInserted == 1;
     }
-    
-    public boolean upload (int projectID, int projectStateID, InputStream inputStream, Connection con)
-    {
-        
-        
-        
-        try
-        {
+
+    public boolean upload(int projectID, int projectStateID, InputStream inputStream, Connection con) {
+
+        try {
             String sql = "INSERT INTO poe_pictures (fkprojectid, fkprojectstateid, poe) values (?, ?, ?)";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, projectID);
             statement.setInt(2, projectStateID);
-            if (inputStream != null) statement.setBlob(3, inputStream);
-            int row=statement.executeUpdate();
-            return row>0;
-        
-        }
-        catch (SQLException e) 
-        {
+            if (inputStream != null) {
+                statement.setBlob(3, inputStream);
+            }
+            int row = statement.executeUpdate();
+            return row > 0;
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-            
+
 }

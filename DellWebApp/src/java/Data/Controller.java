@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Data;
 
 import dataSource.DBFacade;
@@ -99,6 +94,15 @@ public class Controller {
     {
         return dbf.upload(projectID, projectStateID, inputStream);
     }
+    
+    public ArrayList<Project> getProjects(int partnerID) {
+        if (partnerID != 1) {
+            return dbf.getProjects(partnerID);
+        } else {
+            return dbf.getProjects();
+        }
+    }
+    
     public ArrayList<Project> getProjects() {
         return dbf.getProjects();
     }
@@ -109,10 +113,6 @@ public class Controller {
 
     public ArrayList<Project> getProjectsMyAction() {
         return dbf.getProjectsMyAction();
-    }
-
-    public ArrayList<Project> getProjects(int partnerID) {
-        return dbf.getProjects(partnerID);
     }
 
     public ArrayList<String> getStateNames() {
@@ -204,6 +204,12 @@ public class Controller {
     public boolean saveComment(Project p, int personID, String comment){
         return dbf.saveComment(p, personID, comment);
     }
+    
+    /**
+     * 
+     * @param projectID
+     * @return 
+     */
     public ArrayList<Comment> getComments(int projectID){
         
         ArrayList<Comment> comments = dbf.getComments(projectID);

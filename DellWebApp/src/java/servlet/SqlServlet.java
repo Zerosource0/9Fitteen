@@ -66,15 +66,18 @@ public class SqlServlet extends HttpServlet {
                 else {
                     showProjects(request, response, con);
                 }
-            } else {
+            } 
+            else {
                 request.setAttribute("access", false);
                 RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
                 rq.forward(request, response);
             }
-        } else {
+        } 
+        else {
             if (command.equals("login")) {
                 logIn(request, response, con);
-            } else {
+            } 
+            else {
                 if (accessAllowed(request, response, con)) {
                     // Displays the main view.jsp with an overview of the projects
                     switch (command) {
@@ -433,11 +436,8 @@ public class SqlServlet extends HttpServlet {
 
         if (p == null) {
             success = false;
-            request.setAttribute("pro", success);
-            return;
         } else {
             createStateChange(request, response, con);
-
             request.setAttribute("project", p);
         }
 
@@ -515,17 +515,18 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    /**
+     * Returns an ArrayList with all the projects that the current user has permission to see. 
+     * 
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private ArrayList<Project> getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        ArrayList<Project> projects;
-        if ((int) request.getSession().getAttribute("partnerID") != 1) {
-            projects = con.getProjects(((int) request.getSession().getAttribute("partnerID")));
-        } else {
-            projects = con.getProjects();
-        }
-
-        if (projects.size() <= 0) {
-            System.out.println("Empty List");
-        }
+        ArrayList<Project> projects = con.getProjects((int) request.getSession().getAttribute("partnerID"));
 
         request.setAttribute("partnerID", request.getSession().getAttribute("partnerID"));
         request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
@@ -658,9 +659,7 @@ public class SqlServlet extends HttpServlet {
     }
 
     private boolean createStateChange(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        Project project = getLatestProject(request, response, con);
-
-        return con.createStateChange(project, (int) request.getSession().getAttribute("personID"));
+        return con.createStateChange(con.getLatestProject(), (int) request.getSession().getAttribute("personID"));
     }
 
     private boolean updateStateChange(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
@@ -683,7 +682,7 @@ public class SqlServlet extends HttpServlet {
     }
 
     // Returns the last project that was added to the DB
-    private Project getLatestProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private Project getLatestProject(Controller con) throws ServletException, IOException {
         return con.getLatestProject();
     }
 
