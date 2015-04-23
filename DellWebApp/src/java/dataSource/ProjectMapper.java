@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProjectMapper {
-
-    //private DBconnector dbc = 
     
     public ArrayList<Partner> getPartnerInfo() {
         ArrayList<Partner> partnerInfo = new ArrayList<>();
