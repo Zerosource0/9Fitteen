@@ -2,6 +2,9 @@ package dataSource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // Encapsulates code to connect to DB
 // Implemented as a Singleton to ensure max one connection
@@ -43,5 +46,14 @@ public class DBconnector
     public Connection getConnection()
     {
       return con;
+    }
+    
+    public void close()
+    {
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnector.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
