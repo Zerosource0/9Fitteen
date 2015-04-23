@@ -35,47 +35,47 @@ public class DBFacade {
     }
 
     public boolean createStateChange(Project p, int personID) {
-        return pm.createStateChange(p, personID, con);
+        return pm.createStateChange(p, personID);
     }
     public boolean upload (int projectID, int projectStateID, InputStream inputStream)
     {
-        return pm.upload(projectID, projectStateID, inputStream, con);
+        return pm.upload(projectID, projectStateID, inputStream);
     }
     public boolean createProject(Project p) {
-        return pm.createProject(p, con);
+        return pm.createProject(p);
     }
 
     public ArrayList<Project> getProjects() {
-        return pm.getProjects(con);
+        return pm.getProjects();
     }
 
     public ArrayList<Project> getProjectsMyAction(int partnerID) {
-        return pm.getProjectsMyAction(con, partnerID);
+        return pm.getProjectsMyAction(partnerID);
     }
 
     public ArrayList<Project> getProjectsMyAction() {
-        return pm.getProjectsMyAction(con);
+        return pm.getProjectsMyAction();
     }
 
     public ArrayList<Project> getProjects(int partnerID) {
         System.out.println("DBF Partner ID" + partnerID);
-        return pm.getProjects(con, partnerID);
+        return pm.getProjects(partnerID);
     }
 
     public ArrayList<String> getStateNames() {
-        return pm.getStateNames(con);
+        return pm.getStateNames();
     }
 
     public ArrayList<Partner> getPartnerInfo() {
-        return pm.getPartnerInfo(con);
+        return pm.getPartnerInfo();
     }
      public ArrayList<String> getCountries() {
-        return pm.getCountries(con);
+        return pm.getCountries();
     }
 
 
     public Person logIn(String userName, String password) {
-        return pm.logIn(userName, password, con);
+        return pm.logIn(userName, password);
     }
 
     public Project getProject(int projectID) {
@@ -83,67 +83,67 @@ public class DBFacade {
     }
     
     public Report getReport(){
-        return pm.getReport(con);
+        return pm.getReport();
     }
 
     public Project getLatestProject() {
-        return pm.getLatestProject(con);
+        return pm.getLatestProject();
     }
 
     public int getNumberOfUsers() {
-        return pm.getNumberOfUsers(con);
+        return pm.getNumberOfUsers();
     }
 
     public int getNumberOfPartners() {
-        return pm.getNumberOfPartners(con);
+        return pm.getNumberOfPartners();
     }
 
     public boolean saveProject(Project p) {
-        return pm.saveProject(p, con);
+        return pm.saveProject(p);
     }
 
     public boolean updateProjectState(Project p) {
-        return pm.updateProjectState(p, con);
+        return pm.updateProjectState(p);
     }
 
     public ArrayList<Person> getPersons() {
-        return pm.getPersons(con);
+        return pm.getPersons();
     }
 
     public long getFundsAllocated() {
-        return pm.getFundsAllocated(con);
+        return pm.getFundsAllocated();
     }
 
     public void useFunds(int amount) {
-        pm.useFunds(amount, con);
+        pm.useFunds(amount);
     }
     public ArrayList<PersonType> getPersonTypes()
     {
-        return pm.getPersonTypes(con);
+        return pm.getPersonTypes();
     }
     public boolean savePerson(Person per) {
-        return pm.savePerson(per, con);
+        return pm.savePerson(per);
     }
     public boolean savePartner(Partner partner) {
-        return pm.savePartner(partner, con);
+        return pm.savePartner(partner);
     }
     
     public String getPassword(int personID) {
-        return pm.getPassword(personID, con);
+        return pm.getPassword(personID);
     }
     
     public boolean changePassword(String password, int personID) {
-        return pm.changePassword(password, personID, con);
+        return pm.changePassword(password, personID);
     }
     
     public Person addPerson(){
-        return pm.addPerson(con);
+        return pm.addPerson();
     }
     public boolean deletePerson(int personID){
-        return pm.deletePerson(personID,con);
+        return pm.deletePerson(personID);
     }
     public Person getPerson(int personID){
-        return pm.getPerson(personID, con);
+        return pm.getPerson(personID);
     }
     
     public boolean closeConnection() {
@@ -157,10 +157,10 @@ public class DBFacade {
     }
     
     public boolean saveComment(Project p, int personID, String comment){
-        return pm.saveComment(p, personID, comment, con);
+        return pm.saveComment(p, personID, comment);
     }
     
     public ArrayList<Comment> getComments(int projectID){
-        return pm.getComments(projectID, con);
+        return pm.getComments(projectID);
     }
 }
