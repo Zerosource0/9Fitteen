@@ -708,7 +708,6 @@ public class ProjectMapper {
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
                 String comment = rs.getString(1);
-                System.out.println("Comment: " + comment);
                 if (comment != null) {
                     comments.add(new Comment(
                             comment,

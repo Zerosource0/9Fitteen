@@ -97,18 +97,20 @@
                     <p> <b>Funds allocated: </b><%= project.getFundsAllocated() %></p>
                     <a href="Dashboard?command=edit&id=<%=project.getId()%>" ><input type="button" value="Edit"></a>
                     
+                    <% if (project.getFkProjetStateID() > 1) {%>
+                    <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Previous State - <%= stateNames.get(project.getFkProjetStateID()-2) %>"></a>
+                    <% } %> 
+                    
                     <% if (project.getFkProjetStateID() < 9) {%>
                         <% if (a!=5 || (a==5 && project.getFkProjetStateID()==3)  
                                 || (a==5 && project.getFkProjetStateID()==5) 
                                 || (a==5 && project.getFkProjetStateID()==6)) 
                                  {%>
-                            <a href="Dashboard?command=next&id=<%=project.getId()%>" ><input type="button" value="Next State"></a>
+                                 <a href="Dashboard?command=next&id=<%=project.getId()%>" ><input type="button" value="Next State - <%= stateNames.get(project.getFkProjetStateID()) %>"></a>
                             <%} %>
                     <% } %>
                     
-                    <% if (project.getFkProjetStateID() > 1) {%>
-                    <a href="Dashboard?command=back&id=<%=project.getId()%>" ><input type="button" value="Last State"></a>
-                    <% } %> 
+                    
                      
                     <h2>Upload</h2>
                     <form method="POST" action="Dashboard" enctype="multipart/form-data">
