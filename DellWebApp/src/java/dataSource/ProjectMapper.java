@@ -7,6 +7,7 @@ import Data.PersonType;
 import Data.Project;
 import Data.Report;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -777,6 +778,34 @@ public class ProjectMapper {
             e.printStackTrace();
         }
         return rowsInserted == 1;
+    }
+    
+    public Blob getImage (int projectID, int projectStateID, Connection con)
+    {   
+
+        try {
+            String sql="Select POE"+ 
+                       " from POE_PICTURES, PROJECT" +
+                       " where POE_PICTURES.FKPROJECTID=PROJECT.projectID" +
+                       " and POE_PICTURES.FKPROJECTSTATEID=PROJECT.fkprojectStateID"+
+                       " and project.PROJECTID="+projectID+
+                       " and project.fkprojectstateid="+projectStateID;
+            PreparedStatement statement = con.prepareStatement(sql);
+            
+            ResultSet rs=statement.executeQuery();
+            if (rs.next()) 
+            {
+                System.out.println("succes");
+                return rs.getBlob(1);
+            }
+            return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            return null;
+        }
     }
 
     public boolean upload(int projectID, int projectStateID, InputStream inputStream) {
