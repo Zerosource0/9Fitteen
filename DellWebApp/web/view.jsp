@@ -135,10 +135,10 @@
 
                                 %> <tr> <%
                                     %> <td width="35%" > <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
-                                    %> <td> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
-                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
-                                    %> <td> <%= p.getDateCreated()%> </td> <%
-                                    %> <td> <%= p.getDateLastEdit()%> </td> </tr> <%
+                                    %> <td width="16%"> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
+                                    %> <td width="16%"> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
+                                    %> <td width="16%"> <%= p.getDateCreated()%> </td> <%
+                                    %> <td width="16%"> <%= p.getDateLastEdit()%> </td> </tr> <%
                                         }
                                     %>
                             </tbody>
@@ -164,10 +164,10 @@
 
                                 %> <tr> <%
                                     %> <td width="35%" > <a href="Dashboard?id=<%=p.getId()%>" ><%= p.getProjectName()%></a> </td> <%
-                                    %> <td> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
-                                    %> <td> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
-                                    %> <td> <%= p.getDateCreated()%> </td> <%
-                                    %> <td> <%= p.getDateLastEdit()%> </td> </tr> <%
+                                    %> <td width="16%"> <%= stateNames.get(p.getFkProjetStateID() - 1)%> </td> <%
+                                    %> <td width="16%"> <%= partnerInfo.get(p.getFkPartnerId() - 1).getPartnerName()%> </td> <%
+                                    %> <td width="16%"> <%= p.getDateCreated()%> </td> <%
+                                    %> <td width="16%"> <%= p.getDateLastEdit()%> </td> </tr> <%
                                         }
                                     %>
                             </tbody>

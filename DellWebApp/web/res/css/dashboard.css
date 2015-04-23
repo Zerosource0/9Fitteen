@@ -107,15 +107,10 @@ body {
   
 }
 table#example {
-    border-collapse: initial;   
-    border-bottom: 0px;
-    border-top: 0px;
-    border-spacing: 0px;
+    border-collapse: separate;   
+    
 }
 #example tr {
-    background-color: #e2e2e2;
-        border-bottom: 0px;
-    border-top: 0px;
     border-spacing: 0px;
 
 }
@@ -136,8 +131,9 @@ table#example {
     cursor: pointer;
 }
 #example td {
-    border-bottom: 0px;
-    border-top: 0px;
+    line-height: 35px;
+    height: 35px;
+    border-bottom: 5px;
     border-spacing: 0px;
 }
 #example a {
