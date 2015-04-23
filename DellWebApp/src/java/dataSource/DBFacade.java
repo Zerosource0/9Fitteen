@@ -79,7 +79,7 @@ public class DBFacade {
     }
 
     public Project getProject(int projectID) {
-        return pm.getProject(con, projectID);
+        return pm.getProject(projectID);
     }
     
     public Report getReport(){

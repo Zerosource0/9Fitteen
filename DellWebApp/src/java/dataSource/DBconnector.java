@@ -45,6 +45,11 @@ public class DBconnector
     
     public Connection getConnection()
     {
+        try {
+            con = DriverManager.getConnection(URL, id, pw);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnector.class.getName()).log(Level.SEVERE, null, ex);
+        }
       return con;
     }
     
