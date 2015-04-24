@@ -221,9 +221,7 @@ public class Controller {
         return dbf.getPerson(personID);
     }
     
-    public boolean closeConnection() {
-        //return dbf.closeConnection();
-    }
+   
     
     public boolean saveComment(Project p, int personID, String comment){
         return dbf.saveComment(p, personID, comment);

@@ -48,6 +48,8 @@ public class SqlServlet extends HttpServlet {
 
         // Determine what action will be executed by the Servlet
         String command = request.getParameter("command");
+        
+        
 
         // If there is no command, check for other parameters
         if (command == null) {
@@ -113,8 +115,16 @@ public class SqlServlet extends HttpServlet {
                             showProjects(request, response, con);
                             break;
                         case "showCreate":
+                            if(con.getCurrentUser().getFkPersonTypeID()==5)
+                            {
+                                showProjects(request, response, con);
+                                break;
+                            }
+                            else
+                            {
                             showCreate(request, response, con);
                             break;
+                            }
                         case "editPartner":
                             String partnerID = request.getParameter("partnerID");
                             showPartnerEdit(partnerID, request, response, con);
@@ -633,6 +643,7 @@ public class SqlServlet extends HttpServlet {
     private void showCreate(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         getPartnerInfo(request, response, con);
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         request.setAttribute("personName", con.getCurrentUser().getName());
         RequestDispatcher rq = request.getRequestDispatcher("create.jsp");
         rq.forward(request, response);
@@ -658,7 +669,7 @@ public class SqlServlet extends HttpServlet {
     }
 
     private void showSettings(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-
+        request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         request.setAttribute("personName", con.getCurrentUser().getName());
 
         RequestDispatcher rq = request.getRequestDispatcher("settings.jsp");

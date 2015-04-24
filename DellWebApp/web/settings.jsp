@@ -39,9 +39,7 @@
                                 String firstName = ((String) request.getAttribute("personName")).substring(0,firstSpace);%>
                                 <%=firstName%>)Log Out</a></li>
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search...">
-                    </form>
+                    
                 </div>
             </div>
         </nav>
@@ -49,9 +47,23 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
+                   <ul class="nav nav-sidebar">
+                        <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
+
+                    </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
+                        <%
+                         Integer a=0;
+                         a=(Integer) request.getAttribute("rights");
+                        %>
+                        <%if (a!=5) 
+                        {%>
                         
+                        <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
+                        <li><a href="Dashboard?command=showPersons">Show Users</a></li>
+                        <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <li><a href="Dashboard?command=showReport">See report</a></li>
+                        <%}%>
                     </ul>
                     
                     <ul class="nav nav-sidebar">

@@ -45,9 +45,7 @@
                                 String firstName = ((String) request.getAttribute("personName")).substring(0,firstSpace);%>
                                 <%=firstName%>)Log Out</a></li>
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search...">
-                    </form>
+                    
                 </div>
             </div>
         </nav>
@@ -60,14 +58,18 @@
 
                     </ul>
                     <ul class="nav nav-sidebar">
+                        <%
+                         Integer a=0;
+                         a=(Integer) request.getAttribute("rights");
+                        %>
+                        <%if (a!=5) 
+                        {%>
+                        
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
                         <li><a href="Dashboard?command=showPersons">Show Users</a></li>
-                        <li class="active"><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
                         <li><a href="Dashboard?command=showReport">See report</a></li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-
-
+                        <%}%>
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

@@ -7,8 +7,6 @@ import Data.PersonType;
 import Data.Project;
 import Data.Report;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -18,13 +16,12 @@ import java.util.ArrayList;
 public class DBFacade {
 
     private ProjectMapper pm;
-    //private Connection con;
+    
 
     private static DBFacade instance;
 
     private DBFacade() {
         pm = new ProjectMapper();
-        //con = DBconnector.getInstance().getConnection();
     }
 
     public static DBFacade getInstance() {
@@ -145,17 +142,7 @@ public class DBFacade {
     public Person getPerson(int personID){
         return pm.getPerson(personID);
     }
-    
-    public boolean closeConnection() {
-        try {
-            con.close();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-    
+        
     public boolean saveComment(Project p, int personID, String comment){
         return pm.saveComment(p, personID, comment);
     }

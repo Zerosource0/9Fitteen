@@ -45,9 +45,7 @@
                                 String firstName = ((String) request.getAttribute("personName")).substring(0,firstSpace);%>
                                 <%=firstName%>)Log Out</a></li>
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search...">
-                    </form>
+                    
                 </div>
             </div>
         </nav>
@@ -56,43 +54,28 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
 
                     </ul>
                     <ul class="nav nav-sidebar">
-
+                        <%
+                         Integer a=0;
+                         a=(Integer) request.getAttribute("rights");
+                        %>
+                        <%if (a!=5) 
+                        {%>
+                        
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
                         <li><a href="Dashboard?command=showPersons">Show Users</a></li>
-                        <li class="active"><a href="Dashboard?command=showPartners">Show Partners</a></li>
+                        <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
                         <li><a href="Dashboard?command=showReport">See report</a></li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-
-
+                        <%}%>
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header">Dashboard</h1>
+                    
 
-                    <div class="row placeholders">
-                        <div class="col-xs-6 col-sm-4 placeholder">
-                            <img src="res/file148.png" class="img-responsive" alt="test">
-                            <h4><%= projects.size()%></h4>
-                            <span class="text-muted">Number of Projects</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-4 placeholder">
-                            <img src="res/network11.png" class="img-responsive" alt="">
-                            <h4><%= request.getAttribute("numberOfUsers")%></h4>
-                            <span class="text-muted">Number of Users</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-4 placeholder">
-                            <img src="res/people8.png" class="img-responsive" alt="">
-                            <h4><%= request.getAttribute("numberOfPartners")%></h4>
-                            <span class="text-muted">Number of Partners</span>
-                        </div>
-                    </div>
-
-                    <h2 class="sub-header">Partners <snapToRight><a href="Dashboard?command=addPartner" ><input type="button" value="Add New Partner"></a></snaptoright></h2>
+                    <h2 class="sub-header">Partners </h2>
                     <div class="table-responsive">
                         <table  class="table table-striped" id="example">
                             <thead>
