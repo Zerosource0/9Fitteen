@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class DBFacade {
 
     private ProjectMapper pm;
-    private Connection con;
+    //private Connection con;
 
     private static DBFacade instance;
 
     private DBFacade() {
         pm = new ProjectMapper();
-        con = DBconnector.getInstance().getConnection();
+        //con = DBconnector.getInstance().getConnection();
     }
 
     public static DBFacade getInstance() {
@@ -109,7 +109,7 @@ public class DBFacade {
     public ArrayList<Person> getPersons() {
         return pm.getPersons();
     }
-
+    
     public long getFundsAllocated() {
         return pm.getFundsAllocated();
     }

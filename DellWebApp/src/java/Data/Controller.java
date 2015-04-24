@@ -142,7 +142,7 @@ public class Controller {
 
     public void logOut() {
         person = null;
-        closeConnection();
+        //closeConnection();
     }
 
     public int getNumberOfUsers() {
@@ -222,7 +222,7 @@ public class Controller {
     }
     
     public boolean closeConnection() {
-        return dbf.closeConnection();
+        //return dbf.closeConnection();
     }
     
     public boolean saveComment(Project p, int personID, String comment){
