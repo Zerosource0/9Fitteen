@@ -86,7 +86,7 @@
                     
                     <p> <b>Phone Number: </b><%= person.getPhoneNumber() %></p>
                     
-                    <p> <b>Username: </b><%= person.getEmail() %></p>
+                    <p> <b>Email: </b><%= person.getEmail() %></p>
                     
                     <a href="Dashboard?command=editPerson&personID=<%=person.getID()%>" ><input type="button" value="Edit"></a>
                     <a href="Dashboard?command=deletePerson&personID=<%=person.getID()%>" ><input type="button" onclick="return comfirm('Do you really want to delete'<%= person.getName()%>);" value="Delete"></a>
