@@ -86,7 +86,7 @@
                             
                             
                     <div class="table-responsive">
-                        <table  class="table table-striped" id="country">
+                        <table  class="table table-striped" id="example">
                             <thead>
                                 <tr>
                                     <th>Countries:</th>
