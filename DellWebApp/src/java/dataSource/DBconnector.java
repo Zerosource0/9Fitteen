@@ -1,7 +1,6 @@
 package dataSource;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +37,6 @@ public class DBconnector
 		  					     
         } catch (Exception e)
         {
-            System.out.println("\n*** Remember to insert your Oracle ID and PW in the DBConnector class! ***\n");
             System.out.println("error in DBConnector.getConnection()");
             System.out.println(e);
         }

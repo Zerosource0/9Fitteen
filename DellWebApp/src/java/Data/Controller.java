@@ -2,12 +2,13 @@ package Data;
 
 import dataSource.DBFacade;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author marcj_000
- */
 public class Controller {
 
     //Singleton
@@ -243,5 +244,15 @@ public class Controller {
         });
         
         return comments;
+    }
+    
+    public byte[] getImage(int projectID, int projectStateID) {
+        
+        
+        return dbf.getImage(projectID, projectStateID);
+        
+        
+        
+        
     }
 }

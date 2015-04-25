@@ -7,6 +7,7 @@ import Data.PersonType;
 import Data.Project;
 import Data.Report;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
@@ -149,5 +150,9 @@ public class DBFacade {
     
     public ArrayList<Comment> getComments(int projectID){
         return pm.getComments(projectID);
+    }
+    
+    public byte[] getImage(int projectID, int projectStateID) {
+        return pm.getImage(projectID, projectStateID);
     }
 }

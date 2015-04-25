@@ -10,7 +10,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -173,6 +176,10 @@ public class SqlServlet extends HttpServlet {
                         case "upload":
                             upload(request, response, con);
                             showProjects(request, response, con);
+                            break;
+                        case "getImg":
+                            projectID = request.getParameter("id");
+                            getImage(Integer.parseInt(projectID), request, response, con);
                             break;
                         case "back":
                             String id3 = request.getParameter("id");
@@ -633,6 +640,7 @@ public class SqlServlet extends HttpServlet {
 
         getProjects(request, response, con);
         getComments(id, request, response, con);
+        //getImage(Integer.parseInt(id), request, response, con);
         request.setAttribute("project", getProject(pid, request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
@@ -687,6 +695,23 @@ public class SqlServlet extends HttpServlet {
 
     private int getNumberOfPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getNumberOfPartners();
+    }
+    
+    private void getImage(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) {
+        
+        
+        try (OutputStream output = response.getOutputStream();) 
+        {
+            //response.reset();
+            //response.setContentType("image/gif");
+            output.write(con.getImage(projectID, 1));
+        } catch (IOException ex) {
+            Logger.getLogger(SqlServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
     }
 
     private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException 

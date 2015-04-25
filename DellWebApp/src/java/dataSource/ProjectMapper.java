@@ -16,13 +16,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProjectMapper {
-    
+
     public ArrayList<Partner> getPartnerInfo() {
         ArrayList<Partner> partnerInfo = new ArrayList<>();
 
         String sqlString1 = "select * from partner";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -46,7 +46,7 @@ public class ProjectMapper {
 
         String sqlString1 = "select projectstatename from projectstate";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -64,7 +64,7 @@ public class ProjectMapper {
         Project project = null;
         System.out.println("HERE");
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {
@@ -91,7 +91,7 @@ public class ProjectMapper {
         String sqlString1 = "select * from project where projectid =" + projectID;
         Project project = null;
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {
@@ -120,7 +120,7 @@ public class ProjectMapper {
 
         String sqlString1 = "select * from project order by projectid";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -150,7 +150,7 @@ public class ProjectMapper {
 
         String sqlString = "select * from persontype";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -173,7 +173,7 @@ public class ProjectMapper {
                 + "from person, PersonType "
                 + "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID ORDER BY personid";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -200,7 +200,7 @@ public class ProjectMapper {
 
         String sqlString1 = "SELECT * FROM PROJECT PR JOIN PARTNER PA ON PR.FKPARTNERID = PA.PARTNERID WHERE PA.PARTNERID = " + partnerID;
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -230,7 +230,7 @@ public class ProjectMapper {
 
         String sqlString1 = "select * from Project PR join partner PA on PR.fkpartnerid = pa.partnerid where partnerid = " + partnerID + " and PR.FKPROJECTSTATEID in (3,5,6)";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -259,7 +259,7 @@ public class ProjectMapper {
 
         String sqlString1 = "select * from Project where FKPROJECTSTATEID in (1,2,4,7,8) order by datelastedit DESC";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -288,7 +288,7 @@ public class ProjectMapper {
 
         String sqlString1 = "insert into PROJECTSTATEPERSON (FKPersonID, FKProjectStateID, FKProjectID)"
                 + "VALUES (?,?,?)";
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1)) {
 
             statement.setInt(1, personID);
@@ -306,7 +306,7 @@ public class ProjectMapper {
 
         String sqlString1 = "update project set fkprojectstateid = ? where projectid = " + p.getId();
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1)) {
             statement.setInt(1, p.getFkProjetStateID());
 
@@ -344,7 +344,7 @@ public class ProjectMapper {
 
         String sqlString = "update person set personname = ?, personphonenumber = ?, fkpersontypeid = ?, fkpartnerid = ? where personid = " + per.getID();
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString)) {
             statement.setString(1, per.getName());
             statement.setInt(2, per.getPhoneNumber());
@@ -361,7 +361,7 @@ public class ProjectMapper {
             rowsUpdated = 0;
             String sqlString3 = "UPDATE PERSONLOGIN SET PERSONEMAIL = '" + per.getEmail() + "' where fkpersonid = " + per.getID();
 
-            try (   Connection con = DBconnector.getInstance().getConnection();
+            try (Connection con = DBconnector.getInstance().getConnection();
                     PreparedStatement statement3 = con.prepareStatement(sqlString3)) {
 
                 rowsUpdated = statement3.executeUpdate();
@@ -378,7 +378,7 @@ public class ProjectMapper {
 
         String sqlString1 = "update project set projectname = ?,  projectdescription = ?, fkpartnerid = ?,  fundsallocated = ? where projectid = " + p.getId();
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1)) {
             statement.setString(1, p.getProjectName());
             statement.setString(2, p.getDescription());
@@ -398,7 +398,7 @@ public class ProjectMapper {
 
         String sqlString1 = "select DISTINCT PARTNERCOUNTRY from partner";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -423,7 +423,7 @@ public class ProjectMapper {
         String sqlString2 = "insert into project (PROJECTNAME,FKPARTNERID,PROJECTDESCRIPTION,FUNDSALLOCATED)"
                 + " values (?,?,?,?)";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString2)) {
 
             statement.setString(1, p.getProjectName());
@@ -445,7 +445,7 @@ public class ProjectMapper {
         String sqlString1 = "Select FKPERSONID "
                 + "from PERSONLOGIN where PERSONEMAIL='" + login.toLowerCase() + "' and PERSONPASSWORD='" + password + "'";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre1 = con.prepareStatement(sqlString1);
                 ResultSet rs1 = pre1.executeQuery();) {
 
@@ -473,7 +473,7 @@ public class ProjectMapper {
                 + "FROM person, persontype "
                 + "Where person.personid=" + id + " and fkpersontypeid=persontypeid";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre2 = con.prepareStatement(sqlString2);
                 ResultSet rs2 = pre2.executeQuery();) {
 
@@ -508,7 +508,7 @@ public class ProjectMapper {
         int numberOfUsers = 0;
         String sqlString1 = "select count(PERSONID) from PERSON";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
             rs2.next();
@@ -523,7 +523,7 @@ public class ProjectMapper {
         int numberOfPartners = 0;
         String sqlString1 = "select count(PartnerID) from PARTNER";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
             rs2.next();
@@ -538,7 +538,7 @@ public class ProjectMapper {
         int FundsLeft = 0;
         String sqlString1 = "select totalFund from Quarter";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
             rs2.next();
@@ -553,7 +553,7 @@ public class ProjectMapper {
         int FundsLeft = 0;
         String sqlString1 = "update QUARTER SET totalfund = totalfund - " + amount;
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
             rs2.next();
@@ -569,7 +569,7 @@ public class ProjectMapper {
 
         String sqlString = "SELECT PERSONPASSWORD FROM PERSONLOGIN WHERE FKPERSONID = " + personID;
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre = con.prepareStatement(sqlString);
                 ResultSet rs = pre.executeQuery()) {
 
@@ -589,7 +589,7 @@ public class ProjectMapper {
 
         String sqlString = "UPDATE PERSONLOGIN SET PERSONPASSWORD = '" + password + "' WHERE FKPERSONID = " + personID;
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString)) {
 
             rowsUpdated = statement.executeUpdate();
@@ -608,7 +608,7 @@ public class ProjectMapper {
         String sqlString = "INSERT INTO PERSON (PERSONNAME,PERSONPHONENUMBER,FKPersonTypeID) "
                 + "VALUES ('Name',12345678,1)";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement1 = con.prepareStatement(sqlString)) {
 
             rowsInserted = statement1.executeUpdate();
@@ -621,7 +621,7 @@ public class ProjectMapper {
 
         if (rowsInserted == 1) {
 
-            try (   Connection con = DBconnector.getInstance().getConnection();
+            try (Connection con = DBconnector.getInstance().getConnection();
                     PreparedStatement statement2 = con.prepareStatement(sqlString2);
                     ResultSet rs = statement2.executeQuery()) {
                 if (rs.next()) {
@@ -641,7 +641,7 @@ public class ProjectMapper {
             String sqlString3 = "INSERT INTO PERSONLOGIN (FKPERSONID,PERSONEMAIL,PERSONPASSWORD)"
                     + " VALUES (" + person.getID() + ",'email','password')";
 
-            try (   Connection con = DBconnector.getInstance().getConnection();
+            try (Connection con = DBconnector.getInstance().getConnection();
                     PreparedStatement statement3 = con.prepareStatement(sqlString3)) {
 
                 rowsInserted = statement3.executeUpdate();
@@ -661,7 +661,7 @@ public class ProjectMapper {
 
         String sqlString1 = "DELETE FROM PERSONLOGIN WHERE FKPERSONID = " + personID;
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement1 = con.prepareStatement(sqlString1)) {
 
             rowsUpdated = statement1.executeUpdate();
@@ -672,7 +672,7 @@ public class ProjectMapper {
 
         String sqlString2 = "delete from person where personid = " + personID;
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement1 = con.prepareStatement(sqlString2)) {
 
             rowsUpdated = statement1.executeUpdate();
@@ -688,7 +688,7 @@ public class ProjectMapper {
 
         String sqlString = "select DISTINCT PARTNERCOUNTRY, (select count(partnerid) from partner PAR where PAR.PARTNERCOUNTRY = PA.PARTNERCOUNTRY),(select count(projectID) from project PR join partner PART on PR.FKpartnerID = PART.partnerid where PR.FKPROJECTSTATEID = 9 and PART.PARTNERCOUNTRY = PA.PARTNERCOUNTRY),(select sum(FUNDSALLOCATED) from project PRO join partner PARTN on PRO.FKPARTNERID = PARTN.PARTNERID where PRO.FKPROJECTSTATEID = 9 and PARTN.PARTNERCOUNTRY = PA.PARTNERCOUNTRY) ,((select sum(FUNDSALLOCATED) from project PRO join partner PARTN on PRO.FKPARTNERID = PARTN.PARTNERID where PRO.FKPROJECTSTATEID = 9 and PARTN.PARTNERCOUNTRY = PA.PARTNERCOUNTRY)/(select count(partnerid) from partner PAR where PAR.PARTNERCOUNTRY = PA.PARTNERCOUNTRY)) from partner PA ORDER BY PA.PARTNERCOUNTRY";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -713,7 +713,7 @@ public class ProjectMapper {
                 + "where person.FKPERSONTYPEID=Persontype.PERSONTYPEID and PERSONLOGIN.fkpersonID=PERSON.PERSONID and PERSON.PERSONID = " + personID
                 + " ORDER BY personid";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -739,7 +739,7 @@ public class ProjectMapper {
 
         String sqlString = "Select comments, fkpersonid, dateofstatechange from projectStatePerson where FKprojectID = " + projectID + " order by dateofstatechange";
 
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString);
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -766,7 +766,7 @@ public class ProjectMapper {
 
         String sqlString1 = "insert into PROJECTSTATEPERSON (FKPersonID, FKProjectStateID, FKProjectID, Comments)"
                 + "VALUES (?,?,?,?)";
-        try (   Connection con = DBconnector.getInstance().getConnection();
+        try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlString1)) {
 
             statement.setInt(1, personID);
@@ -779,52 +779,46 @@ public class ProjectMapper {
         }
         return rowsInserted == 1;
     }
-    
-    public Blob getImage (int projectID, int projectStateID, Connection con)
-    {   
 
-        try {
-            String sql="Select POE"+ 
-                       " from POE_PICTURES, PROJECT" +
-                       " where POE_PICTURES.FKPROJECTID=PROJECT.projectID" +
-                       " and POE_PICTURES.FKPROJECTSTATEID=PROJECT.fkprojectStateID"+
-                       " and project.PROJECTID="+projectID+
-                       " and project.fkprojectstateid="+projectStateID;
-            PreparedStatement statement = con.prepareStatement(sql);
-            
-            ResultSet rs=statement.executeQuery();
-            if (rs.next()) 
-            {
-                System.out.println("succes");
-                return rs.getBlob(1);
+    public byte[] getImage(int projectID, int projectStateID) {
+        byte[] imgData = null;
+        String sql = "Select POE"
+                + " from POE_PICTURES, PROJECT"
+                + " where POE_PICTURES.FKPROJECTID=PROJECT.projectID"
+                + " and POE_PICTURES.FKPROJECTSTATEID=PROJECT.fkprojectStateID"
+                + " and project.PROJECTID=" + projectID
+                + " and project.fkprojectstateid=" + projectStateID;
+        try (Connection con = DBconnector.getInstance().getConnection();
+                PreparedStatement statement = con.prepareStatement(sql);
+                ResultSet rs = statement.executeQuery()) {
+            if (rs.next()) {
+                System.out.println("success");
+                Blob img = rs.getBlob(1);
+                imgData = img.getBytes(1, (int) img.length());
             }
-            return null;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        finally
-        {
-            return null;
-        }
+        
+        return imgData;
     }
 
     public boolean upload(int projectID, int projectStateID, InputStream inputStream) {
-
-        try {   Connection con = DBconnector.getInstance().getConnection();
-            String sql = "INSERT INTO poe_pictures (fkprojectid, fkprojectstateid, poe) values (?, ?, ?)";
-            PreparedStatement statement = con.prepareStatement(sql);
+        int rowsInserted = 0;
+        String sql = "INSERT INTO poe_pictures (fkprojectid, fkprojectstateid, poe) values (?, ?, ?)";
+        try (Connection con = DBconnector.getInstance().getConnection();
+                PreparedStatement statement = con.prepareStatement(sql);) {
             statement.setInt(1, projectID);
             statement.setInt(2, projectStateID);
             if (inputStream != null) {
                 statement.setBlob(3, inputStream);
             }
-            int row = statement.executeUpdate();
-            return row > 0;
+            rowsInserted = statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return rowsInserted == 1;
     }
 
 }

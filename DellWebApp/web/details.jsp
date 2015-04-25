@@ -108,7 +108,9 @@
                             <%} %>
                     <% } %>
                     
-                    
+                                 <div>
+                                 <img src="Dashboard?command=getImg&id=<%= project.getId() %> " width="150" />
+                                 </div>
                      
                     <h2>Upload</h2>
                     <form method="POST" action="Dashboard" enctype="multipart/form-data">
