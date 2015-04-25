@@ -152,7 +152,11 @@ public class DBFacade {
         return pm.getComments(projectID);
     }
     
-    public byte[] getImage(int projectID, int projectStateID) {
-        return pm.getImage(projectID, projectStateID);
+    public ArrayList<byte[]> getImage(int projectID) {
+        return pm.getImage(projectID);
+    }
+    
+    public int getNumberOfPoe(int projectID) {
+        return pm.getNumberOfPoe(projectID);
     }
 }

@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProjectMapper {
 
@@ -780,26 +782,51 @@ public class ProjectMapper {
         return rowsInserted == 1;
     }
 
-    public byte[] getImage(int projectID, int projectStateID) {
-        byte[] imgData = null;
+    public int getNumberOfPoe(int projectID) {
+        int entries = 0;
+        String sql = "select count(*) "
+                + "FROM POE_PICTURES, "
+                + "PROJECT WHERE POE_PICTURES.FKPROJECTID = PROJECT.projectID "
+                + "and POE_PICTURES.FKPROJECTSTATEID = PROJECT.fkprojectStateID "
+                + "and project.PROJECTID =" + projectID;
+        try (Connection con = DBconnector.getInstance().getConnection();
+                PreparedStatement statement = con.prepareStatement(sql);
+                ResultSet rs = statement.executeQuery()) {
+            
+            if (rs.next()) {
+                entries = rs.getInt(1);
+                System.out.println("FOUND "+ entries);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return entries;
+
+    }
+
+    public ArrayList<byte[]> getImage(int projectID) {
+        ArrayList<byte[]> imgData = new ArrayList<>();
         String sql = "Select POE"
                 + " from POE_PICTURES, PROJECT"
                 + " where POE_PICTURES.FKPROJECTID=PROJECT.projectID"
                 + " and POE_PICTURES.FKPROJECTSTATEID=PROJECT.fkprojectStateID"
-                + " and project.PROJECTID=" + projectID
-                + " and project.fkprojectstateid=" + projectStateID;
+                + " and project.PROJECTID=" + projectID;
         try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sql);
                 ResultSet rs = statement.executeQuery()) {
-            if (rs.next()) {
+            while (rs.next()) {
                 System.out.println("success");
                 Blob img = rs.getBlob(1);
-                imgData = img.getBytes(1, (int) img.length());
+                //imgData = img.getBytes(1, (int) img.length());
+                imgData.add(img.getBytes(1, (int) img.length()));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+        System.out.println("Size of byte Array: " + imgData.size());
         return imgData;
     }
 

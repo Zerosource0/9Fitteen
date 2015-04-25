@@ -178,8 +178,8 @@ public class SqlServlet extends HttpServlet {
                             showProjects(request, response, con);
                             break;
                         case "getImg":
-                            projectID = request.getParameter("id");
-                            getImage(Integer.parseInt(projectID), request, response, con);
+                            //projectID = request.getParameter("id");
+                            getImage(request, response, con);
                             break;
                         case "back":
                             String id3 = request.getParameter("id");
@@ -640,7 +640,7 @@ public class SqlServlet extends HttpServlet {
 
         getProjects(request, response, con);
         getComments(id, request, response, con);
-        //getImage(Integer.parseInt(id), request, response, con);
+        getNumberOfPoe(pid, request, con);
         request.setAttribute("project", getProject(pid, request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
@@ -697,21 +697,23 @@ public class SqlServlet extends HttpServlet {
         return con.getNumberOfPartners();
     }
     
-    private void getImage(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) {
+    private void getImage(HttpServletRequest request, HttpServletResponse response, Controller con) {
         
+        int projectID = Integer.parseInt(request.getParameter("id"));
+        int i = Integer.parseInt(request.getParameter("img"));
         
         try (OutputStream output = response.getOutputStream();) 
         {
             //response.reset();
             //response.setContentType("image/gif");
-            output.write(con.getImage(projectID, 1));
+            output.write(con.getImage(projectID, i));
         } catch (IOException ex) {
             Logger.getLogger(SqlServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
+    }
+    
+    private void getNumberOfPoe(int projectID, HttpServletRequest request, Controller con) {
+        request.setAttribute("poe", con.getNumberOfPoe(projectID));
     }
 
     private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException 

@@ -246,13 +246,11 @@ public class Controller {
         return comments;
     }
     
-    public byte[] getImage(int projectID, int projectStateID) {
-        
-        
-        return dbf.getImage(projectID, projectStateID);
-        
-        
-        
-        
+    public byte[] getImage(int projectID, int index) {
+        return dbf.getImage(projectID).get(index);
+    }
+    
+    public int getNumberOfPoe(int projectID) {
+        return dbf.getNumberOfPoe(projectID);
     }
 }

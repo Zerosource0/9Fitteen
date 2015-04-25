@@ -108,8 +108,14 @@
                             <%} %>
                     <% } %>
                     
-                                 <div>
-                                 <img src="Dashboard?command=getImg&id=<%= project.getId() %> " width="150" />
+                                 
+                                 <div class="">
+                                     <% int number = (Integer) request.getAttribute("poe");
+                                        for (int i = 0; i < number; i++) {
+                                         %>
+                                 <img src="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" width="150" />
+                                 
+                                 <% } %>
                                  </div>
                      
                     <h2>Upload</h2>
