@@ -113,7 +113,7 @@
                                      <% int number = (Integer) request.getAttribute("poe");
                                         for (int i = 0; i < number; i++) {
                                          %>
-                                 <img src="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" width="150" />
+                                         <a href="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" ><img src="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" width="150" /> </a>
                                  
                                  <% } %>
                                  </div>
