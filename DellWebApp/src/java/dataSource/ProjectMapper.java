@@ -818,13 +818,17 @@ public class ProjectMapper {
                 Blob file = rs.getBlob(1);
                 poeFiles.add(new PoeFile(file.getBytes(1, (int) file.length()), rs.getString(2), rs.getString(3))
                 );
+                System.out.println("First entry: " + poeFiles.get(0).getName());
+                System.out.println("Extenstion: " + poeFiles.get(0).getExtension());
 
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        
         return poeFiles;
     }
+    
 
     public ArrayList<byte[]> getImage(int projectID) {
         ArrayList<byte[]> imgData = new ArrayList<>();

@@ -4,6 +4,7 @@ import Data.Comment;
 import Data.Controller;
 import Data.Partner;
 import Data.Person;
+import Data.PoeFile;
 import Data.Project;
 import Data.Report;
 import java.io.BufferedReader;
@@ -25,14 +26,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 @WebServlet(name = "SqlServlet", urlPatterns = {"/Dashboard"})
-
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
         maxFileSize = 1024 * 1024 * 10,
-        maxRequestSize = 1024 * 1024 * 50,
-        // THIS HAS TO BE YOUR OWN PHYSICAL DRIVE
-        location = "D:\\Dev\\Java\\9Fitteen")
+        maxRequestSize = 1024 * 1024 * 50)
 
 public class SqlServlet extends HttpServlet {
+    
+    private static final int DEFAULT_BUFFER_SIZE = 10240;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -703,10 +703,20 @@ public class SqlServlet extends HttpServlet {
         int projectID = Integer.parseInt(request.getParameter("id"));
         int i = Integer.parseInt(request.getParameter("img"));
         
+        System.out.println("Trying to get file for project id " + projectID + " and index " + i + ".");
+        
         try (OutputStream output = response.getOutputStream();) 
         {
-            //response.reset();
-            //response.setContentType("image/gif");
+            PoeFile file = con.getPoeFiles(projectID).get(i);
+            String contentType = getServletContext().getMimeType(file.getExtension());
+            System.out.println("Content type: " + contentType);
+            response.reset();
+            response.setBufferSize(DEFAULT_BUFFER_SIZE);
+            response.setHeader("Content-Length", String.valueOf(file.getData().length));
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + file.getExtension() + "\"");
+            response.setContentType(contentType);
+            
+            
             output.write(con.getImage(projectID, i));
         } catch (IOException ex) {
             Logger.getLogger(SqlServlet.class.getName()).log(Level.SEVERE, null, ex);

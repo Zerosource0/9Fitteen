@@ -112,9 +112,11 @@
                     
                                  
                                  <div class="">
-                                         <% for(int i = 0; i>poeFiles.size();i++) { %>
+                                         <% for(int i = 0; i < poeFiles.size(); i++) { %>
                                          
-                                         <a href="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" ><%= poeFiles.get(i).getName()+poeFiles.get(i).getExtension()%> </a>
+                                         <a href="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" >
+                                             <p><%= poeFiles.get(i).getName() + poeFiles.get(i).getExtension()%> </p>
+                                         </a>
                                  
                                  <% } %>
                                  </div>
