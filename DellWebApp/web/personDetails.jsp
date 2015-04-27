@@ -54,7 +54,7 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
+                        <li><a href="Dashboard?command=view">Overview <span class="sr-only">(current)</span></a></li>
 
                     </ul>
                     <ul class="nav nav-sidebar">
@@ -66,7 +66,7 @@
                         {%>
                         
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
-                        <li><a href="Dashboard?command=showPersons">Show Users</a></li>
+                        <li class="active"><a href="Dashboard?command=showPersons">Show Users</a></li>
                         <li><a href="Dashboard?command=showPartners">Show Partners</a></li>
                         <li><a href="Dashboard?command=showReport">See report</a></li>
                         <%}%>
