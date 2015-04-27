@@ -31,9 +31,9 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">
-          <label>
+          <%--<label>
             <input type="checkbox" value="remember-me"> Remember me
-          </label>
+          </label> --%>
         </div>
         <% Boolean success = (Boolean) request.getAttribute("success"); 
             if (success != null) {

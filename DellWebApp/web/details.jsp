@@ -1,3 +1,4 @@
+<%@page import="Data.PoeFile"%>
 <%@page import="Data.Comment"%>
 <%@page import="Data.Partner"%>
 <%@page import="java.util.Enumeration"%>
@@ -77,6 +78,7 @@
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                         Integer projectID=project.getId(), projectStateID=project.getFkProjetStateID();
                         ArrayList<Comment> comments = (ArrayList<Comment>) request.getAttribute("comments");
+                        ArrayList<PoeFile> poeFiles = (ArrayList<PoeFile>) request.getAttribute("poeFiles");
                         
                     %>
                     <h1 class="page-header"><%= project.getProjectName() %></h1>
@@ -110,10 +112,9 @@
                     
                                  
                                  <div class="">
-                                     <% int number = (Integer) request.getAttribute("poe");
-                                        for (int i = 0; i < number; i++) {
-                                         %>
-                                         <a href="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" ><img src="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" width="150" /> </a>
+                                         <% for(int i = 0; i>poeFiles.size();i++) { %>
+                                         
+                                         <a href="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" ><%= poeFiles.get(i).getName()+poeFiles.get(i).getExtension()%> </a>
                                  
                                  <% } %>
                                  </div>
