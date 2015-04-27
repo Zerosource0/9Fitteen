@@ -91,9 +91,9 @@ public class Controller {
     {
         return dbf.getReport();
     }
-    public boolean upload (int projectID, int projectStateID, InputStream inputStream)
+    public boolean upload (int projectID, int projectStateID, InputStream inputStream, String fileName)
     {
-        return dbf.upload(projectID, projectStateID, inputStream);
+        return dbf.upload(projectID, projectStateID, inputStream, fileName);
     }
     
     public ArrayList<Project> getProjects(int partnerID) {

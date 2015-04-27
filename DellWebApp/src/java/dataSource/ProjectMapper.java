@@ -849,15 +849,32 @@ public class ProjectMapper {
         return imgData;
     }
 
-    public boolean upload(int projectID, int projectStateID, InputStream inputStream) {
+    public boolean upload(int projectID, int projectStateID, InputStream inputStream, String fileName) {
         int rowsInserted = 0;
-        String sql = "INSERT INTO poe_pictures (fkprojectid, fkprojectstateid, poe) values (?, ?, ?)";
+        int lastDot=0;
+        String sql = "INSERT INTO poe_pictures (fkprojectid, fkprojectstateid, poe, filename, fileextension) values (?, ?, ?, ?, ?)";
         try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sql);) {
-            statement.setInt(1, projectID);
-            statement.setInt(2, projectStateID);
+            
             if (inputStream != null) {
+                statement.setInt(1, projectID);
+                statement.setInt(2, projectStateID);
                 statement.setBlob(3, inputStream);
+                int counter=0;
+                for (int i=0 ; i<fileName.length() ; i++)
+                {
+                    if (fileName.charAt(i)=='.') 
+                    {
+                        lastDot=i;
+                        
+                    }
+                    
+                }
+                String name, extension;
+                name=fileName.substring(0, lastDot);
+                extension=fileName.substring(lastDot, fileName.length());
+                statement.setString(4, name);
+                statement.setString(5, extension);
             }
             rowsInserted = statement.executeUpdate();
 

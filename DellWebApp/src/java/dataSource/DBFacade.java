@@ -36,9 +36,9 @@ public class DBFacade {
     public boolean createStateChange(Project p, int personID) {
         return pm.createStateChange(p, personID);
     }
-    public boolean upload (int projectID, int projectStateID, InputStream inputStream)
+    public boolean upload (int projectID, int projectStateID, InputStream inputStream, String fileName)
     {
-        return pm.upload(projectID, projectStateID, inputStream);
+        return pm.upload(projectID, projectStateID, inputStream, fileName);
     }
     public boolean createProject(Project p) {
         return pm.createProject(p);

@@ -734,7 +734,7 @@ public class SqlServlet extends HttpServlet {
         if (filePart != null)
         {
             InputStream inputStream=filePart.getInputStream();
-            con.upload(projectID, projectStateID, inputStream);
+            con.upload(projectID, projectStateID, inputStream, filePart.getSubmittedFileName());
             
         }
         else 
