@@ -4,6 +4,7 @@ import Data.Comment;
 import Data.Partner;
 import Data.Person;
 import Data.PersonType;
+import Data.PoeFile;
 import Data.Project;
 import Data.Report;
 import java.io.InputStream;
@@ -158,5 +159,9 @@ public class DBFacade {
     
     public int getNumberOfPoe(int projectID) {
         return pm.getNumberOfPoe(projectID);
+    }
+    
+    public ArrayList<PoeFile> getPoeFiles(int projetID){
+        return pm.getPoeFiles(projetID);
     }
 }

@@ -4,6 +4,7 @@ import Data.Comment;
 import Data.Partner;
 import Data.Person;
 import Data.PersonType;
+import Data.PoeFile;
 import Data.Project;
 import Data.Report;
 import java.io.InputStream;
@@ -792,19 +793,37 @@ public class ProjectMapper {
         try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sql);
                 ResultSet rs = statement.executeQuery()) {
-            
+
             if (rs.next()) {
                 entries = rs.getInt(1);
-                System.out.println("FOUND "+ entries);
+                System.out.println("FOUND " + entries);
             }
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ProjectMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return entries;
 
+    }
+
+    public ArrayList<PoeFile> getPoeFiles(int projectID) {
+        ArrayList<PoeFile> poeFiles = new ArrayList();
+        String sqlString = "SELECT POE,FILENAME,FILEEXTENSION FROM POE_PICTURES WHERE FKPROJECTID = " + projectID;
+
+        try (Connection con = DBconnector.getInstance().getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                Blob file = rs.getBlob(1);
+                poeFiles.add(new PoeFile(file.getBytes(1, (int) file.length()), rs.getString(2), rs.getString(3))
+                );
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return poeFiles;
     }
 
     public ArrayList<byte[]> getImage(int projectID) {

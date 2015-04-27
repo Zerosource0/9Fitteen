@@ -641,6 +641,7 @@ public class SqlServlet extends HttpServlet {
         getProjects(request, response, con);
         getComments(id, request, response, con);
         getNumberOfPoe(pid, request, con);
+        getPoeFiles(pid, request, con);
         request.setAttribute("project", getProject(pid, request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         RequestDispatcher rq = request.getRequestDispatcher("details.jsp");
@@ -714,6 +715,10 @@ public class SqlServlet extends HttpServlet {
     
     private void getNumberOfPoe(int projectID, HttpServletRequest request, Controller con) {
         request.setAttribute("poe", con.getNumberOfPoe(projectID));
+    }
+    
+    private void getPoeFiles(int projectID, HttpServletRequest request, Controller con){
+        request.setAttribute("poeFiles", con.getPoeFiles(projectID));
     }
 
     private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException 

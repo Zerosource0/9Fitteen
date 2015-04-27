@@ -253,4 +253,9 @@ public class Controller {
     public int getNumberOfPoe(int projectID) {
         return dbf.getNumberOfPoe(projectID);
     }
+    
+    public ArrayList<PoeFile> getPoeFiles(int projectID){
+        return dbf.getPoeFiles(projectID);
+    }
+    
 }
