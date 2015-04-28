@@ -31,7 +31,7 @@ import javax.servlet.http.Part;
         maxRequestSize = 1024 * 1024 * 50)
 
 public class SqlServlet extends HttpServlet {
-    
+
     private static final int DEFAULT_BUFFER_SIZE = 10240;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -44,15 +44,12 @@ public class SqlServlet extends HttpServlet {
             con = Controller.getInstance();
             sessionObj.setAttribute("Controller", con);
 
-        } 
-        else {
+        } else {
             con = (Controller) sessionObj.getAttribute("Controller");
         }
 
         // Determine what action will be executed by the Servlet
         String command = request.getParameter("command");
-        
-        
 
         // If there is no command, check for other parameters
         if (command == null) {
@@ -64,28 +61,23 @@ public class SqlServlet extends HttpServlet {
                 String id = request.getParameter("id");
                 if (id != null) {
                     showDetails(id, request, response, con);
-                } 
-                else if (personID != null) {
+                } else if (personID != null) {
                     showPersonDetails(personID, request, response, con);
-                } 
-                else if (partnerID != null) {
+                } else if (partnerID != null) {
                     showPartnerDetails(partnerID, request, response, con);
                 }// else go back to view.jsp 
                 else {
                     showProjects(request, response, con);
                 }
-            } 
-            else {
+            } else {
                 request.setAttribute("access", false);
                 RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
                 rq.forward(request, response);
             }
-        } 
-        else {
+        } else {
             if (command.equals("login")) {
                 logIn(request, response, con);
-            } 
-            else {
+            } else {
                 if (accessAllowed(request, response, con)) {
                     // Displays the main view.jsp with an overview of the projects
                     switch (command) {
@@ -118,15 +110,12 @@ public class SqlServlet extends HttpServlet {
                             showProjects(request, response, con);
                             break;
                         case "showCreate":
-                            if(con.getCurrentUser().getFkPersonTypeID()==5)
-                            {
+                            if (con.getCurrentUser().getFkPersonTypeID() == 5) {
                                 showProjects(request, response, con);
                                 break;
-                            }
-                            else
-                            {
-                            showCreate(request, response, con);
-                            break;
+                            } else {
+                                showCreate(request, response, con);
+                                break;
                             }
                         case "editPartner":
                             String partnerID = request.getParameter("partnerID");
@@ -174,11 +163,10 @@ public class SqlServlet extends HttpServlet {
                             showSettings(request, response, con);
                             break;
                         case "upload":
-                            upload(request, response, con);
+                            upload(request, con);
                             showProjects(request, response, con);
                             break;
                         case "getFile":
-                            //projectID = request.getParameter("id");
                             getFile(request, response, con);
                             break;
                         case "back":
@@ -190,8 +178,7 @@ public class SqlServlet extends HttpServlet {
                             response.sendRedirect("index.jsp");
                             break;
                     }
-                } 
-                else {
+                } else {
                     request.setAttribute("access", false);
                     RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
                     rq.forward(request, response);
@@ -241,22 +228,22 @@ public class SqlServlet extends HttpServlet {
 
     private void getComments(String projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Comment> comments = con.getComments(Integer.parseInt(projectID));
-        
+
         request.setAttribute("comments", comments);
     }
-    
+
     private void saveComment(String pid, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         int projectID = Integer.parseInt(pid);
         System.out.println("Project ID: " + projectID);
-        
+
         Project project = getProject(projectID, request, response, con);
-        
+
         String comment = request.getParameter("comment");
         System.out.println("Comment: " + comment);
-        
-        con.saveComment(project, (int) request.getSession().getAttribute("personID"),comment);
+
+        con.saveComment(project, (int) request.getSession().getAttribute("personID"), comment);
     }
-    
+
     private void deletePerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         System.out.println("DELETING PERSONID: " + personID);
         con.deletePerson(Integer.parseInt(personID));
@@ -285,7 +272,7 @@ public class SqlServlet extends HttpServlet {
         }
         con.savePartner(partnerID, name, address, zip, country);
     }
-    
+
     private Report getReport(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getReport();
     }
@@ -295,9 +282,9 @@ public class SqlServlet extends HttpServlet {
         getProjects(request, response, con);
         getProjectsMyAction(request, response, con);
         getCountries(request, response, con);
-        getReport(request,response,con);
+        getReport(request, response, con);
 
-        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
+        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         request.setAttribute("moneyLeft", (long) con.getFundsAllocated());
@@ -383,7 +370,7 @@ public class SqlServlet extends HttpServlet {
     }
 
     private void showPersonEdit(int personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        
+
         getProjects(request, response, con);
         request.setAttribute("personTypes", con.getPersonTypes());
         request.setAttribute("personName", con.getCurrentUser().getName());
@@ -481,7 +468,7 @@ public class SqlServlet extends HttpServlet {
         getProjects(request, response, con);
         getProjectsMyAction(request, response, con);
 
-        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
+        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         request.setAttribute("moneyLeft", (long) con.getFundsAllocated());
@@ -492,7 +479,7 @@ public class SqlServlet extends HttpServlet {
     private void showPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getPersons(request, response, con);
 
-        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
+        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         getPartnerInfo(request, response, con);
@@ -504,7 +491,7 @@ public class SqlServlet extends HttpServlet {
     private void showPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getPartnerInfo(request, response, con);
 
-        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(request, response, con));
+        request.setAttribute("numberOfUsers", (int) getNumberOfUsers(con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
         getProjects(request, response, con);
@@ -513,14 +500,15 @@ public class SqlServlet extends HttpServlet {
     }
 
     /**
-     * Returns an ArrayList with all the projects that the current user has permission to see. 
-     * 
+     * Returns an ArrayList with all the projects that the current user has
+     * permission to see.
+     *
      * @param request
      * @param response
      * @param con
      * @return
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
     private ArrayList<Project> getProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects = con.getProjects((int) request.getSession().getAttribute("partnerID"));
@@ -587,7 +575,7 @@ public class SqlServlet extends HttpServlet {
     private void logOut(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         HttpSession sessionObj = request.getSession();
         sessionObj.invalidate();
-        
+
         request.setAttribute("loggedOut", true);
         RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
         rq.forward(request, response);
@@ -659,13 +647,14 @@ public class SqlServlet extends HttpServlet {
     }
 
     /**
-     * Creates a StateChange entry in the DB for the latest project. 
+     * Creates a StateChange entry in the DB for the latest project.
+     *
      * @param request
      * @param response
      * @param con
      * @return
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
     private boolean createStateChange(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.createStateChange(con.getLatestProject(), (int) request.getSession().getAttribute("personID"));
@@ -690,23 +679,21 @@ public class SqlServlet extends HttpServlet {
         return con.getProject(projectID);
     }
 
-    private int getNumberOfUsers(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    private int getNumberOfUsers(Controller con) throws ServletException, IOException {
         return con.getNumberOfUsers();
     }
 
     private int getNumberOfPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getNumberOfPartners();
     }
-    
+
     private void getFile(HttpServletRequest request, HttpServletResponse response, Controller con) {
-        
         int projectID = Integer.parseInt(request.getParameter("id"));
         int i = Integer.parseInt(request.getParameter("file"));
-        
+
         System.out.println("Trying to get file for project id " + projectID + " and index " + i + ".");
-        
-        try (OutputStream output = response.getOutputStream();) 
-        {
+
+        try (OutputStream output = response.getOutputStream();) {
             PoeFile file = con.getPoeFile(projectID, i);
             String contentType = getServletContext().getMimeType(file.getExtension());
             System.out.println("Content type: " + contentType);
@@ -715,120 +702,111 @@ public class SqlServlet extends HttpServlet {
             response.setHeader("Content-Length", String.valueOf(file.getData().length));
             response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + file.getExtension() + "\"");
             response.setContentType(contentType);
-            
-            
+
             output.write(con.getImage(projectID, i));
         } catch (IOException ex) {
             Logger.getLogger(SqlServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void getNumberOfPoe(int projectID, HttpServletRequest request, Controller con) {
         request.setAttribute("poe", con.getNumberOfPoe(projectID));
     }
-    
-    private void getPoeFiles(int projectID, HttpServletRequest request, Controller con){
+
+    private void getPoeFiles(int projectID, HttpServletRequest request, Controller con) {
         request.setAttribute("poeFiles", con.getPoeFileList(projectID));
     }
 
-    private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException 
-    {
-        
-        int projectID=3, projectStateID=3;
-        InputStream is;
-        is=request.getPart("projectID").getInputStream();
-        projectID=getIntFromInputStream(is);
-        is=request.getPart("projectStateID").getInputStream();
-        projectStateID=getIntFromInputStream(is);
+    private void upload(HttpServletRequest request, Controller con) throws ServletException, IOException {
+        int projectID = Integer.parseInt(request.getParameter("projectID"));
+        int projectStateID = Integer.parseInt(request.getParameter("projectStateID"));
         Part filePart = request.getPart("file");
-        if (filePart != null)
-        {
-            InputStream inputStream=filePart.getInputStream();
-            con.upload(projectID, projectStateID, inputStream, filePart.getSubmittedFileName());
-            
-        }
-        else 
-        {
+        
+        if (filePart != null) {
+            try (InputStream inputStream = filePart.getInputStream();) {
+                con.upload(projectID, projectStateID, inputStream, filePart.getSubmittedFileName());
+            }
+
+        } else {
             System.out.println("filePart is NULL");
-            return;
         }
-        
-        
+
         /*
-        // gets absolute path of web app
-        String appPath = "D:/";
+         // gets absolute path of web app
+         String appPath = "D:/";
 
-        // upload directory
-        String savePath = appPath + File.separator + SAVE_DIR;
+         // upload directory
+         String savePath = appPath + File.separator + SAVE_DIR;
 
-        // create dir if non existent
-        File fileSaveDir = new File(savePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdir();
-        }
+         // create dir if non existent
+         File fileSaveDir = new File(savePath);
+         if (!fileSaveDir.exists()) {
+         fileSaveDir.mkdir();
+         }
 
-        System.out.println("Save Path: " + savePath);
+         System.out.println("Save Path: " + savePath);
         
-        for (Part part : request.getParts()) {
-            if (part.getName().equals("file")) {
-                String fileName = extractFileName(part);
-                System.out.println("File name: " + fileName + " " + part.getName());
+         for (Part part : request.getParts()) {
+         if (part.getName().equals("file")) {
+         String fileName = extractFileName(part);
+         System.out.println("File name: " + fileName + " " + part.getName());
+         try {
+         part.write("/" + fileName);
+         } catch (IOException e) {
+         e.printStackTrace();
+         }
+         }
+
+         }
+
+         request.setAttribute("message", "Upload has been successfully done!");
+
+         }
+
+         private String extractFileName(Part part) {
+         String contentDisp = part.getHeader("content-disposition");
+         String[] items = contentDisp.split(";");
+         for (String s : items) {
+         if (s.trim().startsWith("filename")) {
+
+         s = s.substring(s.indexOf("=") + 2, s.length() - 1);
+         while (s.contains("\\")) {
+         //int i = s.charAt(s.indexOf("\\"));
+         s = s.substring(1);
+         }
+         return s;
+         }
+         }
+         return "";
+         */
+    }
+
+    private static int getIntFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
                 try {
-                    part.write("/" + fileName);
+                    br.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-
         }
 
-        request.setAttribute("message", "Upload has been successfully done!");
+        return Integer.parseInt(sb.toString());
 
     }
-
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-
-                s = s.substring(s.indexOf("=") + 2, s.length() - 1);
-                while (s.contains("\\")) {
-                    //int i = s.charAt(s.indexOf("\\"));
-                    s = s.substring(1);
-                }
-                return s;
-            }
-        }
-        return "";
-               */
-    }
-    private static int getIntFromInputStream(InputStream is) {
- 
-		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder();
- 
-		String line;
-		try {
- 
-			br = new BufferedReader(new InputStreamReader(is));
-			while ((line = br.readLine()) != null) {
-				sb.append(line);
-			}
- 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-                
-		return Integer.parseInt(sb.toString());
- 
-	}
 }
