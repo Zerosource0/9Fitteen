@@ -177,9 +177,9 @@ public class SqlServlet extends HttpServlet {
                             upload(request, response, con);
                             showProjects(request, response, con);
                             break;
-                        case "getImg":
+                        case "getFile":
                             //projectID = request.getParameter("id");
-                            getImage(request, response, con);
+                            getFile(request, response, con);
                             break;
                         case "back":
                             String id3 = request.getParameter("id");
@@ -698,16 +698,16 @@ public class SqlServlet extends HttpServlet {
         return con.getNumberOfPartners();
     }
     
-    private void getImage(HttpServletRequest request, HttpServletResponse response, Controller con) {
+    private void getFile(HttpServletRequest request, HttpServletResponse response, Controller con) {
         
         int projectID = Integer.parseInt(request.getParameter("id"));
-        int i = Integer.parseInt(request.getParameter("img"));
+        int i = Integer.parseInt(request.getParameter("file"));
         
         System.out.println("Trying to get file for project id " + projectID + " and index " + i + ".");
         
         try (OutputStream output = response.getOutputStream();) 
         {
-            PoeFile file = con.getPoeFiles(projectID).get(i);
+            PoeFile file = con.getPoeFile(projectID, i);
             String contentType = getServletContext().getMimeType(file.getExtension());
             System.out.println("Content type: " + contentType);
             response.reset();
@@ -728,7 +728,7 @@ public class SqlServlet extends HttpServlet {
     }
     
     private void getPoeFiles(int projectID, HttpServletRequest request, Controller con){
-        request.setAttribute("poeFiles", con.getPoeFiles(projectID));
+        request.setAttribute("poeFiles", con.getPoeFileList(projectID));
     }
 
     private void upload(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException 

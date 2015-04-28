@@ -8,7 +8,6 @@ import Data.PoeFile;
 import Data.Project;
 import Data.Report;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
@@ -161,7 +160,15 @@ public class DBFacade {
         return pm.getNumberOfPoe(projectID);
     }
     
-    public ArrayList<PoeFile> getPoeFiles(int projetID){
-        return pm.getPoeFiles(projetID);
+    public ArrayList<PoeFile> getPoeFiles(int projectID){
+        return pm.getPoeFiles(projectID);
+    }
+    
+    public PoeFile getPoeFile(int projectID, int index) {
+        return pm.getPoeFile(projectID, index);
+    }
+    
+    public ArrayList<String> getPoeFileList(int projectID) {
+        return pm.getPoeFileList(projectID);
     }
 }

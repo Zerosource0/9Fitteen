@@ -78,7 +78,7 @@
                         ArrayList<Partner> partnerInfo = (ArrayList<Partner>) request.getAttribute("partnerInfo");
                         Integer projectID=project.getId(), projectStateID=project.getFkProjetStateID();
                         ArrayList<Comment> comments = (ArrayList<Comment>) request.getAttribute("comments");
-                        ArrayList<PoeFile> poeFiles = (ArrayList<PoeFile>) request.getAttribute("poeFiles");
+                        ArrayList<String> poeFiles = (ArrayList<String>) request.getAttribute("poeFiles");
                         
                     %>
                     <h1 class="page-header"><%= project.getProjectName() %></h1>
@@ -114,8 +114,8 @@
                                  <div class="">
                                          <% for(int i = 0; i < poeFiles.size(); i++) { %>
                                          
-                                         <a href="Dashboard?command=getImg&id=<%=project.getId()%>&img=<%=i%>" >
-                                             <p><%= poeFiles.get(i).getName() + poeFiles.get(i).getExtension()%> </p>
+                                         <a href="Dashboard?command=getFile&id=<%=project.getId()%>&file=<%=i%>" >
+                                             <p><%= poeFiles.get(i)%> </p>
                                          </a>
                                  
                                  <% } %>

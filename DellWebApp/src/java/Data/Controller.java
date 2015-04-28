@@ -2,12 +2,7 @@ package Data;
 
 import dataSource.DBFacade;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controller {
 
@@ -258,4 +253,11 @@ public class Controller {
         return dbf.getPoeFiles(projectID);
     }
     
+    public PoeFile getPoeFile(int projectID, int index) {
+        return dbf.getPoeFile(projectID, index);
+    }
+    
+    public ArrayList<String> getPoeFileList(int projectID) {
+        return dbf.getPoeFileList(projectID);
+    }
 }

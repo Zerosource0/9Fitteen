@@ -825,10 +825,49 @@ public class ProjectMapper {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return poeFiles;
     }
     
+    public ArrayList<String> getPoeFileList(int projectID) {
+        ArrayList<String> fileList = new ArrayList<>();
+        String sqlString = "SELECT FILENAME, FILEEXTENSION FROM POE_PICTURES WHERE FKPROJECTID = " + projectID;
+        
+        try (Connection con = DBconnector.getInstance().getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()) {
+            
+            while (rs.next()) {                
+                fileList.add(rs.getString("FILENAME") + rs.getString("FILEEXTENSION"));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return fileList;
+    }
+
+    public PoeFile getPoeFile(int projectID, int index) {
+        PoeFile file = null;
+        String sqlString = "select POE, FILENAME, FILEEXTENSION "
+                + "from (select POE_PICTURES.* , ROWNUM as ROW_NUMBER from POE_PICTURES where FKPROJECTID = " + projectID + " ) "
+                + "where ROW_NUMBER=" + (index + 1);
+
+        try (Connection con = DBconnector.getInstance().getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlString);
+                ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                Blob data = rs.getBlob(1);
+                file = new PoeFile(data.getBytes(1, (int) data.length()), rs.getString(2), rs.getString(3));
+                System.out.println("The file is " + file.getName());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return file;
+    }
 
     public ArrayList<byte[]> getImage(int projectID) {
         ArrayList<byte[]> imgData = new ArrayList<>();
@@ -855,28 +894,26 @@ public class ProjectMapper {
 
     public boolean upload(int projectID, int projectStateID, InputStream inputStream, String fileName) {
         int rowsInserted = 0;
-        int lastDot=0;
+        int lastDot = 0;
         String sql = "INSERT INTO poe_pictures (fkprojectid, fkprojectstateid, poe, filename, fileextension) values (?, ?, ?, ?, ?)";
         try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement statement = con.prepareStatement(sql);) {
-            
+
             if (inputStream != null) {
                 statement.setInt(1, projectID);
                 statement.setInt(2, projectStateID);
                 statement.setBlob(3, inputStream);
-                int counter=0;
-                for (int i=0 ; i<fileName.length() ; i++)
-                {
-                    if (fileName.charAt(i)=='.') 
-                    {
-                        lastDot=i;
-                        
+                int counter = 0;
+                for (int i = 0; i < fileName.length(); i++) {
+                    if (fileName.charAt(i) == '.') {
+                        lastDot = i;
+
                     }
-                    
+
                 }
                 String name, extension;
-                name=fileName.substring(0, lastDot);
-                extension=fileName.substring(lastDot, fileName.length());
+                name = fileName.substring(0, lastDot);
+                extension = fileName.substring(lastDot, fileName.length());
                 statement.setString(4, name);
                 statement.setString(5, extension);
             }
