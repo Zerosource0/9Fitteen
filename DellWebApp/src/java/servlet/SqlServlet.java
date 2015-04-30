@@ -450,6 +450,7 @@ public class SqlServlet extends HttpServlet {
 
     }
 
+    //Checks if the total funds of all the projects + the fund of the current project is more than the total fund allocated for the quater.
     private boolean checkFunds(long funds, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects = getProjects(request, response, con);
         long totalFundsAllocated = funds;
@@ -476,10 +477,13 @@ public class SqlServlet extends HttpServlet {
         }
     }
 
+    //Returns the total funds allocated for the quarter.
     private long getFundsAllocated(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getFundsAllocated();
     }
 
+    
+    //Subtracking an given amount from the total fund left for the quarter. 
     private void useFunds(int amount, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         con.useFunds(amount);
     }
@@ -545,6 +549,8 @@ public class SqlServlet extends HttpServlet {
         return projects;
     }
 
+    
+    //Returns an array of projects that needs attention. Both for the partners and non partners.
     private ArrayList<Project> getProjectsMyAction(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects;
 
@@ -598,6 +604,7 @@ public class SqlServlet extends HttpServlet {
         return request.getSession().getAttribute("personID") != null;
     }
 
+    //Stops the current session and send to index.jsp
     private void logOut(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         HttpSession sessionObj = request.getSession();
         sessionObj.invalidate();
@@ -705,10 +712,12 @@ public class SqlServlet extends HttpServlet {
         return con.getProject(projectID);
     }
 
+    //Returns the number of users in the db.
     private int getNumberOfUsers(Controller con) throws ServletException, IOException {
         return con.getNumberOfUsers();
     }
 
+    //Returns the number of partners in the db.
     private int getNumberOfPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getNumberOfPartners();
     }

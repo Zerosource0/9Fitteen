@@ -537,8 +537,8 @@ public class ProjectMapper {
         return numberOfPartners;
     }
 
-    public int getFundsAllocated() {
-        int FundsLeft = 0;
+    public long getFundsAllocated() {
+        long FundsLeft = 0;
         String sqlString1 = "select totalFund from Quarter";
 
         try (Connection con = DBconnector.getInstance().getConnection();
@@ -552,19 +552,19 @@ public class ProjectMapper {
         return FundsLeft;
     }
 
-    public int useFunds(int amount) {
-        int FundsLeft = 0;
+    public void useFunds(int amount) {
+       
         String sqlString1 = "update QUARTER SET totalfund = totalfund - " + amount;
 
         try (Connection con = DBconnector.getInstance().getConnection();
                 PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
-            rs2.next();
-            FundsLeft = rs2.getInt(1);
+            //rs2.next();
+           // FundsLeft = rs2.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return FundsLeft;
+       
     }
 
     public String getPassword(int personID) {
