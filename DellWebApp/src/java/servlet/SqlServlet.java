@@ -78,9 +78,12 @@ public class SqlServlet extends HttpServlet {
             if (command.equals("login")) {
                 logIn(request, response, con);
             } else {
+                // Displays the main view.jsp with an overview of the projects
                 if (accessAllowed(request, response, con)) {
-                    // Displays the main view.jsp with an overview of the projects
-                    switch (command) {
+                    
+                    //This switch-case is used for navigation. 
+                    //Cliking a link puts a command in the url. The switch-case then executes the right actions for the given command. 
+                   switch (command) {
                         // Creates a new project in the db and forwards to view.jsp
                         case "comment":
                             String projectID = request.getParameter("projectID");
@@ -120,6 +123,7 @@ public class SqlServlet extends HttpServlet {
                         case "editPartner":
                             String partnerID = request.getParameter("partnerID");
                             showPartnerEdit(partnerID, request, response, con);
+                            break;
                         case "editPerson":
                             //personID = request.getParameter("personID");
                             showPersonEdit(Integer.parseInt(request.getParameter("personID")), request, response, con);
@@ -226,12 +230,15 @@ public class SqlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void getComments(String projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    
+    //Gets an ArrayList of comment objects from the database. 
+   private void getComments(String projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Comment> comments = con.getComments(Integer.parseInt(projectID));
 
         request.setAttribute("comments", comments);
     }
-
+   
+    //Saves comment from input box in the .jsp to the database
     private void saveComment(String pid, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         int projectID = Integer.parseInt(pid);
         System.out.println("Project ID: " + projectID);
@@ -244,23 +251,27 @@ public class SqlServlet extends HttpServlet {
         con.saveComment(project, (int) request.getSession().getAttribute("personID"), comment);
     }
 
+    //(Not in use) deletes selected person from database 
     private void deletePerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         System.out.println("DELETING PERSONID: " + personID);
         con.deletePerson(Integer.parseInt(personID));
     }
-
+    
+    //(Not in use) add a new person to the database, then forwards to the PersonUpdate.jsp
     private void addPerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         Person person = con.addPerson();
         int personID = person.getID();
         showPersonEdit(personID, request, response, con);
     }
-
+    
+    //Updates project states (i.e. Fund Allocation, Reimburse)
     private void updateProjectState(int direction, int id, Controller con) throws ServletException, IOException {
 
         con.updateProjectState(id, direction);
         //updateStateChange(id, request, response, con);
     }
-
+    
+    //Used for updating partner information in the partnerUpdate.jsp
     private void savePartner(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
         String address = request.getParameter("address");
@@ -273,6 +284,7 @@ public class SqlServlet extends HttpServlet {
         con.savePartner(partnerID, name, address, zip, country);
     }
 
+    
     private Report getReport(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getReport();
     }
@@ -293,6 +305,7 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    //Gets an ArrayList of Strings containg countries from the database. 
     private ArrayList<String> getCountries(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> countries = con.getCountries();
 
@@ -300,7 +313,8 @@ public class SqlServlet extends HttpServlet {
         return countries;
     }
 
-    private void savePerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    //Used for updatng person info in the personUpdate.jsp. 
+   private void savePerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
         int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
         int personTypeID = Integer.parseInt(request.getParameter("personTypeID"));
@@ -312,6 +326,7 @@ public class SqlServlet extends HttpServlet {
         con.savePerson(Integer.parseInt(request.getParameter("personID")), name, phoneNumber, personTypeID, partnerID, email);
     }
 
+    //Used for updating project info in the projectUpdate.jsp.
     private void saveProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
         String desc = request.getParameter("description");
@@ -332,6 +347,7 @@ public class SqlServlet extends HttpServlet {
 
     }
 
+    //Used in the viewPartners.jsp. Gets seleced partner from the Database, then forwards to partnerDetails.jsp
     private void showPartnerDetails(String partnerID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partners = getPartnerInfo(request, response, con);
         int pid = Integer.parseInt(partnerID);
@@ -344,6 +360,7 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    //Used in the viewPersons.jsp. Gets the selected person from the Database, then frowards to partnerDtails.jsp.
     private void showPersonDetails(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         int pid = Integer.parseInt(personID);
 
@@ -355,6 +372,7 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    //Used in the partnerDetails.jsp for updating partner information. Forwards to partnerUpdate.jsp.
     private void showPartnerEdit(String partnerID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partners = getPartnerInfo(request, response, con);
         int pid = Integer.parseInt(partnerID);
@@ -369,8 +387,8 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    //Used in the personDetails.jsp for updating partner information. Forwards to personUpdate.jsp.
     private void showPersonEdit(int personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-
         getProjects(request, response, con);
         request.setAttribute("personTypes", con.getPersonTypes());
         request.setAttribute("personName", con.getCurrentUser().getName());
@@ -380,7 +398,8 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
+    //Used in the details.jsp for updating partner information. forwards to update.jsp 
+   private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
 
@@ -391,6 +410,7 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    //Used in the create.jsp. Creates a new project from the input in the form and stores it in the database.
     private void createProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         Boolean success = true;
 
@@ -463,7 +483,8 @@ public class SqlServlet extends HttpServlet {
     private void useFunds(int amount, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         con.useFunds(amount);
     }
-
+    
+    //The initail view after logging in, the showProject forwards to the view.jsp that shows all projects in the database.
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
         getProjectsMyAction(request, response, con);
@@ -476,6 +497,7 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
+    //Forwards to viewPersons.jsp, a list of all users in the database.
     private void showPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getPersons(request, response, con);
 
@@ -487,7 +509,8 @@ public class SqlServlet extends HttpServlet {
         RequestDispatcher rq = request.getRequestDispatcher("viewPersons.jsp");
         rq.forward(request, response);
     }
-
+    
+    //Forwards to viewPartners.jsp, a list fo all partners in teh databse.
     private void showPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getPartnerInfo(request, response, con);
 
@@ -540,7 +563,8 @@ public class SqlServlet extends HttpServlet {
 
         return projects;
     }
-
+    
+    //Returns an ArrayList of person objects. Used for the viewPersons.jsp.
     private ArrayList<Person> getPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         ArrayList<Person> persons = con.getPersons();
@@ -553,13 +577,15 @@ public class SqlServlet extends HttpServlet {
         return persons;
     }
 
+    //Returns an ArrayList of Strings with all the available states (I.E. Fund Allocation, Reimburse). Used when updating projects.
     private ArrayList<String> getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> stateNames = con.getStateNames();
 
         request.setAttribute("stateNames", stateNames);
         return stateNames;
     }
-
+    
+    //Gets an ArrayList of Partner objects. Used for the viewPartners.jsp.
     public ArrayList<Partner> getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partnerInfo = con.getPartnerInfo();
 
@@ -713,6 +739,7 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("poe", con.getNumberOfPoe(projectID));
     }
 
+    //Gets an ArrayList of POE files(Proof of Exection) corresponding to the projectID from the Database.
     private void getPoeFiles(int projectID, HttpServletRequest request, Controller con) {
         request.setAttribute("poeFiles", con.getPoeFileList(projectID));
     }
