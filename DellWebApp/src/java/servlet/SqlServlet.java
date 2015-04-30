@@ -299,7 +299,7 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
-        request.setAttribute("moneyLeft", (long) con.getFundsAllocated());
+        request.setAttribute("moneyLeft", con.getFundsAllocated());
         request.setAttribute("report", getReport(request, response, con));
         RequestDispatcher rq = request.getRequestDispatcher("report.jsp");
         rq.forward(request, response);
@@ -496,7 +496,7 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("numberOfUsers", (int) getNumberOfUsers(con));
         request.setAttribute("numberOfPartners", (int) getNumberOfPartners(request, response, con));
         request.setAttribute("personName", con.getCurrentUser().getName());
-        request.setAttribute("moneyLeft", (long) con.getFundsAllocated());
+        request.setAttribute("moneyLeft", con.getFundsAllocated());
         RequestDispatcher rq = request.getRequestDispatcher("view.jsp");
         rq.forward(request, response);
     }

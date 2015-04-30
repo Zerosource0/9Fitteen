@@ -545,7 +545,7 @@ public class ProjectMapper {
                 PreparedStatement pre2 = con.prepareStatement(sqlString1);
                 ResultSet rs2 = pre2.executeQuery();) {
             rs2.next();
-            FundsLeft = rs2.getInt(1);
+            FundsLeft = rs2.getLong(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
