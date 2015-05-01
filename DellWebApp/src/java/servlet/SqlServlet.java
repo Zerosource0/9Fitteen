@@ -233,10 +233,10 @@ public class SqlServlet extends HttpServlet {
     
     /**
      * Gets an ArrayList of comment objects from the database. 
-     * @param projectID
+     * @param projectID Id of current project.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -251,7 +251,7 @@ public class SqlServlet extends HttpServlet {
      * @param pid
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -272,7 +272,7 @@ public class SqlServlet extends HttpServlet {
      * @param personID
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -292,7 +292,7 @@ public class SqlServlet extends HttpServlet {
      * Updates project states (i.e. Fund Allocation, Reimburse)
      * @param direction
      * @param id
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -306,7 +306,7 @@ public class SqlServlet extends HttpServlet {
      * Used for updating partner information in the partnerUpdate.jsp
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -347,7 +347,7 @@ public class SqlServlet extends HttpServlet {
      * Gets an ArrayList of Strings containg countries from the database. 
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -363,7 +363,7 @@ public class SqlServlet extends HttpServlet {
      * Used for updatng person info in the personUpdate.jsp. 
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -383,7 +383,7 @@ public class SqlServlet extends HttpServlet {
      * Used for updating project info in the projectUpdate.jsp.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -412,7 +412,7 @@ public class SqlServlet extends HttpServlet {
      * @param partnerID
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -433,7 +433,7 @@ public class SqlServlet extends HttpServlet {
      * @param personID
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -453,7 +453,7 @@ public class SqlServlet extends HttpServlet {
      * @param partnerID
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -476,7 +476,7 @@ public class SqlServlet extends HttpServlet {
      * @param personID
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -494,7 +494,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the details.jsp for updating partner information. forwards to update.jsp 
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -513,7 +513,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the create.jsp. Creates a new project from the input in the form and stores it in the database.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -561,7 +561,7 @@ public class SqlServlet extends HttpServlet {
      * @param funds
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -596,7 +596,7 @@ public class SqlServlet extends HttpServlet {
      * Returns the total funds allocated for the quarter.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -611,7 +611,7 @@ public class SqlServlet extends HttpServlet {
      * @param amount
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -623,7 +623,7 @@ public class SqlServlet extends HttpServlet {
      * The initail view after logging in, the showProject forwards to the view.jsp that shows all projects in the database.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -643,7 +643,7 @@ public class SqlServlet extends HttpServlet {
      * Forwards to viewPersons.jsp, a list of all users in the database.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -663,7 +663,7 @@ public class SqlServlet extends HttpServlet {
      * Forwards to viewPartners.jsp, a list fo all partners in teh databse.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -684,7 +684,7 @@ public class SqlServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException
@@ -706,7 +706,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an array of projects that needs attention. Both for the partners and non partners.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -734,7 +734,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an ArrayList of person objects. Used for the viewPersons.jsp.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -755,7 +755,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an ArrayList of Strings with all the available states (I.E. Fund Allocation, Reimburse). Used when updating projects.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -771,7 +771,7 @@ public class SqlServlet extends HttpServlet {
      * Gets an ArrayList of Partner objects. Used for the viewPartners.jsp.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -787,7 +787,7 @@ public class SqlServlet extends HttpServlet {
      * Returns true, if the personID is not null, else false
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -800,7 +800,7 @@ public class SqlServlet extends HttpServlet {
      * Stops the current session and send to index.jsp
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -816,7 +816,7 @@ public class SqlServlet extends HttpServlet {
      * Returns person class adequate to password/login combination.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -844,7 +844,7 @@ public class SqlServlet extends HttpServlet {
      * @param retype
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -875,7 +875,7 @@ public class SqlServlet extends HttpServlet {
      * @param id
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -897,7 +897,7 @@ public class SqlServlet extends HttpServlet {
      * Gets the needed information to display the Create New Project jsp and forwards to it.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
@@ -915,7 +915,7 @@ public class SqlServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException
@@ -933,17 +933,17 @@ public class SqlServlet extends HttpServlet {
     private void showSettings(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         request.setAttribute("personName", con.getCurrentUser().getName());
-
+      
         RequestDispatcher rq = request.getRequestDispatcher("settings.jsp");
         rq.forward(request, response);
     }
 
     /**
      * Returns a single project, selected by ID
-     * @param projectID
+     * @param projectID Id of current project.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -954,7 +954,7 @@ public class SqlServlet extends HttpServlet {
 
     /**
      * Returns the number of users in the db.
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -967,7 +967,7 @@ public class SqlServlet extends HttpServlet {
      * Returns the number of partners in the db.
      * @param request
      * @param response
-     * @param con
+     * @param con Instance of controller object.
      * @return
      * @throws ServletException
      * @throws IOException 
@@ -1006,7 +1006,7 @@ public class SqlServlet extends HttpServlet {
      * Gets an ArrayList of POE files(Proof of Execution) corresponding to the projectID from the Database.
      * @param projectID
      * @param request
-     * @param con 
+     * @param con Instance of controller object. 
      */
     private void getPoeFiles(int projectID, HttpServletRequest request, Controller con) {
         
@@ -1015,7 +1015,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Saves uploaded file as a Blob object in database.
      * @param request
-     * @param con
+     * @param con Instance of controller object.
      * @throws ServletException
      * @throws IOException 
      */
