@@ -231,14 +231,30 @@ public class SqlServlet extends HttpServlet {
     }// </editor-fold>
 
     
-    //Gets an ArrayList of comment objects from the database. 
+    /**
+     * Gets an ArrayList of comment objects from the database. 
+     * @param projectID
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
    private void getComments(String projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Comment> comments = con.getComments(Integer.parseInt(projectID));
 
         request.setAttribute("comments", comments);
     }
    
-    //Saves comment from input box in the .jsp to the database
+    /**
+     * Saves comment from input box in the .jsp to the database
+     * @param pid
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void saveComment(String pid, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         int projectID = Integer.parseInt(pid);
         System.out.println("Project ID: " + projectID);
@@ -251,7 +267,15 @@ public class SqlServlet extends HttpServlet {
         con.saveComment(project, (int) request.getSession().getAttribute("personID"), comment);
     }
 
-    //(Not in use) deletes selected person from database 
+    /**
+     * (Not in use) deletes selected person from database 
+     * @param personID
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void deletePerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         System.out.println("DELETING PERSONID: " + personID);
         con.deletePerson(Integer.parseInt(personID));
@@ -264,14 +288,28 @@ public class SqlServlet extends HttpServlet {
         showPersonEdit(personID, request, response, con);
     }
     
-    //Updates project states (i.e. Fund Allocation, Reimburse)
+    /**
+     * Updates project states (i.e. Fund Allocation, Reimburse)
+     * @param direction
+     * @param id
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void updateProjectState(int direction, int id, Controller con) throws ServletException, IOException {
 
         con.updateProjectState(id, direction);
         //updateStateChange(id, request, response, con);
     }
     
-    //Used for updating partner information in the partnerUpdate.jsp
+    /**
+     * Used for updating partner information in the partnerUpdate.jsp
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void savePartner(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
         String address = request.getParameter("address");
@@ -305,7 +343,15 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    //Gets an ArrayList of Strings containg countries from the database. 
+    /**
+     * Gets an ArrayList of Strings containg countries from the database. 
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private ArrayList<String> getCountries(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> countries = con.getCountries();
 
@@ -313,7 +359,14 @@ public class SqlServlet extends HttpServlet {
         return countries;
     }
 
-    //Used for updatng person info in the personUpdate.jsp. 
+    /**
+     * Used for updatng person info in the personUpdate.jsp. 
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
    private void savePerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
         int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
@@ -326,7 +379,14 @@ public class SqlServlet extends HttpServlet {
         con.savePerson(Integer.parseInt(request.getParameter("personID")), name, phoneNumber, personTypeID, partnerID, email);
     }
 
-    //Used for updating project info in the projectUpdate.jsp.
+    /**
+     * Used for updating project info in the projectUpdate.jsp.
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void saveProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String name = request.getParameter("name");
         String desc = request.getParameter("description");
@@ -347,7 +407,15 @@ public class SqlServlet extends HttpServlet {
 
     }
 
-    //Used in the viewPartners.jsp. Gets seleced partner from the Database, then forwards to partnerDetails.jsp
+    /**
+     * Used in the viewPartners.jsp. Gets seleced partner from the Database, then forwards to partnerDetails.jsp
+     * @param partnerID
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showPartnerDetails(String partnerID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partners = getPartnerInfo(request, response, con);
         int pid = Integer.parseInt(partnerID);
@@ -360,7 +428,15 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    //Used in the viewPersons.jsp. Gets the selected person from the Database, then frowards to partnerDtails.jsp.
+    /**
+     * Used in the viewPersons.jsp. Gets the selected person from the Database, then frowards to partnerDtails.jsp.
+     * @param personID
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showPersonDetails(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         int pid = Integer.parseInt(personID);
 
@@ -372,7 +448,15 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    //Used in the partnerDetails.jsp for updating partner information. Forwards to partnerUpdate.jsp.
+    /**
+     * Used in the partnerDetails.jsp for updating partner information. Forwards to partnerUpdate.jsp.
+     * @param partnerID
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showPartnerEdit(String partnerID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partners = getPartnerInfo(request, response, con);
         int pid = Integer.parseInt(partnerID);
@@ -387,7 +471,15 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    //Used in the personDetails.jsp for updating partner information. Forwards to personUpdate.jsp.
+    /**
+     * Used in the personDetails.jsp for updating partner information. Forwards to personUpdate.jsp.
+     * @param personID
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showPersonEdit(int personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
         request.setAttribute("personTypes", con.getPersonTypes());
@@ -398,7 +490,14 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    //Used in the details.jsp for updating partner information. forwards to update.jsp 
+    /**
+     * Used in the details.jsp for updating partner information. forwards to update.jsp 
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
    private void showEdit(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getStateNames(request, response, con);
         getPartnerInfo(request, response, con);
@@ -410,7 +509,14 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    //Used in the create.jsp. Creates a new project from the input in the form and stores it in the database.
+    /**
+     * Used in the create.jsp. Creates a new project from the input in the form and stores it in the database.
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void createProject(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         Boolean success = true;
 
@@ -450,7 +556,16 @@ public class SqlServlet extends HttpServlet {
 
     }
 
-    //Checks if the total funds of all the projects + the fund of the current project is more than the total fund allocated for the quater.
+    /**
+     * Checks if the total funds of all the projects + the fund of the current project is more than the total fund allocated for the quater.
+     * @param funds
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private boolean checkFunds(long funds, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects = getProjects(request, response, con);
         long totalFundsAllocated = funds;
@@ -477,18 +592,41 @@ public class SqlServlet extends HttpServlet {
         }
     }
 
-    //Returns the total funds allocated for the quarter.
+    /**
+     * Returns the total funds allocated for the quarter.
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private long getFundsAllocated(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getFundsAllocated();
     }
 
     
-    //Subtracking an given amount from the total fund left for the quarter. 
+    /**
+     * Subtracking an given amount from the total fund left for the quarter. 
+     * @param amount
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void useFunds(int amount, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         con.useFunds(amount);
     }
     
-    //The initail view after logging in, the showProject forwards to the view.jsp that shows all projects in the database.
+    /**
+     * The initail view after logging in, the showProject forwards to the view.jsp that shows all projects in the database.
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showProjects(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getProjects(request, response, con);
         getProjectsMyAction(request, response, con);
@@ -501,7 +639,14 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    //Forwards to viewPersons.jsp, a list of all users in the database.
+    /**
+     * Forwards to viewPersons.jsp, a list of all users in the database.
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getPersons(request, response, con);
 
@@ -514,7 +659,14 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
     
-    //Forwards to viewPartners.jsp, a list fo all partners in teh databse.
+    /**
+     * Forwards to viewPartners.jsp, a list fo all partners in teh databse.
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         getPartnerInfo(request, response, con);
 
@@ -550,7 +702,15 @@ public class SqlServlet extends HttpServlet {
     }
 
     
-    //Returns an array of projects that needs attention. Both for the partners and non partners.
+    /**
+     * Returns an array of projects that needs attention. Both for the partners and non partners.
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private ArrayList<Project> getProjectsMyAction(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Project> projects;
 
@@ -570,7 +730,15 @@ public class SqlServlet extends HttpServlet {
         return projects;
     }
     
-    //Returns an ArrayList of person objects. Used for the viewPersons.jsp.
+    /**
+     * Returns an ArrayList of person objects. Used for the viewPersons.jsp.
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private ArrayList<Person> getPersons(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         ArrayList<Person> persons = con.getPersons();
@@ -583,7 +751,15 @@ public class SqlServlet extends HttpServlet {
         return persons;
     }
 
-    //Returns an ArrayList of Strings with all the available states (I.E. Fund Allocation, Reimburse). Used when updating projects.
+    /**
+     * Returns an ArrayList of Strings with all the available states (I.E. Fund Allocation, Reimburse). Used when updating projects.
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private ArrayList<String> getStateNames(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<String> stateNames = con.getStateNames();
 
@@ -591,7 +767,15 @@ public class SqlServlet extends HttpServlet {
         return stateNames;
     }
     
-    //Gets an ArrayList of Partner objects. Used for the viewPartners.jsp.
+    /**
+     * Gets an ArrayList of Partner objects. Used for the viewPartners.jsp.
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     public ArrayList<Partner> getPartnerInfo(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         ArrayList<Partner> partnerInfo = con.getPartnerInfo();
 
@@ -599,12 +783,27 @@ public class SqlServlet extends HttpServlet {
         return partnerInfo;
     }
 
-    // returns true, if the personID is not null, else false
+    /**
+     * Returns true, if the personID is not null, else false
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private boolean accessAllowed(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return request.getSession().getAttribute("personID") != null;
     }
 
-    //Stops the current session and send to index.jsp
+    /**
+     * Stops the current session and send to index.jsp
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void logOut(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         HttpSession sessionObj = request.getSession();
         sessionObj.invalidate();
@@ -613,7 +812,14 @@ public class SqlServlet extends HttpServlet {
         RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
         rq.forward(request, response);
     }
-
+    /**
+     * Returns person class adequate to password/login combination.
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void logIn(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
@@ -631,7 +837,17 @@ public class SqlServlet extends HttpServlet {
             rq.forward(request, response);
         }
     }
-
+    /**
+     * Changes Person password.
+     * @param current
+     * @param password
+     * @param retype
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void changePassword(String current, String password, String retype, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         String message = null;
         if (con.checkPassword(current)) {
@@ -654,7 +870,15 @@ public class SqlServlet extends HttpServlet {
 
     }
 
-    // Retrieves the selected project, gets other essential data and forwards
+    /**
+     * Retrieves the selected project, gets other essential data and forwards
+     * @param id
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showDetails(String id, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         int pid = Integer.parseInt(id);
@@ -669,7 +893,14 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    // Gets the needed information to display the Create New Project jsp and forwards to it
+    /**
+     * Gets the needed information to display the Create New Project jsp and forwards to it.
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showCreate(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
 
         getPartnerInfo(request, response, con);
@@ -707,21 +938,44 @@ public class SqlServlet extends HttpServlet {
         rq.forward(request, response);
     }
 
-    // Returns a single project, selected by ID
+    /**
+     * Returns a single project, selected by ID
+     * @param projectID
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private Project getProject(int projectID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getProject(projectID);
     }
 
-    //Returns the number of users in the db.
+    /**
+     * Returns the number of users in the db.
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private int getNumberOfUsers(Controller con) throws ServletException, IOException {
         return con.getNumberOfUsers();
     }
 
-    //Returns the number of partners in the db.
+    /**
+     * Returns the number of partners in the db.
+     * @param request
+     * @param response
+     * @param con
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private int getNumberOfPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getNumberOfPartners();
     }
-
+    
     private void getFile(HttpServletRequest request, HttpServletResponse response, Controller con) {
         int projectID = Integer.parseInt(request.getParameter("id"));
         int i = Integer.parseInt(request.getParameter("file"));
@@ -748,11 +1002,23 @@ public class SqlServlet extends HttpServlet {
         request.setAttribute("poe", con.getNumberOfPoe(projectID));
     }
 
-    //Gets an ArrayList of POE files(Proof of Exection) corresponding to the projectID from the Database.
+    /**
+     * Gets an ArrayList of POE files(Proof of Execution) corresponding to the projectID from the Database.
+     * @param projectID
+     * @param request
+     * @param con 
+     */
     private void getPoeFiles(int projectID, HttpServletRequest request, Controller con) {
+        
         request.setAttribute("poeFiles", con.getPoeFileList(projectID));
     }
-
+    /**
+     * Saves uploaded file as a Blob object in database.
+     * @param request
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void upload(HttpServletRequest request, Controller con) throws ServletException, IOException {
         int projectID = Integer.parseInt(request.getParameter("projectID"));
         int projectStateID = Integer.parseInt(request.getParameter("projectStateID"));
@@ -767,82 +1033,6 @@ public class SqlServlet extends HttpServlet {
             System.out.println("filePart is NULL");
         }
 
-        /*
-         // gets absolute path of web app
-         String appPath = "D:/";
-
-         // upload directory
-         String savePath = appPath + File.separator + SAVE_DIR;
-
-         // create dir if non existent
-         File fileSaveDir = new File(savePath);
-         if (!fileSaveDir.exists()) {
-         fileSaveDir.mkdir();
-         }
-
-         System.out.println("Save Path: " + savePath);
-        
-         for (Part part : request.getParts()) {
-         if (part.getName().equals("file")) {
-         String fileName = extractFileName(part);
-         System.out.println("File name: " + fileName + " " + part.getName());
-         try {
-         part.write("/" + fileName);
-         } catch (IOException e) {
-         e.printStackTrace();
-         }
-         }
-
-         }
-
-         request.setAttribute("message", "Upload has been successfully done!");
-
-         }
-
-         private String extractFileName(Part part) {
-         String contentDisp = part.getHeader("content-disposition");
-         String[] items = contentDisp.split(";");
-         for (String s : items) {
-         if (s.trim().startsWith("filename")) {
-
-         s = s.substring(s.indexOf("=") + 2, s.length() - 1);
-         while (s.contains("\\")) {
-         //int i = s.charAt(s.indexOf("\\"));
-         s = s.substring(1);
-         }
-         return s;
-         }
-         }
-         return "";
-         */
     }
 
-    private static int getIntFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return Integer.parseInt(sb.toString());
-
-    }
 }

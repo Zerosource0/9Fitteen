@@ -489,14 +489,7 @@ public class ProjectMapper {
             if (fkpartnerid == null) {
                 fkpartnerid = 1;
             }
-            sqlString2
-                    = "Select Partner.PARTNERNAME, PROJECT.*"
-                    + " from Project, person, projectstateperson, partner"
-                    + " where Person.PERSONID=" + id + " and Person.PersonID=PROJECTSTATEPERSON.FKPERSONID"
-                    + " and PROJECTSTATEPERSON.FKPROJECTID=Project.PROJECTID"
-                    + " and Partner.PARTNERID=Project.FKPARTNERID";
-            PreparedStatement pre = con.prepareStatement(sqlString2);
-            ResultSet rs = pre.executeQuery();
+            
 
             return new Person(id, rights, fkpartnerid, name, phoneNumber);
         } catch (SQLException ex) {
