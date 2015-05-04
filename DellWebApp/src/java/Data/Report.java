@@ -8,14 +8,18 @@ import java.util.ArrayList;
  */
 public class Report {
 
-    private final ArrayList<String> countries = new ArrayList();
-    private final ArrayList<Integer> noPartners = new ArrayList();
-    private final ArrayList<Integer> noProjectDone = new ArrayList();
-    private final ArrayList<Integer> moneySpent = new ArrayList();
-    private final ArrayList<Integer> avgSpentPartner = new ArrayList();
+    private ArrayList<String> countries;
+    private ArrayList<Integer> noPartners;
+    private ArrayList<Integer> noProjectDone;
+    private ArrayList<Integer> moneySpent;
+    private ArrayList<Integer> avgSpentPartner;
 
     public Report() {
-
+        countries = new ArrayList<>();
+        noPartners = new ArrayList<>();
+        noProjectDone = new ArrayList<>();
+        moneySpent = new ArrayList<>();
+        avgSpentPartner = new ArrayList<>();
     }
 
     public ArrayList<String> getCountries() {

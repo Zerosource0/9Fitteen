@@ -1,9 +1,5 @@
 package Data;
 
-/**
- *
- * @author marcj_000
- */
 public class PersonType {
     
     private int personTypeID;

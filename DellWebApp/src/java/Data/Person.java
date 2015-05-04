@@ -8,7 +8,8 @@ public class Person {
     private int fkPersonTypeID;
     private String personTypeName;
     private String email;
-
+    private Integer fkPartnerID;
+    
     public int getId() {
         return id;
     }
@@ -32,17 +33,13 @@ public class Person {
     public void setFkPersonTypeName(String fkPersonTypeName) {
         this.personTypeName = fkPersonTypeName;
     }
-    private Integer fkPartnerID;
 
     public Person(int id, int rights, Integer fkpartnerid, String name, int phoneNumber) {
-
         this.id = id;
         this.fkPersonTypeID = rights;
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.fkPartnerID = fkpartnerid;
-        //this.pass=pass;
-
     }
 
     public Person(String name, int phoneNumber, int fkPersonTypeID, Integer fkPartnerID) {

@@ -13,7 +13,7 @@ import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 
-public class DBconnector
+public class DBConnector
 {
 
     private static String driver = "oracle.jdbc.driver.OracleDriver";
@@ -25,9 +25,9 @@ public class DBconnector
     private DataSource dataSource;
 
     //-- Singleton ---- 
-    private static DBconnector instance;
+    private static DBConnector instance;
     
-    private DBconnector()
+    private DBConnector()
     {
         try
         {
@@ -42,7 +42,7 @@ public class DBconnector
         }
     }
     
-    public static DataSource setupDataSource(String connectURI) {
+    private static DataSource setupDataSource(String connectURI) {
         ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(connectURI, id, pw);
         
         PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory, null);
@@ -55,20 +55,20 @@ public class DBconnector
         return dataSource;      
     }
     
-    public static DBconnector getInstance()
+    static DBConnector getInstance()
     {
         if (instance == null)
-            instance = new DBconnector();
+            instance = new DBConnector();
         return instance;
     }
     
-    public Connection getConnection()
+    Connection getConnection()
     {
         try {
             con = dataSource.getConnection();
             
         } catch (SQLException ex) {
-            Logger.getLogger(DBconnector.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
       return con;
     }

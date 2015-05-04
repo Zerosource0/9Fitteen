@@ -10,15 +10,9 @@ import Data.Report;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-/**
- *
- * @author marcj_000
- */
 public class DBFacade {
 
     private ProjectMapper pm;
-    
-
     private static DBFacade instance;
 
     private DBFacade() {

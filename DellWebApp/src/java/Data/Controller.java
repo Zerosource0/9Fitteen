@@ -5,13 +5,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Controller {
-
-    //Singleton
     private static Controller instance;
     private DBFacade dbf;
-    private Person person = null;
+    private Person person;
 
     private Controller() {
+        person = null;
         dbf = DBFacade.getInstance();
     }
 
