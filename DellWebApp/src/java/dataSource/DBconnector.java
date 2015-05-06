@@ -13,9 +13,8 @@ import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 
-public class DBConnector
+class DBConnector
 {
-
     private static String driver = "oracle.jdbc.driver.OracleDriver";
     private static String URL = "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat";
     private static String id = "cphjb186";
@@ -23,8 +22,7 @@ public class DBConnector
     
     private Connection con;
     private DataSource dataSource;
-
-    //-- Singleton ---- 
+    
     private static DBConnector instance;
     
     private DBConnector()
@@ -33,7 +31,6 @@ public class DBConnector
         {
             Class.forName(driver);
             dataSource = setupDataSource(URL);
-            //con = DriverManager.getConnection(URL, id, pw);   
 		  					     
         } catch (Exception e)
         {
