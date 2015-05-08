@@ -1,5 +1,5 @@
 package Data;
-
+//Author: Jonas, Andreas, Marc, Adam
 public class Person {
 
     private int id;

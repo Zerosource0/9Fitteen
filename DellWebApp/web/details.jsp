@@ -6,6 +6,7 @@
 <%@page import="Data.Project"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<!--Authors: Andreas, Adam , Jonas, Marc  -->
 <html lang="en">
     <head>
         <meta charset="utf-8">

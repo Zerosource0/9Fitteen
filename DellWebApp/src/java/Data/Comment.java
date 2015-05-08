@@ -1,5 +1,5 @@
 package Data;
-
+//Author: Marc
 public class Comment {
     
     private String comment;

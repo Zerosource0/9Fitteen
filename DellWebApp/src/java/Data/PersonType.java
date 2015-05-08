@@ -1,4 +1,5 @@
 package Data;
+//Author: Adam, Marc, Jonas
 
 public class PersonType {
     

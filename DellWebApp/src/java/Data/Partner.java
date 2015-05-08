@@ -1,5 +1,5 @@
 package Data;
-
+//Author: Jonas, Andreas
 public class Partner {
     
     private int partnerID;

@@ -1,4 +1,5 @@
 package Data;
+//Author: Andreas, Jonas, Adam
 
 import dataSource.DBFacade;
 import java.io.InputStream;

@@ -1,4 +1,5 @@
 package Data;
+//Author: Andreas, Adam
 
 public class PoeFile {
     

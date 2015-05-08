@@ -2,6 +2,7 @@
 <%@page import="Data.Partner"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<!--Authors: Andreas  -->
 <html lang="en">
     <head>
         <meta charset="utf-8">

@@ -1,5 +1,9 @@
 package dataSource;
 
+/**
+ *
+ * @author Andreas
+ */
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;

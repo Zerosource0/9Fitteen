@@ -1,5 +1,9 @@
 package dataSource;
 
+/**
+ *
+ * @author Jonas, Andreas, Adam, Marc
+ */
 import Data.Comment;
 import Data.Partner;
 import Data.Person;

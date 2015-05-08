@@ -6,6 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<!--Authors: Adam, Marc  -->
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -89,7 +90,7 @@
                     <p> <b>Email: </b><%= person.getEmail() %></p>
                     
                     <a href="Dashboard?command=editPerson&personID=<%=person.getID()%>" ><input type="button" value="Edit"></a>
-                    <a href="Dashboard?command=deletePerson&personID=<%=person.getID()%>" ><input type="button" onclick="return comfirm('Do you really want to delete'<%= person.getName()%>);" value="Delete"></a>
+                    
                 </div>
             </div>
         </div>

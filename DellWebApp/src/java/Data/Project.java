@@ -2,7 +2,7 @@ package Data;
 
 /**
  *
- * @author marcj_000
+ * @author Marc
  */
 public class Project {
  
