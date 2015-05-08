@@ -227,7 +227,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Gets an ArrayList of comment objects from the database.
      *
-     * @author: Marc
+     * @author: Marc, Andreas
      * @param projectID Id of current project.
      * @param request
      * @param response
@@ -244,7 +244,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Saves comment from input box in the .jsp to the database
      *
-     * @author: Marc
+     * @author: Marc, Andreas
      * @param pid
      * @param request
      * @param response
@@ -268,7 +268,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Updates project states (i.e. Fund Allocation, Reimburse)
      *
-     * @author: Marc, Adam
+     * @author: Marc, Adam, Andreas
      * @param direction
      * @param id
      * @param con Instance of controller object.
@@ -344,7 +344,7 @@ public class SqlServlet extends HttpServlet {
     }
 
     /**
-     * Gets an ArrayList of Strings containg countries from the database.
+     * Gets an ArrayList of Strings containing countries from the database.
      *
      * @author: Jonas
      * @param request
@@ -386,7 +386,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Used for updating project info in the projectUpdate.jsp.
      *
-     * @author: Marc, Adam
+     * @author: Marc, Adam, Andreas
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -414,7 +414,7 @@ public class SqlServlet extends HttpServlet {
     }
 
     /**
-     * Used in the viewPartners.jsp. Gets seleced partner from the Database,
+     * Used in the viewPartners.jsp. Gets selected partner from the Database,
      * then forwards to partnerDetails.jsp
      *
      * @author: Marc, Adam
@@ -534,7 +534,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the create.jsp. Creates a new project from the input in the form
      * and stores it in the database.
      *
-     * @author: Marc, Adam
+     * @author: Marc, Adam, Andreas
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -635,7 +635,7 @@ public class SqlServlet extends HttpServlet {
     }
 
     /**
-     * Subtracking an given amount from the total fund left for the quarter.
+     * Subtracting an given amount from the total fund left for the quarter.
      *
      * @author: Jonas
      * @param amount
@@ -653,7 +653,7 @@ public class SqlServlet extends HttpServlet {
      * The initial view after logging in, the showProject forwards to the
      * view.jsp that shows all projects in the database.
      *
-     * @author: Marc, Adam
+     * @author: Marc, Adam, Andreas
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -719,7 +719,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an ArrayList with all the projects that the current user has
      * permission to see.
      *
-     * @author: Marc, Adam
+     * @author: Marc, Adam, Andreas
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -797,7 +797,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an ArrayList of Strings with all the available states (I.E. Fund
      * Allocation, Reimburse). Used when updating projects.
      *
-     * @author: Marc
+     * @author: Marc, Andreas
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -848,7 +848,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Stops the current session and send to index.jsp
      * 
-     * @author: Jonas, Adam
+     * @author: Jonas, Adam, Andreas
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -893,7 +893,7 @@ public class SqlServlet extends HttpServlet {
 
     /**
      * Changes Person password.
-     * @author Adam
+     * @author Adam, Andreas
      * @param current
      * @param password
      * @param retype
@@ -928,7 +928,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Retrieves the selected project, gets other essential data and forwards
      *
-     * @author: Marc
+     * @author: Marc, Andreas
      * @param id
      * @param request
      * @param response
@@ -954,7 +954,7 @@ public class SqlServlet extends HttpServlet {
      * Gets the needed information to display the Create New Project jsp and
      * forwards to it.
      *
-     * @author: Marc
+     * @author: Marc, Andreas
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -991,6 +991,15 @@ public class SqlServlet extends HttpServlet {
         return con.createStateChange(project, (int) request.getSession().getAttribute("personID"));
     }
 
+    /**
+     * Shows the settings page
+     * @author: Andreas
+     * @param request
+     * @param response
+     * @param con
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showSettings(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         request.setAttribute("rights", con.getCurrentUser().getFkPersonTypeID());
         request.setAttribute("personName", con.getCurrentUser().getName());
@@ -1082,6 +1091,7 @@ public class SqlServlet extends HttpServlet {
      * Gets an ArrayList of POE files(Proof of Execution) corresponding to the
      * projectID from the Database.
      *
+     * @author: Andreas
      * @param projectID
      * @param request
      * @param con Instance of controller object.
