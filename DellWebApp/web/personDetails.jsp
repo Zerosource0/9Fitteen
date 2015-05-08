@@ -59,7 +59,6 @@
                     </ul>
                     <ul class="nav nav-sidebar">
                         <%
-                         Integer a=0;
                          a=(Integer) request.getAttribute("rights");
                         %>
                         <%if (a!=5) 
