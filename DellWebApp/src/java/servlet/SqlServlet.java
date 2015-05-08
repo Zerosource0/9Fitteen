@@ -252,6 +252,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Saves comment from input box in the .jsp to the database
      *
+     * @author: Marc
      * @param pid
      * @param request
      * @param response
@@ -271,31 +272,11 @@ public class SqlServlet extends HttpServlet {
         con.saveComment(project, (int) request.getSession().getAttribute("personID"), comment);
     }
 
-    /**
-     * (Not in use) deletes selected person from database
-     *
-     * @param personID
-     * @param request
-     * @param response
-     * @param con Instance of controller object.
-     * @throws ServletException
-     * @throws IOException
-     */
-    private void deletePerson(String personID, HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        System.out.println("DELETING PERSONID: " + personID);
-        con.deletePerson(Integer.parseInt(personID));
-    }
-
-    //(Not in use) add a new person to the database, then forwards to the PersonUpdate.jsp
-    private void addPerson(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
-        Person person = con.addPerson();
-        int personID = person.getID();
-        showPersonEdit(personID, request, response, con);
-    }
 
     /**
      * Updates project states (i.e. Fund Allocation, Reimburse)
      *
+     * @author: Marc
      * @param direction
      * @param id
      * @param con Instance of controller object.
@@ -311,6 +292,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Used for updating partner information in the partnerUpdate.jsp
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -388,8 +370,9 @@ public class SqlServlet extends HttpServlet {
     }
 
     /**
-     * Used for updatng person info in the personUpdate.jsp.
+     * Used for updating person info in the personUpdate.jsp.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -411,6 +394,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Used for updating project info in the projectUpdate.jsp.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -441,6 +425,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the viewPartners.jsp. Gets seleced partner from the Database,
      * then forwards to partnerDetails.jsp
      *
+     * @author: Marc
      * @param partnerID
      * @param request
      * @param response
@@ -464,6 +449,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the viewPersons.jsp. Gets the selected person from the Database,
      * then frowards to partnerDtails.jsp.
      *
+     * @author: Marc
      * @param personID
      * @param request
      * @param response
@@ -486,6 +472,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the partnerDetails.jsp for updating partner information. Forwards
      * to partnerUpdate.jsp.
      *
+     * @author: Marc
      * @param partnerID
      * @param request
      * @param response
@@ -511,6 +498,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the personDetails.jsp for updating partner information. Forwards
      * to personUpdate.jsp.
      *
+     * @author: Marc
      * @param personID
      * @param request
      * @param response
@@ -532,6 +520,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the details.jsp for updating partner information. forwards to
      * update.jsp
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -553,6 +542,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the create.jsp. Creates a new project from the input in the form
      * and stores it in the database.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -668,9 +658,10 @@ public class SqlServlet extends HttpServlet {
     }
 
     /**
-     * The initail view after logging in, the showProject forwards to the
+     * The initial view after logging in, the showProject forwards to the
      * view.jsp that shows all projects in the database.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -692,6 +683,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Forwards to viewPersons.jsp, a list of all users in the database.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -713,6 +705,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Forwards to viewPartners.jsp, a list fo all partners in teh databse.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -734,6 +727,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an ArrayList with all the projects that the current user has
      * permission to see.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -787,6 +781,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Returns an ArrayList of person objects. Used for the viewPersons.jsp.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -810,6 +805,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an ArrayList of Strings with all the available states (I.E. Fund
      * Allocation, Reimburse). Used when updating projects.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -827,6 +823,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Gets an ArrayList of Partner objects. Used for the viewPartners.jsp.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -939,6 +936,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Retrieves the selected project, gets other essential data and forwards
      *
+     * @author: Marc
      * @param id
      * @param request
      * @param response
@@ -964,6 +962,7 @@ public class SqlServlet extends HttpServlet {
      * Gets the needed information to display the Create New Project jsp and
      * forwards to it.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -982,6 +981,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Creates a StateChange entry in the DB for the latest project.
      *
+     * @author: Marc
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -1010,6 +1010,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Returns a single project, selected by ID
      *
+     * @author: Marc
      * @param projectID Id of current project.
      * @param request
      * @param response
