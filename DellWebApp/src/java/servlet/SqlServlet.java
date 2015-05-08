@@ -92,14 +92,6 @@ public class SqlServlet extends HttpServlet {
                             saveComment(projectID, request, response, con);
                             showDetails(projectID, request, response, con);
                             break;
-                        case "deletePerson":
-                            String personID = request.getParameter("personID");
-                            deletePerson(personID, request, response, con);
-                            showPersons(request, response, con);
-                            break;
-                        case "addPerson":
-                            addPerson(request, response, con);
-                            break;
                         case "showPartners":
                             showPartners(request, response, con);
                             break;
@@ -140,7 +132,7 @@ public class SqlServlet extends HttpServlet {
                             break;
                         case "savePerson":
                             savePerson(request, response, con);
-                            personID = request.getParameter("personID");
+                            String personID = request.getParameter("personID");
                             showPersonDetails(personID, request, response, con);
                             break;
                         case "showReport":
@@ -276,7 +268,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Updates project states (i.e. Fund Allocation, Reimburse)
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param direction
      * @param id
      * @param con Instance of controller object.
@@ -292,7 +284,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Used for updating partner information in the partnerUpdate.jsp
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -372,7 +364,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Used for updating person info in the personUpdate.jsp.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -394,7 +386,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Used for updating project info in the projectUpdate.jsp.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -425,7 +417,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the viewPartners.jsp. Gets seleced partner from the Database,
      * then forwards to partnerDetails.jsp
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param partnerID
      * @param request
      * @param response
@@ -449,7 +441,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the viewPersons.jsp. Gets the selected person from the Database,
      * then frowards to partnerDtails.jsp.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param personID
      * @param request
      * @param response
@@ -542,7 +534,7 @@ public class SqlServlet extends HttpServlet {
      * Used in the create.jsp. Creates a new project from the input in the form
      * and stores it in the database.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -661,7 +653,7 @@ public class SqlServlet extends HttpServlet {
      * The initial view after logging in, the showProject forwards to the
      * view.jsp that shows all projects in the database.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -683,7 +675,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Forwards to viewPersons.jsp, a list of all users in the database.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -705,7 +697,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Forwards to viewPartners.jsp, a list fo all partners in teh databse.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -727,7 +719,7 @@ public class SqlServlet extends HttpServlet {
      * Returns an ArrayList with all the projects that the current user has
      * permission to see.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -781,7 +773,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Returns an ArrayList of person objects. Used for the viewPersons.jsp.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -823,7 +815,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Gets an ArrayList of Partner objects. Used for the viewPartners.jsp.
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -855,8 +847,8 @@ public class SqlServlet extends HttpServlet {
 
     /**
      * Stops the current session and send to index.jsp
-     *
-     * @author: Jonas
+     * 
+     * @author: Jonas, Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -866,7 +858,7 @@ public class SqlServlet extends HttpServlet {
     private void logOut(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         HttpSession sessionObj = request.getSession();
         sessionObj.invalidate();
-
+        
         request.setAttribute("loggedOut", true);
         RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
         rq.forward(request, response);
@@ -874,7 +866,7 @@ public class SqlServlet extends HttpServlet {
 
     /**
      * Returns person class adequate to password/login combination.
-     *
+     * @author Adam
      * @param request
      * @param response
      * @param con Instance of controller object.
@@ -901,7 +893,7 @@ public class SqlServlet extends HttpServlet {
 
     /**
      * Changes Person password.
-     *
+     * @author Adam
      * @param current
      * @param password
      * @param retype
@@ -1010,7 +1002,7 @@ public class SqlServlet extends HttpServlet {
     /**
      * Returns a single project, selected by ID
      *
-     * @author: Marc
+     * @author: Marc, Adam
      * @param projectID Id of current project.
      * @param request
      * @param response
@@ -1050,7 +1042,13 @@ public class SqlServlet extends HttpServlet {
     private int getNumberOfPartners(HttpServletRequest request, HttpServletResponse response, Controller con) throws ServletException, IOException {
         return con.getNumberOfPartners();
     }
-
+    /**
+     * Returns specific file using id of current person.
+     * @author Adam
+     * @param request
+     * @param response
+     * @param con 
+     */
     private void getFile(HttpServletRequest request, HttpServletResponse response, Controller con) {
         int projectID = Integer.parseInt(request.getParameter("id"));
         int i = Integer.parseInt(request.getParameter("file"));
@@ -1095,7 +1093,7 @@ public class SqlServlet extends HttpServlet {
 
     /**
      * Saves uploaded file as a Blob object in database.
-     *
+     * @author Adam
      * @param request
      * @param con Instance of controller object.
      * @throws ServletException
