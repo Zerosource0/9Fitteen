@@ -85,8 +85,6 @@
                             <h4><%= projects.size()%></h4>
                             <span class="text-muted">Number of Projects</span>
                         </div>
-                        <%if (a!=5) 
-                        {%>
                         <div class="col-xs-6 col-sm-3 placeholder">
                             <img src="res/photos/network11.png" class="img-responsive" alt="">
                             <h4><%= request.getAttribute("numberOfUsers")%></h4>
@@ -102,7 +100,6 @@
                             <h4> <% String s = NumberFormat.getNumberInstance().format(request.getAttribute("moneyLeft")); %><%= s %> DKK</h4>
                             <span class="text-muted">Money left</span>
                         </div>
-                            <%}%>
                     </div>
 
                             

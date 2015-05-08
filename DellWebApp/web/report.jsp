@@ -6,15 +6,6 @@
 <%@page import="Data.Project"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    Integer a = 5;
-    a = (Integer) request.getAttribute("rights");
-    if (a==5 || a==null)
-    {
-        response.sendRedirect("Dashboard?command=logout");
-        
-    }
- %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -70,7 +61,10 @@
 
                     </ul>
                     <ul class="nav nav-sidebar">
-                        
+                        <%
+                            Integer a = 0;
+                            a = (Integer) request.getAttribute("rights");
+                        %>
                         <%if (a != 5) {%>
 
                         <li><a href="Dashboard?command=showCreate">Create New Project</a></li>
